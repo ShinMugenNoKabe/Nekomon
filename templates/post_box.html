@@ -1,0 +1,33 @@
+{% load i18n %}
+
+{% load static %}
+
+<div class="post animated animatedFadeInUp fadeInUp">
+    <div class='post-header'>
+        <div>
+            <a href="/{{ request.user.username }}">
+                <img class='post-pfp' src="{% static 'images/profile_pictures/' %}{{ request.user.profile_picture }}">
+            </a>
+        </div>
+        <div class='post-username-date'>
+            <p>
+                <a href="/{{ request.user.username }}">@{{ request.user.username }}</a>
+            </p>
+            <p>
+                <a href="/{{ request.user.username }}">{{ request.user.name }}</a>
+            </p>
+            </a>
+
+         </div>
+    </div>
+    <hr>
+    <form id="upload-post">
+        {% csrf_token %}
+        {% for field in post_box %}
+            {{ field }}
+        {% endfor %}
+        <button id="new-post-button" form="upload-post">{% trans "Upload new post" %}</button>
+        <div id="char-count"></div><br>
+        <div id="errors"></div>
+    </form>
+</div>

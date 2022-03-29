@@ -1,0 +1,37 @@
+{% extends 'base-forms.html' %}
+
+{% load i18n %}
+
+{% load static %}
+
+{% block content %}
+
+    <form id="register-form">
+        {% csrf_token %}
+        <img src="{% static 'images/neko.png' %}" id="nekomon-logo">
+        <p id="top-text">{% trans "New account" %}</p>
+
+        {% for field in form %}
+            <div class="input-row">
+                {{ field }}
+            </div>
+        {% endfor %}
+
+        <!-- Errors -->
+        <div id="errors">
+            {% if form.errors %}
+                {% for key, value in form.errors.items %}
+                    {{ value }}
+                {% endfor %}
+            {% endif %}
+        </div>
+    </form>
+
+    <div class="buttons-links">
+        <button class="big-button" type="submit" form="register-form">{% trans "Register" %}</button>
+        <div id="links">
+            <div class="link"><a href="/">{% trans "Go back to main" %}</a></div>
+        </div>
+    </div>
+
+{% endblock %}

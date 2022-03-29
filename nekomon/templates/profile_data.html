@@ -1,0 +1,29 @@
+{% load i18n %} {% load static %} {% block content %}
+<div class="user-profile">
+    <div class="profile-header">
+        <img class='profile-pfp' src="{% static 'images/profile_pictures/' %}{{ request.user.profile_picture }}">
+
+        <div id="profile-info">
+            <div>
+                {{ request.user.name }}
+            </div>
+            <div>
+                @{{ request.user.username }}
+            </div>
+            <div>
+                {{ request.user.description }}
+            </div>
+            <div>
+                {% trans "Date joined" %}: {{ request.user.date_joined|date:"d/m/Y" }}
+            </div>
+            <div>
+                {% trans "Last access" %}: {{ request.user.last_login|date:"d/m/Y G:i:s" }}
+            </div>
+        </div>
+
+        <div class="profile-button-container">
+            <button id="edit-profile" class="profile-button">{% trans "Edit profile" %}</button>
+        </div>
+    </div>
+</div>
+{% endblock %}

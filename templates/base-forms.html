@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="es-ES">
+<head>
+    <meta charset="utf-8">
+    <link rel="icon" type="image/png" href="{% static 'images/neko.png' %}">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link href="{% static 'css/main.css' %}" rel='stylesheet' type='text/css'>
+    <title>Iniciar sesión - Nekomon</title>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+</head>
+
+<body id="forms-body">
+    <main id="forms-container">
+        {% block content %}
+        {% endblock %}
+    </main>
+
+    <script type="text/javascript" src="{% static 'js/jquery.cookie-1.4.1.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/json_errors.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/log-in.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/register.js' %}"></script>
+</body>
+</html>

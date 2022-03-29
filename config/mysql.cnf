@@ -1,0 +1,6 @@
+[client]
+database = nekomon
+user = neko
+password = 26cL7WqbJy8aFE3F
+host = localhost
+default-character-set = utf8

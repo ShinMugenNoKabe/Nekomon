@@ -1,0 +1,115 @@
+#forms-body {
+    background-color:  #1c1c1c;
+    margin: auto;
+    font-family: "Work Sans";
+}
+    
+#forms-container {
+        text-align: center;
+        padding: 1em;
+        background-color: white;
+        position: absolute;
+        margin-left: auto;
+        margin-right: auto;
+        left: 0;
+        right: 0;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 40%;
+        border-radius: 20px;
+    }
+    
+    .flash-message {
+        color: red;
+        padding-top: 1.2em;
+    }
+    
+    #nekomon-logo {
+        padding-top: 0.2em;
+        width: 10em;
+    }
+    
+    #top-text {
+        margin: 0;
+        font-size: 2em;
+        color: rgb(77, 127, 194);
+    }
+    
+    .input-text {
+        width: 80%;
+        height: 3em;
+        border-radius: 50px;
+        padding-left: 2em;
+        padding-right: 2em;
+        border: 2px solid grey;
+        color: grey;
+        margin-top: 1.3em;
+        font-size: 0.9em;
+    
+        &:active {
+            border-color: grey;
+        }
+    }
+    
+    .buttons-links {
+        text-align: center;
+    }
+    
+    .big-button {
+        background-color: rgb(219, 169, 218);
+        color: white;
+        text-decoration: none;
+        border: none;
+        width: 87%;
+        height: 3em;
+        border-radius: 50px;
+        font-size: 1em;
+        margin-top: 2em;
+    
+        &:hover {
+            cursor: pointer;
+            background-color: rgb(161, 123, 161);
+        }
+    }
+    
+    #links {
+        font-size: 1.2em;
+        margin-top: 1em;
+    
+        .link {
+            padding-bottom: 1em;
+        }
+    
+        a {
+            text-decoration: none;
+    
+            &:hover {
+                color: rgb(224, 124, 185);
+            }
+        }
+    }
+    
+    .errorlist {
+        padding: 0;
+        list-style-type: none;
+    
+        li {
+            color: red;
+            padding-top: 0.7em;
+        }
+    }
+    
+    #email-successful {
+        margin-top: 1.3em;
+    }
+    
+    @media only screen and (min-width: 320px) and (max-width: 991px) {
+        body {
+            margin-top: 0;
+            padding-bottom: 0;
+        }
+        
+        #forms-container {
+            width: 80%;
+        }
+    }

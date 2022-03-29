@@ -1,0 +1,93 @@
+{% extends 'base.html' %} {% load i18n %} {% load static %} {% block content %}
+
+<main class="main-site-container">
+
+<div class="user-profile">
+    {% include 'profile_data.html' %}
+</div>
+
+<div class="posts">
+    {% include 'post_box.html' %}
+    <div id="posts" class="animated animatedFadeInUp fadeInUp"></div>
+</div>
+
+<div class="miscellaneous">
+    <span class="post-random-text">{% trans "Random post" %}</span><br>
+<div id="post-random">
+    <div class="post" style="border-top: 2px solid #565656">
+        <div class='post-header'>
+            <div>
+                <img class='post-pfp' src="/web/images/profile_pictures/{{random_post.user.profile_picture}}">
+            </div>
+            <div class='post-username-date'>
+                <a href="/{{random_post.user.username}}">
+                    <p>
+                        {{random_post.user.name}}
+                    </p>
+                    <p>
+                        @{{random_post.user.username}}
+                    </p>
+                </a>
+                <p>
+                    <a href="/posts/{{random_post.id}}">
+                        {{ random_post.created_at|date:"d/m/Y G:i:s" }}
+                    </a>
+                </p>
+            </div>
+        </div>
+        <hr>
+        <div class='post-content'>
+            {{ random_post.content }}
+        </div>
+        <hr>
+        <i class="fas fa-heart"></i>
+    </div>
+    </div>
+</div>
+
+    <!-- Edit profile modal -->
+    <div id="profile-modal" class="modal">
+      <!-- Modal content -->
+      <div class="modal-content">
+          {% comment %}
+        <span class="edit"><i class="far fa-edit"></i></span>{% endcomment %}
+        <form id="edit-profile-form">
+            {% csrf_token %}
+
+            <div id="edit-profile-header-image" style="
+                background-image: url('{% static 'images/profile_header_images/' %}{{request.user.profile_header_image}}');">
+            </div>
+
+            <div id="edit-profile-picture" style="
+                background-image: url('{% static 'images/profile_pictures/' %}{{request.user.profile_picture}}');">
+            </div>
+
+            <div id="edit-profile-username-name">
+                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Architecto, consequatur cupiditate ex, excepturi, maiores molestias pariatur perferendis rem repellendus soluta tenetur vel veniam vitae. Deserunt minima quo velit voluptates voluptatibus.
+            </div>
+
+            <div id="edit-profile-bio-pw">
+                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad cum inventore ipsam. Minus, vel, voluptates. Consequatur cum debitis incidunt odit quas saepe, ullam veniam. Aut earum laudantium possimus totam vero.
+            </div>
+
+            {% comment %}
+            {% for field in form %}
+            <div class="input-row">
+                {{ field }}
+            </div>
+            {% endfor %}
+            {% endcomment %}
+        </form>
+    </div>
+
+</div>
+
+</main>
+
+
+<script type="text/javascript" src="{% static 'js/list-posts.js' %}"></script>
+<script type="text/javascript">
+    fetchPosts("ajax/list-posts-main/");
+</script>
+
+{% endblock %}

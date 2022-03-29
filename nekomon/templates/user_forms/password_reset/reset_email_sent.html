@@ -1,0 +1,26 @@
+{% extends 'base-forms.html' %}
+
+{% load i18n %}
+
+{% load static %}
+
+{% block content %}
+
+    <form id="reset-form" method="post">
+        {% csrf_token %}
+        <img src="{% static 'images/neko.png' %}" id="nekomon-logo">
+        <p id="top-text">{% trans "E-mail sent succesfully" %}</p>
+
+        <div id="email-successful">
+            <span class="reset-done">{% trans "We sent you an e-mail with all the instructions needed to reset your password." %}</span>
+            <span class="reset-done">{% trans "If you haven't recieved it yet, please check your e-mail and the junk mail folder." %}</span>
+        </div>
+    </form>
+
+    <div class="buttons-links">
+        <div id="links">
+            <div class="link"><a href="/">{% trans "Go back to main" %}</a></div>
+        </div>
+    </div>
+
+{% endblock %}

@@ -1,0 +1,113 @@
+@import url("https://fonts.googleapis.com/css2?family=Work+Sans&display=swap");
+body {
+  background-color: #1c1c1c;
+  margin: auto;
+  font-family: "Work Sans";
+}
+
+#container {
+  text-align: center;
+  padding: 1em;
+  background-color: white;
+  position: absolute;
+  margin-left: auto;
+  margin-right: auto;
+  left: 0;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 40%;
+  border-radius: 20px;
+}
+
+.flash-message {
+  color: red;
+  padding-top: 1.2em;
+}
+
+#nekomon-logo {
+  padding-top: 0.2em;
+  width: 10em;
+}
+
+#top-text {
+  margin: 0;
+  font-size: 2em;
+  color: #4d7fc2;
+}
+
+.input-text {
+  width: 80%;
+  height: 3em;
+  border-radius: 50px;
+  padding-left: 2em;
+  padding-right: 2em;
+  border: 2px solid grey;
+  color: grey;
+  margin-top: 1.3em;
+  font-size: 0.9em;
+}
+.input-text:active {
+  border-color: grey;
+}
+
+.buttons-links {
+  text-align: center;
+}
+
+.big-button {
+  background-color: #dba9da;
+  color: white;
+  text-decoration: none;
+  border: none;
+  width: 87%;
+  height: 3em;
+  border-radius: 50px;
+  font-size: 1em;
+  margin-top: 2em;
+}
+.big-button:hover {
+  cursor: pointer;
+  background-color: #a17ba1;
+}
+
+.link {
+  font-size: 1.2em;
+  margin-top: 1em;
+  padding-bottom: 1em;
+}
+.link + .link {
+  margin: 0;
+}
+.link a {
+  text-decoration: none;
+}
+.link a:hover {
+  color: #e07cb9;
+}
+
+.errorlist {
+  padding: 0;
+  list-style-type: none;
+}
+.errorlist li {
+  color: red;
+  padding-top: 0.7em;
+}
+
+#email-successful {
+  margin-top: 1.3em;
+}
+
+@media only screen and (min-width: 320px) and (max-width: 991px) {
+  body {
+    margin-top: 0;
+    padding-bottom: 0;
+  }
+
+  #form-container {
+    width: 80%;
+  }
+}
+
+/*# sourceMappingURL=forms.css.map */

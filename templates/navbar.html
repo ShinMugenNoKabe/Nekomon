@@ -1,0 +1,28 @@
+{% load i18n %}
+
+{% load static %}
+
+<nav>
+    <a href="/"><img id="nav-logo" src="{% static 'images/neko.png' %}" title="{% trans 'Home' %}"></a>
+
+    {% if request.user.is_authenticated %}
+        <div id="nav-username-logout">
+            <a href="/{{ request.user.username }}" class="nav-username-and-pfp">
+                <div class="nav-user-data">
+                    <span class="nav-username">{{ request.user.username }}</span>
+                    <img class='profile-picture-nav'src="{% static 'images/profile_pictures/' %}{{ request.user.profile_picture }}">
+                </div>
+            </a>
+
+            <form action="/logout/" id="logout">
+                <button id="nav-logout-button" form="logout">{% trans "Log-out" %}</button>
+            </form>
+        </div>
+
+    {% else %}
+        <div class="nav-user-data">
+            <a href="/login/">{% trans "Log-in" %}</a>
+        </div>
+    {% endif %}
+
+</nav>

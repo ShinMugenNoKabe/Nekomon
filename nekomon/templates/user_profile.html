@@ -1,0 +1,80 @@
+{% extends 'base.html' %} {% load i18n %} {% load static %} {% block content %}
+
+<main class="user-profile-container">
+    <div class="profile-header">
+        <img class='profile-pfp' src="{% static 'images/profile_pictures/' %}{{ profile.profile_picture }}">
+
+        <div id="profile-info">
+            <div>
+                {{ profile.name }}
+            </div>
+            <div>
+                @{{ profile.username }}
+            </div>
+            <div>
+                {{ profile.description }}
+            </div>
+            <div>
+                {% trans "Date joined" %}: {{ profile.date_joined|date:"d/m/Y" }}
+            </div>
+            <div>
+                {% trans "Last access" %}: {{ profile.last_login|date:"d/m/Y G:i:s" }}
+            </div>
+        </div>
+
+        <div>
+            {% if profile == request.user %}
+            <form id="edit-profile" method="post" action="edit-profile.php" class="profile-button-container">
+                <button form="edit-profile" class="profile-button">{% trans "Edit profile" %}</button>
+            </form>
+            {% else %}
+            <form id="follow-unfollow" class="profile-button-container">
+                {% csrf_token %} {% for field in follow_unfollow_form %} {{ field }} {% endfor %}
+                <button form="follow-unfollow" class="profile-button" id="follow-unfollow-button">
+                        {% if is_following %}
+                            {% trans "Unfollow" %}
+                        {% else %}
+                            {% trans "Follow" %}
+                        {% endif %}
+                    </button>
+            </form>
+            {% endif %}
+        </div>
+    </div>
+
+    {% if profile == request.user %} {% include 'post_box.html' %} {% endif %}
+
+    <div id="posts" class="animated animatedFadeInUp fadeInUp"></div>
+</main>
+<script type="text/javascript" src="{% static 'js/list-posts.js' %}"></script>
+<script type="text/javascript">
+    fetchPosts("ajax/list-posts-profile/{{ profile.pk }}");
+</script>
+<script type="text/javascript">
+    let follow_unfollow_form = $('#follow-unfollow');
+    let follow_unfollow_button = $('#follow-unfollow-button');
+    let is_following_input = $('#id_is_following');
+
+    follow_unfollow_form.submit(function() {
+        $.ajax({
+            type: "post",
+            url: "/ajax/follow-unfollow/",
+            data: follow_unfollow_form.serialize(),
+            success: function(data) {
+                if (data == "True") {
+                    follow_unfollow_button.html("{% trans 'Unfollow' %}");
+                    is_following_input.val(data);
+                } else {
+                    follow_unfollow_button.html("{% trans 'Follow' %}");
+                    is_following_input.val(data);
+                }
+            },
+            error: function(data) {
+                alert("{% trans 'Can\'t do that' %}");
+            },
+        });
+        return false;
+    });
+</script>
+
+{% endblock %}
