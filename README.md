@@ -2,6 +2,7 @@
 
 <p>Nekomon es una red social completamente gratuita y sencilla de utilizar,
 creada desde cero utilizando Python.</p>
+<p>Puedes encontrar la web en <a href="https://www.nekomon.es">https://www.nekomon.es</a>.</p>
 
 <h3>Tecnologías a usar:</h3>
 <ul>
