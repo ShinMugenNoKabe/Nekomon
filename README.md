@@ -12,6 +12,8 @@ creada desde cero utilizando Python.</p>
 <li>IDE: <b>PyCharm/Visual Studio Code</b></li>
 <li>VPS desplagado en: <b>Contabo</b></li>
 <li>Servidor web: <b>NGINX</b></li>
+<li>Servidor de bases de datos: <b>MySQL</b></li>
 <li>Servidor de correo: <b>Postfix</b></li>
 <li>Dominio registrado en: <b>GoDaddy</b></li>
+<li>Autoridad de Certificación: <b>Let’s Encrypt</b></li>
 </ul>
