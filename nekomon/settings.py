@@ -23,10 +23,11 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-jyzw6annx-*22gn)v2dhm5(0t5=ny^xm-ozq^t%77jxwzezofb'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = [
     'localhost',
+    '127.0.0.1',
     'www.nekomon.es',
 ]
 
@@ -134,9 +135,9 @@ STATIC_URL = 'web/'
 
 STATIC_ROOT = ''
 
-STATICFILES_DIRS = (
-    'web',
-)
+STATICFILES_DIRS = [
+    BASE_DIR / "web",
+]
 
 MEDIA_URL = 'media/'
 MEDIA_ROOT = ''
