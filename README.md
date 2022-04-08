@@ -17,3 +17,10 @@ creada desde cero utilizando Python.</p>
 <li>Dominio registrado en: <b>GoDaddy</b></li>
 <li>Autoridad de Certificación: <b>Let’s Encrypt</b></li>
 </ul>
+
+<p>Nekomon.es además viene incorporado con un Bot de Discord completamente funcional, el cual recibe datos de entidades desde una API REST y los muestra al usuario.</p>
+
+Por ejemplo, para mostrar la información de usuario se debe escribir en un canal de texto:<br>
+<code>/user nombreDeUsuario</code>
+
+Puedes añadir el Bot a tu servidor haciendo click en <a href="https://discord.com/api/oauth2/authorize?client_id=349981324574195715&permissions=0&scope=bot">este enlace</a>.
