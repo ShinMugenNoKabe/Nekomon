@@ -33,6 +33,13 @@
             {{ post.content }}
         </div>
         <hr>
+
+        {% if post.image != "" %}
+            <div class="post-image">
+                <img src='https://i.imgur.com/{{ post.image }}.png' alt="Image attached to the post">
+            </div>
+            <hr>
+        {% endif %}
         <i class="fas fa-heart"></i>
     </div>
 </div>
