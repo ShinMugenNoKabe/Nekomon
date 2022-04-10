@@ -33,7 +33,8 @@ function fetchPosts(view) {
                         <div class='post-content'>
                             ${post.content}
                         </div>
-                        <hr>
+                        <hr>`
+                        + getImage(post) + `
                         <form id='like-post'>
                             <input type='hidden' value='${post.id}'>
                             <i class="fas fa-heart like-icon"></i>
@@ -46,3 +47,16 @@ function fetchPosts(view) {
         }
     });
 };
+
+function getImage(post) {
+    if (post.image === "") {
+        return "";
+    }
+
+    return `
+        <div class="post-image">
+            <img src='https://i.imgur.com/` + post.image + `.png' alt="Image attached to the post">
+        </div>
+        <hr>
+    `
+}

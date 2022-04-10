@@ -1,10 +1,23 @@
 let post_box = $('#upload-post');
 
-post_box.submit(function () {
+post_box.submit(function (e) {
+    let formData = new FormData();
+    let csrftoken = $(post_box).children("input[name='csrfmiddlewaretoken']").val();
+    let image = $(post_box).children("input[name='image']")[0];
+    //console.log(image)
+    let content = $(post_box).children("textarea[name='content']").val();
+    //let content = "test"
+    formData.append("image", image.files[0]);
+    formData.append("csrfmiddlewaretoken", csrftoken);
+    formData.append("content", content);
+
     $.ajax({
         type: "post",
+        enctype: 'multipart/form-data',
         url: "/ajax/new-post/",
-        data: post_box.serialize(),
+        data: formData,
+        processData: false,
+        contentType: false,
         success: function(data) {
             fetchPosts("ajax/list-posts-main/");
             $('#id_content').val("");
@@ -18,6 +31,10 @@ post_box.submit(function () {
 });
 
 $(document).ready(function() {
+    $("#select-image-icon").click(function() {
+        $("#id_image").trigger('click');
+    });
+
     /*$("#id_content").keypress(function(e) {
         let keycode = (e.keyCode ? e.keyCode : e.which);
 

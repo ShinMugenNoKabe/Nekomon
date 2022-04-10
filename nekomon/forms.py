@@ -25,6 +25,7 @@ from nekomon.models import User, Post, Follow
 
 REGEX = r'\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}\b'
 
+
 class LogInForm(forms.Form):
     username = forms.CharField(
         max_length=15,
@@ -242,6 +243,15 @@ class PostForm(forms.Form):
         widget=forms.Textarea(
             attrs={
                 'placeholder': _("New post"),
+            }
+        )
+    )
+
+    image = forms.ImageField(
+        required=False,
+        widget=forms.FileInput(
+            attrs={
+                'style': "display: none",
             }
         )
     )

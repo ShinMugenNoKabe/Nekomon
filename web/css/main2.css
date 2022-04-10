@@ -196,6 +196,10 @@ a:hover {
     word-wrap: break-word;
 }
 
+.post-image img {
+    width: 100%;
+}
+
 #new-post-content {
     padding-top: 0;
 }

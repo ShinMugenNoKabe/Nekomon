@@ -23,7 +23,7 @@ from django.views.generic import RedirectView, CreateView
 from nekomon.forms import LogInForm, RegisterForm, PostForm, FollowUnfollowForm
 # from nekomon.models import User
 from nekomon.models import User, Post, Follow
-from nekomon.utils import get_ip_address
+from nekomon.utils import get_ip_address, upload_image_to_imgur
 
 
 @login_required
@@ -177,16 +177,24 @@ def logout_view(request):
 
 def new_post_ajax(request):
     if request.method == "POST":
-        form = PostForm(request.POST or None)
+        form = PostForm(request.POST)
 
         if form.is_valid():
             content = form.cleaned_data['content']
 
-            Post.objects.create(
+            image = ""
+
+            if request.FILES:
+                image = upload_image_to_imgur(request)
+
+            post = Post.objects.create(
                 content=content,
                 user_id=request.user.id,
+                image=image
             )
+
             # Post.save()
+
             response = JsonResponse("test", safe=False)
             response.status_code = 200
             return response
@@ -267,6 +275,7 @@ def list_posts_main_ajax(request):
                 'created_at': str(post.created_at),
                 'last_modified_at': str(post.created_at),
                 'content': post.content,
+                'image': post.image,
                 'user': {
                     'username': user.username,
                     'name': user.name,
@@ -313,7 +322,6 @@ def list_posts_profile_ajax(request, pk):
             posts_json.append(post_dict)
 
         response = JsonResponse(posts_json, safe=False)
-        print(posts_json)
         response.status_code = 200
         return response
     else:
@@ -339,4 +347,8 @@ def list_posts_profile_ajax(request, pk):
         #     return response
 
 
+def testimage(request):
+    context = {
+    }
 
+    return render(request, 'testimage.html', context)

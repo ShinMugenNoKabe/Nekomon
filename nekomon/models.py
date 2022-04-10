@@ -37,6 +37,8 @@ class Post(CommonInfo):
         on_delete=models.CASCADE,
     )
     content = models.CharField("Content", max_length=500)
+    #image = models.ImageField(upload_to='images/')
+    image = models.CharField(max_length=10)
 
     # Metadatos
     class Meta:
