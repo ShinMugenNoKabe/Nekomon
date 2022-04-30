@@ -197,12 +197,31 @@ a:hover {
 
 .post-content,
 #new-post-content {
-    display: block;
+    display: flex;
     word-wrap: break-word;
 }
 
-.post-image img {
+#image-preview-container {
+    position: relative;
+    display: none;
+    margin-top: 7px;
+}
+
+#select-image-icon {
+    cursor: pointer;
+}
+
+.post-image img, #image-preview {
     width: 100%;
+}
+
+#remove-image-button {
+    color: red;
+    position: absolute;
+    right: 5px;
+    top: 5px;
+    margin-top: 7px;
+    cursor: pointer;
 }
 
 #new-post-content {

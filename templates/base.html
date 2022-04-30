@@ -9,8 +9,6 @@
 
     <link href="{% static 'css/main.css' %}" rel="stylesheet" type='text/css'>
     <link href="{% static 'css/main2.css' %}" rel="stylesheet" type='text/css'>
-    <link href="{% static 'css/fontawesome.min.css' %}" rel="stylesheet" type='text/css'>
-
 
     <title>Iniciar sesión - Nekomon</title>
 
@@ -20,7 +18,7 @@
 <body>
     {% include 'navbar.html' %} {% block content %} {% endblock %}
 
-    <script type="text/javascript" src="{% static 'js/fontawesome.min.js' %}"></script>
+    <script src="https://kit.fontawesome.com/44068b9eec.js" crossorigin="anonymous"></script>
     <script type="text/javascript" src="{% static 'js/edit-profile.js' %}"></script>
     <script type="text/javascript" src="{% static 'js/upload-post.js' %}"></script>
     <script type="text/javascript" src="{% static 'js/fetch-errors.js' %}"></script>

@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: alpha\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-04-30 20:22+0200\n"
+"POT-Creation-Date: 2022-04-30 21:09+0200\n"
 "PO-Revision-Date: 2022-04-30 18:46+0100\n"
 "Last-Translator: Rufino Serrano Cañas rufisercay@gmail.com\n"
 "Language: Spanish\n"
@@ -40,6 +40,14 @@ msgstr "Subir nuevo post"
 #: .\templates\post_box.html:31
 msgid "Submitting post..."
 msgstr "Subiendo post..."
+
+#: .\templates\post_box.html:37
+msgid "Remove the image"
+msgstr "Eliminar la imagen"
+
+#: .\templates\post_box.html:38
+msgid "Preview of the image"
+msgstr "Previsualización de la imagen"
 
 #: .\templates\profile_data.html:17 .\templates\user_profile.html:18
 msgid "Date joined"
@@ -214,7 +222,8 @@ msgstr "Usuario no encontrado."
 
 #: .\nekomon\forms.py:380
 msgid "An account registered by that e-mail was not found."
-msgstr "No se ha encontrado ninguna cuenta registrada con ese correo electrónico."
+msgstr ""
+"No se ha encontrado ninguna cuenta registrada con ese correo electrónico."
 
 #: .\nekomon\utils.py:46
 msgid "Image attached to the post"

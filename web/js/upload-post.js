@@ -1,8 +1,32 @@
 let post_box = $('#upload-post');
+let image = $(post_box).children("input[name='image']")[0];
+let imagePreviewContainer = $("#image-preview-container");
+
+$(image).change(function(e) {
+    let imagePreview = $("#image-preview");
+
+    // Create blob image
+    $(imagePreview).attr("src", URL.createObjectURL(e.target.files[0]));
+
+    // Show the preview
+    $(imagePreviewContainer).css("display", "block");
+});
+
+function removeImage() {
+    // Stop showing the preview
+    $(imagePreviewContainer).css("display", "none");
+
+    // Remove the image
+    $(image).val(null);
+}
+
+$("#remove-image-button").click(removeImage);
 
 post_box.submit(function (e) {
     let uploadButton = $("#new-post-button");
     let spinLoadIcon = $("#spin-load-icon");
+
+    $("#errors").html("");
 
     // Disable the upload button
     uploadButton.attr("disabled", true);
@@ -37,7 +61,7 @@ post_box.submit(function (e) {
         },
         complete: function() {
             // Remove the image once its uploaded
-            $(image).val(null);
+            removeImage();
 
             // Enable the upload button
             uploadButton.attr("disabled", false);
