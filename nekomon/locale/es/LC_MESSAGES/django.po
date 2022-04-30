@@ -3,8 +3,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: alpha\n"
-"Report-Msgid-Bugs-To: rufisercay@gmail.com\n"
-"POT-Creation-Date: 2022-04-30 18:48+0200\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2022-04-30 20:22+0200\n"
 "PO-Revision-Date: 2022-04-30 18:46+0100\n"
 "Last-Translator: Rufino Serrano Cañas rufisercay@gmail.com\n"
 "Language: Spanish\n"
@@ -13,143 +13,67 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: .\forms.py:36 .\forms.py:142
-msgid "Username"
-msgstr "Nombre de usuario"
-
-#: .\forms.py:47 .\forms.py:153 .\forms.py:391
-msgid "Password"
-msgstr "Contraseña"
-
-#: .\forms.py:74 .\forms.py:203
-msgid "The username field cannot be empty."
-msgstr "El campo de nombre de usuario no puede estar vacío."
-
-#: .\forms.py:77 .\forms.py:84 .\forms.py:206 .\forms.py:213 .\forms.py:433
-msgid "The username field characters has exceeded."
-msgstr ""
-"Se ha excedido la cantidad de carácteres en el campo de nombre de usuario."
-
-#: .\forms.py:81 .\forms.py:210 .\forms.py:430
-msgid "The password field cannot be empty."
-msgstr "El campo de contraseña no puede estar vacío."
-
-#: .\forms.py:95
-msgid ""
-"The introduced username was not found or does not match with the password."
-msgstr "La contraseña introducida no coincide con el nombre de usuario."
-
-#: .\forms.py:131 .\forms.py:326
-msgid "E-mail"
-msgstr ""
-
-#: .\forms.py:164 .\forms.py:402
-msgid "Repeat the password"
-msgstr "Repita la contraseña"
-
-#: .\forms.py:193 .\forms.py:353
-msgid "The e-mail field cannot be empty."
-msgstr "El campo de e-mail no puede estar vacío."
-
-#: .\forms.py:196 .\forms.py:356
-msgid "The e-mail field characters has exceeded."
-msgstr "Se ha excedido la cantidad de carácteres en el campo de e-mail."
-
-#: .\forms.py:199 .\forms.py:359
-msgid "The e-mail format is incorrect."
-msgstr "El formato del e-mail es incorrecto."
-
-#: .\forms.py:216 .\forms.py:436
-msgid "The introduced passwords do not match."
-msgstr "Las contraseñas introducidas no coinciden."
-
-#: .\forms.py:225
-msgid "An account with the introduced e-mail or username already exists."
-msgstr "Una cuenta con el e-mail introducido ya existe."
-
-#: .\forms.py:245
-msgid "New post"
-msgstr "Nuevo post"
-
-#: .\forms.py:266
-msgid "The content of the post cannot be empty."
-msgstr "El contenido del post no puede estar vacío."
-
-#: .\forms.py:268
-msgid "The content of the post characters has exceeded."
-msgstr "Se han excecido la cantidad de carácteres del post"
-
-#: .\forms.py:307 .\forms.py:309
-msgid "Cannot be empty."
-msgstr "El campo de e-mail no puede estar vacío."
-
-#: .\forms.py:316
-msgid "User not found."
-msgstr "Usuario no encontrado."
-
-#: .\forms.py:380
-msgid "An account registered by that e-mail was not found."
-msgstr ""
-"No se ha encontrado ninguna cuenta registrada con ese correo electrónico."
-
-#: .\utils.py:51
-msgid "The image is too big."
-msgstr "La imagen es demasiado grande."
-
-msgid "Home"
-msgstr "Inicio"
-
-msgid "Log-out"
-msgstr "Cerrar sesión"
-
-msgid "Log-in"
-msgstr "Iniciar sesión"
-
-msgid "Upload new post"
-msgstr "Subir nuevo post"
-
+#: .\templates\main_site.html:17
 msgid "Random post"
 msgstr "Post aleatorio"
 
+#: .\templates\navbar.html:6
+msgid "Home"
+msgstr "Inicio"
+
+#: .\templates\navbar.html:18
+msgid "Log-out"
+msgstr "Cerrar sesión"
+
+#: .\templates\navbar.html:24 .\templates\user_forms\user_login.html:12
+msgid "Log-in"
+msgstr "Iniciar sesión"
+
+#: .\templates\post_box.html:28
+msgid "Add an image to your post!"
+msgstr "¡Añade una imagen a tu post!"
+
+#: .\templates\post_box.html:29
+msgid "Upload new post"
+msgstr "Subir nuevo post"
+
+#: .\templates\post_box.html:31
+msgid "Submitting post..."
+msgstr "Subiendo post..."
+
+#: .\templates\profile_data.html:17 .\templates\user_profile.html:18
 msgid "Date joined"
 msgstr "Fecha de registro"
 
+#: .\templates\profile_data.html:20 .\templates\user_profile.html:21
 msgid "Last access"
 msgstr "Último acceso"
 
+#: .\templates\profile_data.html:25 .\templates\user_profile.html:28
 msgid "Edit profile"
 msgstr "Editar perfil"
 
-msgid "Enter"
-msgstr "Entrar"
-
-msgid "Don't have an account yet?"
-msgstr "¿No posee una cuenta?"
-
-msgid "Register"
-msgstr "Registrarse"
-
-msgid "Forgot your password?"
-msgstr "¿Olvidaste tu contraseña?"
-
-msgid "Reset password"
-msgstr "Restablecer"
-
-msgid "Password reset"
-msgstr "Restablecer contraseña"
-
-msgid "Go back to main"
-msgstr "Regresar"
-
+#: .\templates\user_forms\password_reset\reset_done.html:12
 msgid "Password reset completed"
 msgstr "Contraseña restablecida"
 
+#: .\templates\user_forms\password_reset\reset_done.html:15
 msgid "Your password has been reseted. You can log-in now."
 msgstr "Tu contraseña ha sido ha sido restablecida. Puedes iniciar sesión."
 
+#: .\templates\user_forms\password_reset\reset_done.html:21
+#: .\templates\user_forms\password_reset\reset_email_sent.html:22
+#: .\templates\user_forms\password_reset\reset_form.html:34
+#: .\templates\user_forms\password_reset\reset_new_password.html:35
+#: .\templates\user_forms\user_register.html:33
+msgid "Go back to main"
+msgstr "Regresar"
+
+#: .\templates\user_forms\password_reset\reset_email_sent.html:12
 msgid "E-mail sent succesfully"
 msgstr "E-mail enviado correctamente"
 
+#: .\templates\user_forms\password_reset\reset_email_sent.html:15
 msgid ""
 "We sent you an e-mail with all the instructions needed to reset your "
 "password."
@@ -157,21 +81,148 @@ msgstr ""
 "Te enviamos un e-mail con todas las instrucciones necesarias para "
 "restablecer tu contraseña."
 
+#: .\templates\user_forms\password_reset\reset_email_sent.html:16
 msgid ""
-"If you haven't recieved it yet, please check your e-mail and the junk "
-"mail folder."
+"If you haven't recieved it yet, please check your e-mail and the junk mail "
+"folder."
 msgstr ""
 "Si no la has recivido aún, por favor, compruebe su e-mail y la carpeta de "
 "correo no deseado."
 
-msgid "Unfollow"
-msgstr "Dejar de seguir"
+#: .\templates\user_forms\password_reset\reset_form.html:12
+#: .\templates\user_forms\password_reset\reset_new_password.html:13
+msgid "Password reset"
+msgstr "Restablecer contraseña"
 
-msgid "Follow"
-msgstr "Seguir"
+#: .\templates\user_forms\password_reset\reset_form.html:31
+#: .\templates\user_forms\password_reset\reset_new_password.html:32
+#: .\templates\user_forms\user_login.html:34
+msgid "Reset password"
+msgstr "Restablecer"
 
+#: .\templates\user_forms\password_reset\reset_form.html:33
+#: .\templates\user_forms\password_reset\reset_new_password.html:34
+#: .\templates\user_forms\user_login.html:33
+msgid "Don't have an account yet?"
+msgstr "¿No posee una cuenta?"
+
+#: .\templates\user_forms\password_reset\reset_form.html:33
+#: .\templates\user_forms\password_reset\reset_new_password.html:34
+#: .\templates\user_forms\user_login.html:33
+#: .\templates\user_forms\user_register.html:31
+msgid "Register"
+msgstr "Registrarse"
+
+#: .\templates\user_forms\user_login.html:31
+msgid "Enter"
+msgstr "Entrar"
+
+#: .\templates\user_forms\user_login.html:34
+msgid "Forgot your password?"
+msgstr "¿Olvidaste tu contraseña?"
+
+#: .\templates\user_forms\user_register.html:12
 msgid "New account"
 msgstr "Nueva cuenta"
 
-msgid "The introduced username was not found."
-msgstr "El nombre de usuario introducido no se ha encontrado."
+#: .\templates\user_profile.html:35 .\templates\user_profile.html:63
+msgid "Unfollow"
+msgstr "Dejar de seguir"
+
+#: .\templates\user_profile.html:37 .\templates\user_profile.html:66
+msgid "Follow"
+msgstr "Seguir"
+
+#: .\templates\user_profile.html:71
+msgid "Can\\"
+msgstr ""
+
+#: .\nekomon\forms.py:36 .\nekomon\forms.py:142
+msgid "Username"
+msgstr "Nombre de usuario"
+
+#: .\nekomon\forms.py:47 .\nekomon\forms.py:153 .\nekomon\forms.py:391
+msgid "Password"
+msgstr "Contraseña"
+
+#: .\nekomon\forms.py:74 .\nekomon\forms.py:203
+msgid "The username field cannot be empty."
+msgstr "El campo de nombre de usuario no puede estar vacío."
+
+#: .\nekomon\forms.py:77 .\nekomon\forms.py:84 .\nekomon\forms.py:206
+#: .\nekomon\forms.py:213 .\nekomon\forms.py:433
+msgid "The username field characters has exceeded."
+msgstr ""
+"Se ha excedido la cantidad de carácteres en el campo de nombre de usuario."
+
+#: .\nekomon\forms.py:81 .\nekomon\forms.py:210 .\nekomon\forms.py:430
+msgid "The password field cannot be empty."
+msgstr "El campo de contraseña no puede estar vacío."
+
+#: .\nekomon\forms.py:95
+msgid ""
+"The introduced username was not found or does not match with the password."
+msgstr "La contraseña introducida no coincide con el nombre de usuario."
+
+#: .\nekomon\forms.py:131 .\nekomon\forms.py:326
+msgid "E-mail"
+msgstr ""
+
+#: .\nekomon\forms.py:164 .\nekomon\forms.py:402
+msgid "Repeat the password"
+msgstr "Repita la contraseña"
+
+#: .\nekomon\forms.py:193 .\nekomon\forms.py:353
+msgid "The e-mail field cannot be empty."
+msgstr "El campo de e-mail no puede estar vacío."
+
+#: .\nekomon\forms.py:196 .\nekomon\forms.py:356
+msgid "The e-mail field characters has exceeded."
+msgstr "Se ha excedido la cantidad de carácteres en el campo de e-mail."
+
+#: .\nekomon\forms.py:199 .\nekomon\forms.py:359
+msgid "The e-mail format is incorrect."
+msgstr "El formato del e-mail es incorrecto."
+
+#: .\nekomon\forms.py:216 .\nekomon\forms.py:436
+msgid "The introduced passwords do not match."
+msgstr "Las contraseñas introducidas no coinciden."
+
+#: .\nekomon\forms.py:225
+msgid "An account with the introduced e-mail or username already exists."
+msgstr "Una cuenta con el e-mail introducido ya existe."
+
+#: .\nekomon\forms.py:245
+msgid "New post"
+msgstr "Nuevo post"
+
+#: .\nekomon\forms.py:266
+msgid "The content of the post cannot be empty."
+msgstr "El contenido del post no puede estar vacío."
+
+#: .\nekomon\forms.py:268
+msgid "The content of the post characters has exceeded."
+msgstr "Se han excecido la cantidad de carácteres del post"
+
+#: .\nekomon\forms.py:307 .\nekomon\forms.py:309
+msgid "Cannot be empty."
+msgstr "El campo de e-mail no puede estar vacío."
+
+#: .\nekomon\forms.py:316
+msgid "User not found."
+msgstr "Usuario no encontrado."
+
+#: .\nekomon\forms.py:380
+msgid "An account registered by that e-mail was not found."
+msgstr "No se ha encontrado ninguna cuenta registrada con ese correo electrónico."
+
+#: .\nekomon\utils.py:46
+msgid "Image attached to the post"
+msgstr "Imagen adjunta al post"
+
+#: .\nekomon\utils.py:112
+msgid "The image is too big."
+msgstr "La imagen es demasiado grande."
+
+#~ msgid "The introduced username was not found."
+#~ msgstr "El nombre de usuario introducido no se ha encontrado."

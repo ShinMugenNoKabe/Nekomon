@@ -25,7 +25,7 @@
         {% for field in post_box %}
             {{ field }}
         {% endfor %}
-        <i class="fas fa-solid fa-images" id="select-image-icon" title="{% trans 'Add an image to your post!'}"></i>
+        <i class="fas fa-solid fa-images" id="select-image-icon" title="{% blocktranslate %}Add an image to your post!{% endblocktranslate %}"></i>
         <button id="new-post-button" form="upload-post">{% trans "Upload new post" %}</button>
         <img src="{% static 'images/loading.gif' %}"
              alt="{% trans 'Submitting post...' %}"
