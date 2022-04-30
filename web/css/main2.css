@@ -159,6 +159,11 @@ a:hover {
     background-color: rgb(11, 52, 102);
 }
 
+#new-post-button:disabled {
+    cursor: default;
+    background-color: rgb(11, 52, 102);
+}
+
 .post {
     color: white;
     background-color: rgb(42, 42, 42);
@@ -352,6 +357,11 @@ textarea {
 
 #edit-profile-biografy textarea {
     width: 60%;
+}
+
+#spin-load-icon {
+    width: 20px;
+    height: 20px;
 }
 
 @media only screen and (max-width: 500px) {

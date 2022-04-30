@@ -16,7 +16,6 @@
             <p>
                 <a href="/{{ request.user.username }}">{{ request.user.name }}</a>
             </p>
-            </a>
 
          </div>
     </div>
@@ -26,8 +25,12 @@
         {% for field in post_box %}
             {{ field }}
         {% endfor %}
-        <i class="fas fa-solid fa-images" id="select-image-icon"></i>
+        <i class="fas fa-solid fa-images" id="select-image-icon" title="{% trans 'Add an image to your post!'}"></i>
         <button id="new-post-button" form="upload-post">{% trans "Upload new post" %}</button>
+        <img src="{% static 'images/loading.gif' %}"
+             alt="{% trans 'Submitting post...' %}"
+             id="spin-load-icon"
+             hidden="hidden">
         <div id="char-count"></div><br>
         <div id="errors"></div>
     </form>

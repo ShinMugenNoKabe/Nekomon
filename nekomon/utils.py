@@ -98,6 +98,8 @@ def upload_image_to_imgur(request):
 
     json_response = json.loads(response.content.decode("utf-8"))
 
+    print(json_response)
+
     data_response = json_response.get("data")
     is_success = json_response.get("success")
 

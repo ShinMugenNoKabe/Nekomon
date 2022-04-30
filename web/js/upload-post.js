@@ -1,6 +1,15 @@
 let post_box = $('#upload-post');
 
 post_box.submit(function (e) {
+    let uploadButton = $("#new-post-button");
+    let spinLoadIcon = $("#spin-load-icon");
+
+    // Disable the upload button
+    uploadButton.attr("disabled", true);
+
+    // Show the loading icon
+    spinLoadIcon.attr("hidden", false);
+
     let formData = new FormData();
 
     let content = $(post_box).children("textarea[name='content']").val();
@@ -19,13 +28,22 @@ post_box.submit(function (e) {
         processData: false,
         contentType: false,
         success: function(data) {
-        console.log(data.post)
             $('#id_content').val("");
             $("#char-count").html("");
             $("#posts").html(data.post + $("#posts").html());
         },
         error: function(data) {
             $("#errors").html("<div class='flash-message'>" + data.responseJSON.error + "</div>");
+        },
+        complete: function() {
+            // Remove the image once its uploaded
+            $(image).val(null);
+
+            // Enable the upload button
+            uploadButton.attr("disabled", false);
+
+            // Stop showing the loading icon
+            spinLoadIcon.attr("hidden", true);
         }
     });
     return false;
