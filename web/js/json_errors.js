@@ -1,9 +1,10 @@
 function jsonErrors(data) {
-    errors = JSON.parse(data.responseJSON.errors);
+    errors = data.responseJSON.error[0];
+
     let error_list = "<ul class='errorlist'>";
 
-    for (error in errors['__all__']) {
-        let error_message = errors['__all__'][error]['message'];
+    for (error in errors) {
+        let error_message = errors[error];
         error_list = (error_list + "<li>" + error_message + "</li>");
     }
 

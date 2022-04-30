@@ -3,7 +3,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: alpha\n"
-"Report-Msgid-Bugs-To: \n"
+"Report-Msgid-Bugs-To: rufisercay@gmail.com\n"
 "POT-Creation-Date: 2022-04-30 18:48+0200\n"
 "PO-Revision-Date: 2022-04-30 18:46+0100\n"
 "Last-Translator: Rufino Serrano Cañas rufisercay@gmail.com\n"
