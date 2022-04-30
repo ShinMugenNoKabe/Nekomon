@@ -2,14 +2,13 @@ let post_box = $('#upload-post');
 
 post_box.submit(function (e) {
     let formData = new FormData();
-    let csrftoken = $(post_box).children("input[name='csrfmiddlewaretoken']").val();
-    let image = $(post_box).children("input[name='image']")[0];
-    //console.log(image)
     let content = $(post_box).children("textarea[name='content']").val();
-    //let content = "test"
+    let image = $(post_box).children("input[name='image']")[0];
+    let csrftoken = $(post_box).children("input[name='csrfmiddlewaretoken']").val();
+
+    formData.append("content", content);
     formData.append("image", image.files[0]);
     formData.append("csrfmiddlewaretoken", csrftoken);
-    formData.append("content", content);
 
     $.ajax({
         type: "post",
@@ -24,6 +23,8 @@ post_box.submit(function (e) {
             $("#char-count").html("");
         },
         error: function(data) {
+            //data = JSON.des
+            console.log(data)
             $("#errors").html("<div class='flash-message'>" + data.responseJSON.error + "</div>");
         }
     });

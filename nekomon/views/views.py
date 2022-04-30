@@ -20,10 +20,11 @@ from django.urls import reverse, reverse_lazy
 from django.views.decorators.csrf import csrf_exempt
 from django.views.generic import RedirectView, CreateView
 
+from nekomon.exceptions import UploadImageToImgurException
 from nekomon.forms import LogInForm, RegisterForm, PostForm, FollowUnfollowForm
 # from nekomon.models import User
 from nekomon.models import User, Post, Follow
-from nekomon.utils import get_ip_address, upload_image_to_imgur
+from nekomon.utils import get_ip_address, upload_image_to_imgur, return_errors
 
 
 @login_required
@@ -116,58 +117,49 @@ def log_in_ajax(request):
     if request.method == "POST":
         form = LogInForm(request.POST or None)
 
-        if form.is_valid():
-            username = form.cleaned_data['username']
-            password = form.cleaned_data['password']
-            user = authenticate(
-                username=username,
-                password=password,
-            )
-            if user is not None:
-                login(request, user)
-                return go_to_main_view(request)
-                # return HttpResponseRedirect(reverse_lazy('main_view'))
-                # return render(request, "calender.html")
-            else:
-                print("test")
-        else:
-            response = JsonResponse({"errors": form.errors.as_json()})
-            response.status_code = 403  # To announce that the user isn't allowed to publish
+        if not form.is_valid():
+            return return_errors(form.errors)
 
-            # response.status_code = 403  # To announce that the user isn't allowed to publish
-            return response
+        username = form.cleaned_data['username']
+        password = form.cleaned_data['password']
+        user = authenticate(
+            username=username,
+            password=password,
+        )
+        if user is not None:
+            login(request, user)
+            return go_to_main_view(request)
+            # return HttpResponseRedirect(reverse_lazy('main_view'))
+            # return render(request, "calender.html")
+        else:
+            print("test")
 
 
 def register_ajax(request):
     if request.method == "POST":
         form = RegisterForm(request.POST or None)
 
-        if form.is_valid():
-            username = form.cleaned_data['username']
-            password = form.cleaned_data['password']
+        if not form.is_valid():
+            return return_errors(form.errors)
 
-            user = authenticate(
-                username=username,
-                password=password,
-            )
+        username = form.cleaned_data['username']
+        password = form.cleaned_data['password']
 
-            if user is not None:
-                user.registration_ip = get_ip_address(request)
-                user.save()
+        user = authenticate(
+            username=username,
+            password=password,
+        )
 
-                login(request, user)
-                return go_to_main_view(request)
-                # return HttpResponseRedirect(reverse_lazy('main_view'))
-                # return render(request, "calender.html")
-            else:
-                print("test")
+        if user is not None:
+            user.registration_ip = get_ip_address(request)
+            user.save()
 
+            login(request, user)
+            return go_to_main_view(request)
+            # return HttpResponseRedirect(reverse_lazy('main_view'))
+            # return render(request, "calender.html")
         else:
-            response = JsonResponse({"errors": form.errors.as_json()})
-            response.status_code = 403  # To announce that the user isn't allowed to publish
-
-            # response.status_code = 403  # To announce that the user isn't allowed to publish
-            return response
+            print("test")
 
 
 def logout_view(request):
@@ -179,77 +171,64 @@ def new_post_ajax(request):
     if request.method == "POST":
         form = PostForm(request.POST)
 
-        if form.is_valid():
-            content = form.cleaned_data['content']
+        if not form.is_valid():
+            return return_errors(form.errors)
 
-            image = ""
+        content = form.cleaned_data['content']
 
-            if request.FILES:
+        image = ""
+
+        if request.FILES:
+            try:
                 image = upload_image_to_imgur(request)
+            except UploadImageToImgurException as ex:
+                return return_errors(str(ex))
 
-            post = Post.objects.create(
-                content=content,
-                user_id=request.user.id,
-                image=image
-            )
+        post = Post.objects.create(
+            content=content,
+            user_id=request.user.id,
+            image=image
+        )
 
-            # Post.save()
+        # Post.save()
 
-            response = JsonResponse("test", safe=False)
-            response.status_code = 200
-            return response
-        else:
-            list_errors = []
-            for errors, error in form.errors.items():
-                list_errors.append(error)
-
-            response = JsonResponse({"error": list_errors})
-            response.status_code = 403  # To announce that the user isn't allowed to publish
-
-            # response.status_code = 403  # To announce that the user isn't allowed to publish
-            return response
+        response = JsonResponse("test", safe=False)
+        response.status_code = 200
+        return response
 
 
 def follow_unfollow_ajax(request):
     if request.method == "POST":
         form = FollowUnfollowForm(request.POST or None)
 
-        if form.is_valid():
-            user_id = form.cleaned_data['user_id']
-            is_following = form.cleaned_data['is_following']
+        if not form.is_valid():
+            return return_errors(form.errors)
 
-            if not str(user_id) == str(request.user.id):
-                if is_following:
-                    follow = Follow.objects.get(
-                        user_followed_id=user_id,
-                        user_follower_id=request.user.id,
-                    )
+        user_id = form.cleaned_data['user_id']
+        is_following = form.cleaned_data['is_following']
 
-                    follow.delete()
+        if not str(user_id) == str(request.user.id):
+            if is_following:
+                follow = Follow.objects.get(
+                    user_followed_id=user_id,
+                    user_follower_id=request.user.id,
+                )
 
-                    response = JsonResponse("False", safe=False)
-                else:
-                    follow = Follow(
-                        user_followed_id=user_id,
-                        user_follower_id=request.user.id,
-                    )
+                follow.delete()
 
-                    follow.save()
+                response = JsonResponse("False", safe=False)
+            else:
+                follow = Follow(
+                    user_followed_id=user_id,
+                    user_follower_id=request.user.id,
+                )
 
-                    response = JsonResponse("True", safe=False)
-                # Post.save()
+                follow.save()
 
-                response.status_code = 200
-                return response
-        else:
-            list_errors = []
-            for errors, error in form.errors.items():
-                list_errors.append(error)
+                response = JsonResponse("True", safe=False)
+            # Post.save()
 
-            response = JsonResponse({"error": list_errors})
-            response.status_code = 403  # To announce that the user isn't allowed to publish
-
-            # response.status_code = 403  # To announce that the user isn't allowed to publish
+            response.status_code = 200
             return response
 
 
@@ -345,10 +324,3 @@ def list_posts_profile_ajax(request, pk):
         #
         #     # response.status_code = 403  # To announce that the user isn't allowed to publish
         #     return response
-
-
-def testimage(request):
-    context = {
-    }
-
-    return render(request, 'testimage.html', context)

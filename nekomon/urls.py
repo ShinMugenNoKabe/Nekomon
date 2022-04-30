@@ -21,7 +21,7 @@ from nekomon.views.api_views import api_get_username
 from nekomon.views.views import go_to_main_view, log_in_ajax, register_ajax, logout_view, user_profile_view, \
     new_post_ajax, \
     list_posts_main_ajax, \
-    list_posts_profile_ajax, post_view, log_in_view, register_view, follow_unfollow_ajax, testimage
+    list_posts_profile_ajax, post_view, log_in_view, register_view, follow_unfollow_ajax
 from django.contrib.auth import views as auth_views
 
 urlpatterns = [
@@ -78,6 +78,4 @@ urlpatterns = [
 
     # NekoBot API
     path('api/user/<str:username>', api_get_username, name='api_get_username'),
-
-    path('testimage', testimage, name='testimage'),
 ]

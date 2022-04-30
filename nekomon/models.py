@@ -2,7 +2,6 @@ from django.contrib.auth.models import AbstractUser
 from django.db import models
 
 from nekomon import settings
-from nekomon.utils import image_upload_location
 from core.models import CommonInfo
 from django.utils.timezone import now
 
