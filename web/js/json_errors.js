@@ -12,4 +12,3 @@ function jsonErrors(data) {
 
     $("#errors").html(error_list);
 }
-

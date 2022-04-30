@@ -14,6 +14,65 @@ from nekomon.exceptions import UploadImageToImgurException
 from django.utils.translation import gettext_lazy as _
 
 
+def build_post_in_html(post):
+    post_html = "<div class='post'>"
+
+    # Header
+    post_html +=    "<div class='post-header'>"
+    post_html +=        "<div>"
+    post_html +=            "<img class='post-pfp' src='/web/images/profile_pictures/" + post.user.profile_picture + "'/>"
+    post_html +=        "</div>"
+    post_html +=        "<div class='post-username-date'>"
+    post_html +=            "<a href='/" + post.user.username + "'>"
+    post_html +=                "<p>" + post.user.name + "</p>"
+    post_html +=                "<p>@" + post.user.username + "</p>"
+    post_html +=            "</a>"
+    post_html +=            "<p>"
+    post_html +=                "<a href='/posts/" + str(post.id) + "'>"
+    post_html +=                    post.created_at.strftime("%d/%m/%Y %H:%M:%S")
+    post_html +=                "</a>"
+    post_html +=            "</p>"
+    post_html +=        "</div>"
+    post_html +=    "</div>"
+
+    # Content
+    post_html +=    "<hr>"
+    post_html +=    "<div class='post-content'>" + post.content + "</div>"
+    post_html +=    "<hr>"
+
+    if post.image != "":
+        post_html +=        "<div class='post-image'>"
+        post_html +=            "<img src='https://i.imgur.com/" + post.image + ".png' alt='" +\
+                                    _("Image attached to the post") + "'>"
+        post_html +=        "</div>"
+        post_html +=        "<hr>"
+
+    post_html +=    "<i class='fas fa-heart'></i>"
+
+    post_html += "</div>"
+
+    return post_html
+
+
+def build_multiple_posts_in_html(posts):
+    posts_html = ""
+
+    for post in posts:
+        posts_html += build_post_in_html(post)
+
+    return posts_html
+
+
+def get_ip_address(request):
+    x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')
+
+    if x_forwarded_for:
+        ip = x_forwarded_for.split(',')[0]
+    else:
+        ip = request.META.get('REMOTE_ADDR')
+    return ip
+
+
 def upload_image_to_imgur(request):
     client_id = '2f491d6a2d5cc9d'
 
@@ -49,16 +108,6 @@ def upload_image_to_imgur(request):
 
         if error == "File is over the size limit":
             raise UploadImageToImgurException(_("The image is too big."))
-
-
-def get_ip_address(request):
-    x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')
-
-    if x_forwarded_for:
-        ip = x_forwarded_for.split(',')[0]
-    else:
-        ip = request.META.get('REMOTE_ADDR')
-    return ip
 
 
 def return_errors(object_error):

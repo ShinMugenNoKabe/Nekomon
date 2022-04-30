@@ -44,12 +44,10 @@
 
     {% if profile == request.user %} {% include 'post_box.html' %} {% endif %}
 
-    <div id="posts" class="animated animatedFadeInUp fadeInUp"></div>
+    <div id="posts">
+        {{ posts | safe}}
+    </div>
 </main>
-<script type="text/javascript" src="{% static 'js/list-posts.js' %}"></script>
-<script type="text/javascript">
-    fetchPosts("ajax/list-posts-profile/{{ profile.pk }}");
-</script>
 <script type="text/javascript">
     let follow_unfollow_form = $('#follow-unfollow');
     let follow_unfollow_button = $('#follow-unfollow-button');

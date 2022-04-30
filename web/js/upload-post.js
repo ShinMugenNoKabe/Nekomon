@@ -2,6 +2,7 @@ let post_box = $('#upload-post');
 
 post_box.submit(function (e) {
     let formData = new FormData();
+
     let content = $(post_box).children("textarea[name='content']").val();
     let image = $(post_box).children("input[name='image']")[0];
     let csrftoken = $(post_box).children("input[name='csrfmiddlewaretoken']").val();
@@ -18,13 +19,12 @@ post_box.submit(function (e) {
         processData: false,
         contentType: false,
         success: function(data) {
-            fetchPosts("ajax/list-posts-main/");
+        console.log(data.post)
             $('#id_content').val("");
             $("#char-count").html("");
+            $("#posts").html(data.post + $("#posts").html());
         },
         error: function(data) {
-            //data = JSON.des
-            console.log(data)
             $("#errors").html("<div class='flash-message'>" + data.responseJSON.error + "</div>");
         }
     });

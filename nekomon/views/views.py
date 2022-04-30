@@ -24,18 +24,27 @@ from nekomon.exceptions import UploadImageToImgurException
 from nekomon.forms import LogInForm, RegisterForm, PostForm, FollowUnfollowForm
 # from nekomon.models import User
 from nekomon.models import User, Post, Follow
-from nekomon.utils import get_ip_address, upload_image_to_imgur, return_errors
+from nekomon.utils import get_ip_address, upload_image_to_imgur, return_errors, build_multiple_posts_in_html, \
+    build_post_in_html
 
 
 @login_required
 def go_to_main_view(request):
+    posts = Post.objects.raw(
+        "SELECT distinct nekomon_post.* from nekomon_post, nekomon_follow where user_follower_id = "
+        + str(request.user.id) +
+        " and nekomon_post.user_id = user_followed_id or nekomon_post.user_id = " + str(request.user.id) +
+        " order by created_at desc"
+    )
+
     random_post = Post.objects.raw(
         "SELECT * FROM nekomon_post ORDER BY RAND() LIMIT 1"
-    )
+    )[0]
     
     context = {
-        'post_box': PostForm,
-        'random_post': random_post[0]
+        "posts": build_multiple_posts_in_html(posts),
+        "random_post": build_post_in_html(random_post),
+        "post_box": PostForm,
     }
 
     return render(request, 'main_site.html', context)
@@ -61,11 +70,17 @@ def user_profile_view(request, profile):
     except ObjectDoesNotExist:
         is_following = False
 
+    posts = Post.objects.raw(
+        "SELECT distinct nekomon_post.* from nekomon_post where user_id = " + str(profile.id) +
+        " order by created_at desc"
+    )
+
     context = {
         "profile": profile,
-        'post_box': PostForm,
-        'is_following': is_following,
-        'follow_unfollow_form': FollowUnfollowForm(
+        "posts": build_multiple_posts_in_html(posts),
+        "post_box": PostForm,
+        "is_following": is_following,
+        "follow_unfollow_form": FollowUnfollowForm(
             initial={
                 'user_id': profile.id,
                 'is_following': is_following,
@@ -81,6 +96,8 @@ def post_view(request, pk):
         post = Post.objects.get(
             id=pk
         )
+
+        post = build_post_in_html(post)
     except ObjectDoesNotExist:
         return go_to_main_view()
         
@@ -192,7 +209,7 @@ def new_post_ajax(request):
 
         # Post.save()
 
-        response = JsonResponse("test", safe=False)
+        response = JsonResponse({"post": build_post_in_html(post)})
         response.status_code = 200
         return response
 
@@ -230,97 +247,3 @@ def follow_unfollow_ajax(request):
 
             response.status_code = 200
             return response
-
-
-@csrf_exempt
-def list_posts_main_ajax(request):
-    if request.method == "POST":
-        posts = Post.objects.raw(
-            "SELECT distinct nekomon_post.* from nekomon_post, nekomon_follow where user_follower_id = "
-            + str(request.user.id) +
-            " and nekomon_post.user_id = user_followed_id or nekomon_post.user_id = " + str(request.user.id) +
-            " order by created_at desc"
-        )
-
-        posts_json = []
-
-        for post in posts:
-            user = User.objects.get(
-                id=post.user_id,
-            )
-
-            post_dict = {
-                'id': str(post.id),
-                'created_at': str(post.created_at),
-                'last_modified_at': str(post.created_at),
-                'content': post.content,
-                'image': post.image,
-                'user': {
-                    'username': user.username,
-                    'name': user.name,
-                    'profile_picture': user.profile_picture
-                }
-            }
-
-            posts_json.append(post_dict)
-
-        response = JsonResponse(posts_json, safe=False)
-        response.status_code = 200
-        return response
-    else:
-        pass
-
-
-@csrf_exempt
-def list_posts_profile_ajax(request, pk):
-    if request.method == "POST":
-        posts = Post.objects.raw(
-            "SELECT distinct nekomon_post.* from nekomon_post where user_id = " + str(pk) +
-            " order by created_at desc"
-        )
-
-        posts_json = []
-
-        for post in posts:
-            user = User.objects.get(
-                id=post.user_id,
-            )
-
-            post_dict = {
-                'id': str(post.id),
-                'created_at': str(post.created_at),
-                'last_modified_at': str(post.created_at),
-                'content': post.content,
-                'user': {
-                        'username': user.username,
-                        'name': user.name,
-                        'profile_picture': user.profile_picture
-                    }
-                }
-
-            posts_json.append(post_dict)
-
-        response = JsonResponse(posts_json, safe=False)
-        response.status_code = 200
-        return response
-    else:
-        pass
-        # list_errors = []
-        # for errors, error in posts.errors.items():
-        #     list_errors.append(error)
-        #
-        # response = JsonResponse({"error": list_errors})
-        # response.status_code = 403  # To announce that the user isn't allowed to publish
-        #
-        # # response.status_code = 403  # To announce that the user isn't allowed to publish
-        # return response
-        # else:
-        #     list_errors = []
-        #     for errors, error in form.errors.items():
-        #         list_errors.append(error)
-        #
-        #     response = JsonResponse({"error": list_errors})
-        #     response.status_code = 403  # To announce that the user isn't allowed to publish
-        #
-        #     # response.status_code = 403  # To announce that the user isn't allowed to publish
-        #     return response
