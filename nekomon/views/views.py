@@ -196,6 +196,8 @@ def new_post_ajax(request):
         image = ""
 
         if request.FILES:
+            #content = ""
+
             try:
                 image = upload_image_to_imgur(request)
             except UploadImageToImgurException as ex:
