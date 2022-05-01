@@ -4,44 +4,12 @@
 
 {% load static %}
 
+{% block title %}{{ user }} {% trans "at" context "Post title - Username at Nekomon.es" %} Nekomon.es{% endblock %}
+
 {% block content %}
 
-<div id="posts" class="animated animatedFadeInUp fadeInUp">
-    <div class="post">
-        <div class='post-header'>
-            <div>
-                <img class='post-pfp' src="/web/images/profile_pictures/{{ post.user.profile_picture }}">
-            </div>
-            <div class='post-username-date'>
-                <a href="/{{ post.user.username }}">
-                    <p>
-                        {{ post.user.name }}
-                    </p>
-                    <p>
-                        @{{ post.user.username }}
-                    </p>
-                </a>
-                <p>
-                    <a href="/posts/{{ post.id }}">
-                        {{ post.created_at|date:"d/m/Y G:i:s" }}
-                    </a>
-                </p>
-            </div>
-        </div>
-        <hr>
-        <div class='post-content'>
-            {{ post.content }}
-        </div>
-        <hr>
-
-        {% if post.image != "" %}
-            <div class="post-image">
-                <img src='https://i.imgur.com/{{ post.image }}.png' alt="Image attached to the post">
-            </div>
-            <hr>
-        {% endif %}
-        <i class="fas fa-heart"></i>
-    </div>
+<div id="posts">
+    {{ post | safe }}
 </div>
 
 {% endblock %}

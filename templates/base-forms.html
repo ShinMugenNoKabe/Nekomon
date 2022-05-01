@@ -1,13 +1,13 @@
 <!DOCTYPE html>
 {% load static %}
-<html lang="es-ES">
+<html>
 <head>
     <meta charset="utf-8">
     <link rel="icon" type="image/png" href="{% static 'images/neko.png' %}">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <link href="{% static 'css/main.css' %}" rel='stylesheet' type='text/css'>
-    <title>Iniciar sesión - Nekomon</title>
+    <title>{% block title %} {% endblock %}</title>
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
 </head>

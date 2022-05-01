@@ -97,11 +97,14 @@ def post_view(request, pk):
             id=pk
         )
 
+        name = post.user.name
+
         post = build_post_in_html(post)
     except ObjectDoesNotExist:
         return go_to_main_view()
         
     context = {
+        "name": name,
         "post": post,
     }
 

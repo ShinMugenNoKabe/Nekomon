@@ -1,4 +1,6 @@
-{% load i18n %} {% load static %} {% block content %}
+{% load i18n %} {% load static %}
+
+{% block content %}
 <div class="user-profile">
     <div class="profile-header">
         <img class='profile-pfp' src="{% static 'images/profile_pictures/' %}{{ request.user.profile_picture }}">

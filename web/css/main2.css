@@ -94,7 +94,7 @@ a:hover {
 .profile-header {
     position: relative;
     color: white;
-    background-image: url("/web/images/profile_pictures/flopadios.png");
+    background-image: url("/web/images/profile_header_images/nobg.png");
     background-size: cover;
     height: 15em;
     width: 95%;

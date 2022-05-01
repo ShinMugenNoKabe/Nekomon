@@ -1,4 +1,10 @@
-{% extends 'base.html' %} {% load i18n %} {% load static %} {% block content %}
+{% extends 'base.html' %} {% load i18n %} {% load static %}
+
+{% block title %}
+    {{ request.user.name }} - Nekomon.es
+{% endblock %}
+
+{% block content %}
 
 <main class="user-profile-container">
     <div class="profile-header">
@@ -31,12 +37,12 @@
             <form id="follow-unfollow" class="profile-button-container">
                 {% csrf_token %} {% for field in follow_unfollow_form %} {{ field }} {% endfor %}
                 <button form="follow-unfollow" class="profile-button" id="follow-unfollow-button">
-                        {% if is_following %}
-                            {% trans "Unfollow" %}
-                        {% else %}
-                            {% trans "Follow" %}
-                        {% endif %}
-                    </button>
+                    {% if is_following %}
+                    {% trans "Unfollow" %}
+                    {% else %}
+                    {% trans "Follow" %}
+                    {% endif %}
+                </button>
             </form>
             {% endif %}
         </div>
@@ -73,6 +79,7 @@
         });
         return false;
     });
+
 </script>
 
 {% endblock %}

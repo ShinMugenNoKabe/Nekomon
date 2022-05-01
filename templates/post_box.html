@@ -17,24 +17,27 @@
                 <a href="/{{ request.user.username }}">{{ request.user.name }}</a>
             </p>
 
-         </div>
+        </div>
     </div>
     <hr>
     <form id="upload-post">
         {% csrf_token %}
         {% for field in post_box %}
-            {{ field }}
+        {{ field }}
         {% endfor %}
-        <i class="fas fa-solid fa-images" id="select-image-icon" title="{% blocktranslate %}Add an image to your post!{% endblocktranslate %}"></i>
+        <i class="fas fa-solid fa-images" id="select-image-icon"
+           title="{% blocktranslate %}Add an image to your post!{% endblocktranslate %}"></i>
         <button id="new-post-button" form="upload-post">{% trans "Upload new post" %}</button>
         <img src="{% static 'images/loading.gif' %}"
              alt="{% trans 'Submitting post...' %}"
              id="spin-load-icon"
              hidden="hidden">
-        <div id="char-count"></div><br>
+        <div id="char-count"></div>
+        <br>
         <div id="errors"></div>
         <div id="image-preview-container">
-            <i class="fa-solid fa-xmark fa-xl" title="{% blocktranslate %}Remove the image{% endblocktranslate %}" id="remove-image-button"></i>
+            <i class="fa-solid fa-xmark fa-xl" title="{% blocktranslate %}Remove the image{% endblocktranslate %}"
+               id="remove-image-button"></i>
             <img id="image-preview" src="" alt="{% blocktranslate %}Preview of the image{% endblocktranslate %}">
         </div>
     </form>
