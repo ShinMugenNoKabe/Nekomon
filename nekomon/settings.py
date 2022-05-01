@@ -10,9 +10,13 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.0/ref/settings/
 """
 import os
+from datetime import datetime
 from pathlib import Path
+import pytz
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
+import tzlocal
+
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 
@@ -121,11 +125,11 @@ AUTH_USER_MODEL = 'nekomon.User'
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+#TIME_ZONE = tzlocal.get_localzone()
 
 USE_I18N = True
 
-USE_TZ = True
+USE_TZ = False
 
 
 # Static files (CSS, JavaScript, Images)

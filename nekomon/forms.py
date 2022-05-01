@@ -262,7 +262,7 @@ class PostForm(forms.Form):
         cleaned_data['content'] = strip_tags(cleaned_data.get('content'))
         content = cleaned_data.get('content')
 
-        image = cleaned_data.get('image')
+        image = cleaned_data
         print(image)
 
         if len(content) == 0:

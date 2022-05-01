@@ -55,6 +55,9 @@ post_box.submit(function (e) {
             $('#id_content').val("");
             $("#char-count").html("");
             $("#posts").html(data.post + $("#posts").html());
+
+            // Update timeago
+            $("time.timeago").timeago();
         },
         error: function(data) {
             $("#errors").html("<div class='flash-message'>" + data.responseJSON.error + "</div>");

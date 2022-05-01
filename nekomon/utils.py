@@ -1,6 +1,8 @@
 import base64
 import json
 import ast
+from datetime import datetime, timedelta
+
 import requests
 
 from base64 import b64encode
@@ -12,9 +14,12 @@ from django.template.backends import django
 from nekomon.exceptions import UploadImageToImgurException
 
 from django.utils.translation import gettext_lazy as _
+import timeago
 
 
 def build_post_in_html(post):
+    formatted_post_date = post.created_at.strftime("%Y-%m-%d %H:%M:%S")
+
     post_html = "<div class='post'>"
 
     # Header
@@ -29,7 +34,10 @@ def build_post_in_html(post):
     post_html +=            "</a>"
     post_html +=            "<p>"
     post_html +=                "<a href='/posts/" + str(post.id) + "'>"
-    post_html +=                    post.created_at.strftime("%d/%m/%Y %H:%M:%S")
+    #post_html +=                    post.created_at.strftime("%d/%m/%Y %H:%M:%S")
+    post_html +=                    "<time class='timeago' datetime='" + post.created_at.isoformat() + "'>"
+    post_html +=                        post.created_at.strftime("%d of %B, %Y at %I:%M:%S %p")
+    post_html +=                    "</time>"
     post_html +=                "</a>"
     post_html +=            "</p>"
     post_html +=        "</div>"
