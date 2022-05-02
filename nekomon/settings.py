@@ -17,6 +17,10 @@ import pytz
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 import tzlocal
 
+from dotenv import load_dotenv
+
+load_dotenv()
+
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 
@@ -24,7 +28,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-jyzw6annx-*22gn)v2dhm5(0t5=ny^xm-ozq^t%77jxwzezofb'
+SECRET_KEY = os.getenv("SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -184,8 +188,8 @@ CHANNEL_LAYERS = {
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_HOST_USER = 'nekomon.es@gmail.com'
-EMAIL_HOST_PASSWORD = 'sfhsuvfgkyudljta'
+EMAIL_HOST_USER = os.getenv("EMAIL_HOST_USER")
+EMAIL_HOST_PASSWORD = os.getenv("EMAIL_HOST_PASSWORD")
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
-DEFAULT_FROM_EMAIL = 'Nekomon.es <noreply@nekomon.es>'
+DEFAULT_FROM_EMAIL = os.getenv("DEFAULT_FROM_EMAIL")
