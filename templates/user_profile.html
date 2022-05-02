@@ -58,9 +58,9 @@
 <script type="text/javascript">
     const protocol = location.protocol === "http:" ? "ws://" : "wss://";
 
-    // Start WebSocket for the logged in user
+    // Start WebSocket for the requested profile
     const postSocket = new WebSocket(
-        protocol + window.location.host + '/ws/feed/{{ request.user.username }}/'
+        protocol + window.location.host + '/ws/feed/Godofredo/'
     );
 </script>
 
