@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: alpha\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-05-01 19:00+0200\n"
+"POT-Creation-Date: 2022-05-02 20:44+0200\n"
 "PO-Revision-Date: 2022-04-30 18:46+0100\n"
 "Last-Translator: Rufino Serrano Cañas rufisercay@gmail.com\n"
 "Language: Spanish\n"
@@ -12,6 +12,10 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: .\templates\base-forms.html:30 .\templates\main_site.html:27
+msgid "Check out our repository! "
+msgstr "¡Mira nuestro repositorio! "
 
 #: .\templates\main_site.html:3
 msgid "Feed"
@@ -149,15 +153,15 @@ msgstr "¿Olvidaste tu contraseña?"
 msgid "New account"
 msgstr "Nueva cuenta"
 
-#: .\templates\user_profile.html:41 .\templates\user_profile.html:69
+#: .\templates\user_profile.html:41 .\templates\user_profile.html:77
 msgid "Unfollow"
 msgstr "Dejar de seguir"
 
-#: .\templates\user_profile.html:43 .\templates\user_profile.html:72
+#: .\templates\user_profile.html:43 .\templates\user_profile.html:80
 msgid "Follow"
 msgstr "Seguir"
 
-#: .\templates\user_profile.html:77
+#: .\templates\user_profile.html:85
 msgid "Can\\"
 msgstr ""
 
@@ -165,7 +169,7 @@ msgstr ""
 msgid "Username"
 msgstr "Nombre de usuario"
 
-#: .\nekomon\forms.py:47 .\nekomon\forms.py:153 .\nekomon\forms.py:394
+#: .\nekomon\forms.py:47 .\nekomon\forms.py:153 .\nekomon\forms.py:391
 msgid "Password"
 msgstr "Contraseña"
 
@@ -174,12 +178,12 @@ msgid "The username field cannot be empty."
 msgstr "El campo de nombre de usuario no puede estar vacío."
 
 #: .\nekomon\forms.py:77 .\nekomon\forms.py:84 .\nekomon\forms.py:206
-#: .\nekomon\forms.py:213 .\nekomon\forms.py:436
+#: .\nekomon\forms.py:213 .\nekomon\forms.py:433
 msgid "The username field characters has exceeded."
 msgstr ""
 "Se ha excedido la cantidad de carácteres en el campo de nombre de usuario."
 
-#: .\nekomon\forms.py:81 .\nekomon\forms.py:210 .\nekomon\forms.py:433
+#: .\nekomon\forms.py:81 .\nekomon\forms.py:210 .\nekomon\forms.py:430
 msgid "The password field cannot be empty."
 msgstr "El campo de contraseña no puede estar vacío."
 
@@ -188,27 +192,27 @@ msgid ""
 "The introduced username was not found or does not match with the password."
 msgstr "La contraseña introducida no coincide con el nombre de usuario."
 
-#: .\nekomon\forms.py:131 .\nekomon\forms.py:329
+#: .\nekomon\forms.py:131 .\nekomon\forms.py:326
 msgid "E-mail"
 msgstr ""
 
-#: .\nekomon\forms.py:164 .\nekomon\forms.py:405
+#: .\nekomon\forms.py:164 .\nekomon\forms.py:402
 msgid "Repeat the password"
 msgstr "Repita la contraseña"
 
-#: .\nekomon\forms.py:193 .\nekomon\forms.py:356
+#: .\nekomon\forms.py:193 .\nekomon\forms.py:353
 msgid "The e-mail field cannot be empty."
 msgstr "El campo de e-mail no puede estar vacío."
 
-#: .\nekomon\forms.py:196 .\nekomon\forms.py:359
+#: .\nekomon\forms.py:196 .\nekomon\forms.py:356
 msgid "The e-mail field characters has exceeded."
 msgstr "Se ha excedido la cantidad de carácteres en el campo de e-mail."
 
-#: .\nekomon\forms.py:199 .\nekomon\forms.py:362
+#: .\nekomon\forms.py:199 .\nekomon\forms.py:359
 msgid "The e-mail format is incorrect."
 msgstr "El formato del e-mail es incorrecto."
 
-#: .\nekomon\forms.py:216 .\nekomon\forms.py:439
+#: .\nekomon\forms.py:216 .\nekomon\forms.py:436
 msgid "The introduced passwords do not match."
 msgstr "Las contraseñas introducidas no coinciden."
 
@@ -220,23 +224,23 @@ msgstr "Una cuenta con el e-mail introducido ya existe."
 msgid "New post"
 msgstr "Nuevo post"
 
-#: .\nekomon\forms.py:269
+#: .\nekomon\forms.py:266
 msgid "The content of the post cannot be empty."
 msgstr "El contenido del post no puede estar vacío."
 
-#: .\nekomon\forms.py:271
+#: .\nekomon\forms.py:268
 msgid "The content of the post characters has exceeded."
 msgstr "Se han excecido la cantidad de carácteres del post"
 
-#: .\nekomon\forms.py:310 .\nekomon\forms.py:312
+#: .\nekomon\forms.py:307 .\nekomon\forms.py:309
 msgid "Cannot be empty."
 msgstr "El campo de e-mail no puede estar vacío."
 
-#: .\nekomon\forms.py:319
+#: .\nekomon\forms.py:316
 msgid "User not found."
 msgstr "Usuario no encontrado."
 
-#: .\nekomon\forms.py:383
+#: .\nekomon\forms.py:380
 msgid "An account registered by that e-mail was not found."
 msgstr ""
 "No se ha encontrado ninguna cuenta registrada con ese correo electrónico."

@@ -300,6 +300,20 @@ textarea {
     padding: 0.5em;
 }
 
+.miscellaneous {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    height: 0;
+}
+
+.repository {
+    color: white;
+    margin: 15px 20px;
+    padding: 10px;
+    background-color: rgb(42, 42, 42);
+}
+
 /* Modal */
 .modal {
   display: none; /* Hidden by default */
