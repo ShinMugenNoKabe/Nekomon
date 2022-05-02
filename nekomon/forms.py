@@ -262,9 +262,6 @@ class PostForm(forms.Form):
         cleaned_data['content'] = strip_tags(cleaned_data.get('content'))
         content = cleaned_data.get('content')
 
-        image = cleaned_data
-        print(image)
-
         if len(content) == 0:
             self.add_error(None, ValidationError(_("The content of the post cannot be empty.")))
         elif len(content) > 140:

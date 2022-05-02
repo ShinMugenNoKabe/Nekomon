@@ -26,4 +26,11 @@
 
 </main>
 
+<script type="text/javascript">
+    // Start WebSocket for the logged in user
+    const postSocket = new WebSocket(
+        'ws://' + window.location.host + '/ws/feed/{{ request.user.username }}/'
+    );
+</script>
+
 {% endblock %}

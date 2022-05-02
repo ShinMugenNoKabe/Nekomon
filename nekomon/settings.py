@@ -50,6 +50,8 @@ INSTALLED_APPS = [
     'rest_framework',
     # 'widget_tweaks',
 
+    'channels',
+
     'nekomon',
 ]
 
@@ -168,6 +170,17 @@ LOCALE_PATHS = (
 CRISPY_CLASS_CONVERTERS = {'textinput': ""}
 
 LOGIN_URL = "/login/"
+
+# Channels
+ASGI_APPLICATION = 'nekomon.asgi.application'
+CHANNEL_LAYERS = {
+    'default': {
+        'BACKEND': 'channels_redis.core.RedisChannelLayer',
+        'CONFIG': {
+            "hosts": [('127.0.0.1', 6379)],
+        },
+    },
+}
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'

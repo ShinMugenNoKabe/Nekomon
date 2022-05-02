@@ -252,3 +252,13 @@ def follow_unfollow_ajax(request):
 
             response.status_code = 200
             return response
+
+
+def chat(request):
+    return render(request, 'chat.html')
+
+
+def room(request, room_name):
+    return render(request, 'chat/room.html', {
+        'room_name': room_name
+    })

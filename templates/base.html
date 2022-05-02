@@ -12,23 +12,25 @@
 
     <title>{% block title %}{% endblock %}</title>
 
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"
+            integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
 </head>
 
 <body>
-    {% include 'navbar.html' %} {% block content %} {% endblock %}
+{% include 'navbar.html' %} {% block content %} {% endblock %}
 
-    <script src="{% static 'js/jquery.timeago.js' %}"></script>
-    <script type="text/javascript">
+<script src="{% static 'js/jquery.timeago.js' %}"></script>
+<script type="text/javascript">
         // Start timeago
         $(document).ready(function() {
             $("time.timeago").timeago();
         });
-    </script>
-    <script src="https://kit.fontawesome.com/44068b9eec.js" crossorigin="anonymous"></script>
-    <script src="{% static 'js/edit-profile.js' %}"></script>
-    <script src="{% static 'js/upload-post.js' %}"></script>
-    <script src="{% static 'js/fetch-errors.js' %}"></script>
+
+</script>
+<script src="https://kit.fontawesome.com/44068b9eec.js" crossorigin="anonymous"></script>
+<script src="{% static 'js/edit-profile.js' %}"></script>
+<script src="{% static 'js/upload-post.js' %}"></script>
+<script src="{% static 'js/fetch-errors.js' %}"></script>
 </body>
 
 </html>

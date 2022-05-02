@@ -22,6 +22,20 @@ function removeImage() {
 
 $("#remove-image-button").click(removeImage);
 
+postSocket.onmessage = function(e) {
+    const data = JSON.parse(e.data);
+
+    // Update posts
+    $("#posts").html(data.new_post + $("#posts").html());
+
+    // Update timeago
+    $("time.timeago").timeago();
+};
+
+postSocket.onclose = function(e) {
+    console.error('Chat socket closed unexpectedly');
+};
+
 post_box.submit(function (e) {
     let uploadButton = $("#new-post-button");
     let spinLoadIcon = $("#spin-load-icon");
@@ -54,10 +68,16 @@ post_box.submit(function (e) {
         success: function(data) {
             $('#id_content').val("");
             $("#char-count").html("");
-            $("#posts").html(data.post + $("#posts").html());
+            //$("#posts").html(data.post + $("#posts").html());
 
-            // Update timeago
-            $("time.timeago").timeago();
+            // Send post to websocket
+            /*postSocket.send(
+                console.log(postSocket.readyState));*/
+            postSocket.send(JSON.stringify({
+                'post': data.post
+            }));
+            console.log(postSocket.readyState);
+
         },
         error: function(data) {
             $("#errors").html("<div class='flash-message'>" + data.responseJSON.error + "</div>");
@@ -103,6 +123,24 @@ $(document).ready(function() {
         }
     });
 });
+
+
+
+        /*document.querySelector('#chat-message-input').focus();
+        document.querySelector('#chat-message-input').onkeyup = function(e) {
+            if (e.keyCode === 13) {  // enter, return
+                document.querySelector('#chat-message-submit').click();
+            }
+        };*/
+
+        /*document.querySelector('#new-post-button').onclick = function(e) {
+            const messageInputDom = document.querySelector('#id_content');
+            const message = messageInputDom.value;
+            postSocket.send(JSON.stringify({
+                'message': message
+            }));
+            //document.querySelector("#posts").innerHTML = "";
+        };*/
 
 //$(document).ready(function() {
 //    $("#upload-post").submit(function(e) {
