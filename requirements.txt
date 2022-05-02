@@ -12,6 +12,6 @@ coverage==6.2
 bcrypt==3.2.0
 timeago==1.0.15
 channels==3.0.4
-consumer==0.6.1
 channels-redis==3.4.0
 python-dotenv==0.20.0
+tzlocal
