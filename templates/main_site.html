@@ -32,9 +32,11 @@
 </main>
 
 <script type="text/javascript">
+    const protocol = location.protocol === "http:" ? "ws://" : "wss://";
+
     // Start WebSocket for the logged in user
     const postSocket = new WebSocket(
-        'wss://' + window.location.host + '/ws/feed/{{ request.user.username }}/'
+        protocol + window.location.host + '/ws/feed/{{ request.user.username }}/'
     );
 </script>
 
