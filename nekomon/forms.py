@@ -237,6 +237,7 @@ class RegisterForm(forms.Form):
 
 
 class PostForm(forms.Form):
+
     content = forms.CharField(
         max_length=140,
         required=False,
@@ -260,9 +261,12 @@ class PostForm(forms.Form):
     def clean(self):
         cleaned_data = super().clean()
         cleaned_data['content'] = strip_tags(cleaned_data.get('content'))
-        content = cleaned_data.get('content')
 
-        if len(content) == 0:
+        content = cleaned_data.get('content')
+        image = cleaned_data.get('image')
+
+        # If an image is uploaded there is no need for content
+        if image is None and len(content) == 0:
             self.add_error(None, ValidationError(_("The content of the post cannot be empty.")))
         elif len(content) > 140:
             self.add_error(None, ValidationError(_("The content of the post characters has exceeded.")))

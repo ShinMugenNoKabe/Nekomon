@@ -34,7 +34,6 @@ def build_post_in_html(post):
     post_html +=            "</a>"
     post_html +=            "<p>"
     post_html +=                "<a href='/posts/" + str(post.id) + "'>"
-    #post_html +=                    post.created_at.strftime("%d/%m/%Y %H:%M:%S")
     post_html +=                    "<time class='timeago' datetime='" + post.created_at.isoformat() + "'>"
     post_html +=                        post.created_at.strftime("%d of %B, %Y at %I:%M:%S %p")
     post_html +=                    "</time>"
@@ -44,8 +43,10 @@ def build_post_in_html(post):
     post_html +=    "</div>"
 
     # Content
-    post_html +=    "<hr>"
-    post_html +=    "<div class='post-content'>" + post.content + "</div>"
+    if post.content != "":
+        post_html +=    "<hr>"
+        post_html +=    "<div class='post-content'>" + post.content + "</div>"
+
     post_html +=    "<hr>"
 
     if post.image != "":

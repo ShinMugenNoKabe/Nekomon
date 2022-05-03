@@ -189,7 +189,7 @@ def logout_view(request):
 
 def new_post_ajax(request):
     if request.method == "POST":
-        form = PostForm(request.POST)
+        form = PostForm(request.POST, request.FILES)
 
         if not form.is_valid():
             return return_errors(form.errors)
