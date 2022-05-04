@@ -1,6 +1,7 @@
 import base64
 import json
 import ast
+import os
 from datetime import datetime, timedelta
 
 import requests
@@ -15,6 +16,10 @@ from nekomon.exceptions import UploadImageToImgurException
 
 from django.utils.translation import gettext_lazy as _
 import timeago
+
+from dotenv import load_dotenv
+
+load_dotenv()
 
 
 def build_post_in_html(post):
@@ -83,11 +88,11 @@ def get_ip_address(request):
 
 
 def upload_image_to_imgur(request):
-    client_id = '2f491d6a2d5cc9d'
+    client_id = os.getenv("IMGUR_CLIENT_ID")
 
     headers = {"Authorization": "Client-ID " + client_id}
 
-    api_key = 'caebd7e369f6fdbd884b77232a7df5130d0836d1'
+    api_key = os.getenv("IMGUR_API_KEY")
 
     url = "https://api.imgur.com/3/upload.json"
 
