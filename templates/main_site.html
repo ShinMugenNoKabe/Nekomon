@@ -4,34 +4,13 @@
 
 {% block content %}
 
-<main class="main-site-container">
 
-    <div class="user-profile">
-        {% include 'profile_data.html' %}
+<div class="posts">
+    {% include 'post_box.html' %}
+    <div id="posts">
+        {{ posts | safe }}
     </div>
-
-    <div class="posts">
-        {% include 'post_box.html' %}
-        <div id="posts">
-            {{ posts | safe }}
-        </div>
-    </div>
-
-    <div class="miscellaneous">
-        <span class="post-random-text">{% trans "Random post" %}</span><br>
-        <div id="post-random">
-            {{ random_post | safe }}
-        </div>
-
-        {% comment %}
-        <div class="repository">
-            Copyright (c) Rufino Serrano. All rights reserved. {% trans "Check out our repository! " %}
-            <a href="https://github.com/ShinMugenNoKabe/nekomon" target="_blank">https://github.com/ShinMugenNoKabe/nekomon</a>
-        </div>
-        {% endcomment %}
-    </div>
-
-</main>
+</div>
 
 <script type="text/javascript">
     const protocol = location.protocol === "http:" ? "ws://" : "wss://";
@@ -40,6 +19,7 @@
     const postSocket = new WebSocket(
         protocol + window.location.host + '/ws/feed/{{ request.user.username }}/'
     );
+
 </script>
 
 {% endblock %}
