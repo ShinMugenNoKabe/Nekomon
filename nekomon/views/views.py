@@ -25,7 +25,7 @@ from nekomon.forms import LogInForm, RegisterForm, PostForm, FollowUnfollowForm
 # from nekomon.models import User
 from nekomon.models import User, Post, Follow
 from nekomon.utils import get_ip_address, upload_image_to_imgur, return_errors, build_multiple_posts_in_html, \
-    build_post_in_html
+    build_post_in_html, get_random_post
 
 
 @login_required
@@ -37,9 +37,7 @@ def go_to_main_view(request):
         " order by created_at desc"
     )
 
-    random_post = Post.objects.raw(
-        "SELECT * FROM nekomon_post ORDER BY RAND() LIMIT 1"
-    )[0]
+    random_post = get_random_post()
     
     context = {
         "posts": build_multiple_posts_in_html(posts),
@@ -75,6 +73,8 @@ def user_profile_view(request, profile):
         " order by created_at desc"
     )
 
+    random_post = get_random_post()
+
     context = {
         "profile": profile,
         "posts": build_multiple_posts_in_html(posts),
@@ -86,6 +86,7 @@ def user_profile_view(request, profile):
                 'is_following': is_following,
             },
         ),
+        "random_post": build_post_in_html(random_post),
     }
 
     return render(request, 'user_profile.html', context)
@@ -102,10 +103,13 @@ def post_view(request, pk):
         post = build_post_in_html(post)
     except ObjectDoesNotExist:
         return go_to_main_view()
+
+    random_post = get_random_post()
         
     context = {
         "name": name,
         "post": post,
+        "random_post": build_post_in_html(random_post),
     }
 
     return render(request, 'post_view.html', context)

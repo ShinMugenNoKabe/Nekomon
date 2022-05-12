@@ -1,4 +1,4 @@
-<!DOCTYPE html> {% load static %}
+<!DOCTYPE html> {% load static %} {% load i18n %}
 <html>
 
 <head>
@@ -17,7 +17,40 @@
 </head>
 
 <body>
-{% include 'navbar.html' %} {% block content %} {% endblock %}
+{% include 'navbar.html' %}
+
+<main class="main-site-container">
+
+    <div class="user-profile">
+        {% include 'profile_data.html' %}
+    </div>
+
+    {% block content %} {% endblock %}
+
+    {% comment %}
+    <div class="posts">
+        {% include 'post_box.html' %}
+        <div id="posts">
+            {{ posts | safe }}
+        </div>
+    </div>
+    {% endcomment %}
+
+    <div class="miscellaneous">
+        <span class="post-random-text">{% trans "Random post" %}</span><br>
+        <div id="post-random">
+            {{ random_post | safe }}
+        </div>
+
+        {% comment %}
+        <div class="repository">
+            Copyright (c) Rufino Serrano. All rights reserved. {% trans "Check out our repository! " %}
+            <a href="https://github.com/ShinMugenNoKabe/nekomon" target="_blank">https://github.com/ShinMugenNoKabe/nekomon</a>
+        </div>
+        {% endcomment %}
+    </div>
+
+</main>
 
 <script src="{% static 'js/jquery.timeago.js' %}"></script>
 <script type="text/javascript">

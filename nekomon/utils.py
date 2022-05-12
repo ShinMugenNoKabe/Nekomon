@@ -19,6 +19,8 @@ import timeago
 
 from dotenv import load_dotenv
 
+from nekomon.models import Post
+
 load_dotenv()
 
 
@@ -141,3 +143,9 @@ def return_errors(object_error):
     response.status_code = 403  # To announce that the user isn't allowed to publish
 
     return response
+
+
+def get_random_post():
+    return Post.objects.raw(
+        "SELECT * FROM nekomon_post ORDER BY RAND() LIMIT 1"
+    )[0]
