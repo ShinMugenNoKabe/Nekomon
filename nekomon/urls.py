@@ -19,7 +19,7 @@ from django.urls import path
 from nekomon.forms import CustomPasswordResetForm, CustomPasswordSetPasswordForm
 from nekomon.views.api_views import api_get_username
 from nekomon.views.views import go_to_main_view, log_in_ajax, register_ajax, logout_view, user_profile_view, \
-    new_post_ajax, log_in_view, register_view, post_view, follow_unfollow_ajax, chat, room
+    new_post_ajax, log_in_view, register_view, post_view, follow_unfollow_ajax, chat, room, update_profile
 from django.contrib.auth import views as auth_views
 
 urlpatterns = [
@@ -63,6 +63,9 @@ urlpatterns = [
     # Register
     path('register/', register_view, name='register_view'),
     path('ajax/new-account/', register_ajax, name='new_account_ajax'),
+
+    # Update profile
+    path('ajax/update-profile/', update_profile, name='update_profile'),
 
     # User profile
     path('<str:profile>', user_profile_view, name='user_profile_view'),

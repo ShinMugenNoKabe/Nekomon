@@ -2,17 +2,17 @@
 
 {% block content %}
 <div class="user-profile">
-    <div class="profile-header">
+    <div class="profile-header" id="profile-header">
         <img class='profile-pfp' src="{% static 'images/profile_pictures/' %}{{ request.user.profile_picture }}">
 
         <div id="profile-info">
-            <div>
+            <div id="user-name">
                 {{ request.user.name }}
             </div>
-            <div>
+            <div id="user-username">
                 @{{ request.user.username }}
             </div>
-            <div>
+            <div id="user-description">
                 {{ request.user.description }}
             </div>
             <div>
@@ -22,6 +22,8 @@
                 {% trans "Last access" %}: {{ request.user.last_login|date:"d/m/Y G:i:s" }}
             </div>
         </div>
+
+        {% csrf_token %}
 
         <div class="profile-button-container">
             <button id="edit-profile" class="profile-button">{% trans "Edit profile" %}</button>

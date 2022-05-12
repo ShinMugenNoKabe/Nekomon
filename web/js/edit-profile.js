@@ -1,14 +1,43 @@
-let modal = document.getElementById("profile-modal");
-let modal_button = document.getElementById("edit-profile");
+$(document).ready(function() {
+    const editProfileButton = $("#edit-profile");
 
-// Open modal on click
-modal_button.onclick = function() {
-  modal.style.display = "block";
-}
+    editProfileButton.click(function() {
+        const name = $("#user-name");
+        name.html("<input type='text'>");
 
-// Close modal when clicked everywhere else
-window.onclick = function(event) {
-  if (event.target == modal) {
-    modal.style.display = "none";
-  }
-}
+        const username = $("#user-username");
+        username.html("<input type='text'>");
+
+        const description = $("#user-description");
+        description.html("<input type='text'>");
+
+        const csrftoken = $("#profile-header").children('input[name="csrfmiddlewaretoken"]').val();
+
+        editProfileButton.text("Guardar");
+
+        editProfileButton.click(function() {
+            $.ajax({
+                type: "post",
+                url: "/ajax/update-profile/",
+                data: {
+                    "name": name.val(),
+                    "username": username.val(),
+                    "description": description.val(),
+                    "csrftoken": csrftoken
+                },
+                success: function(data) {
+                    /*if (data == "True") {
+                        follow_unfollow_button.html("Dejar de seguir");
+                        is_following_input.val(data);
+                    } else {
+                        follow_unfollow_button.html("Seguir");
+                        is_following_input.val(data);
+                    }*/
+                },
+                error: function(data) {
+                    console.log("An error has ocurred");
+                },
+            });
+        });
+    });
+});

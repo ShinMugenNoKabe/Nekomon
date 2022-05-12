@@ -258,6 +258,30 @@ def follow_unfollow_ajax(request):
             return response
 
 
+def update_profile(request):
+    if request.method == "POST":
+        form = RegisterForm(request.POST or None)
+
+        if not form.is_valid():
+            return return_errors(form.errors)
+
+        username = form.cleaned_data['username']
+        description = form.cleaned_data['description']
+
+        user = request.user
+
+        if user is not None:
+            user.description = description
+            user.update()
+
+            login(request, user)
+            return go_to_main_view(request)
+            # return HttpResponseRedirect(reverse_lazy('main_view'))
+            # return render(request, "calender.html")
+        else:
+            print("test")
+
+
 def chat(request):
     return render(request, 'chat.html')
 

@@ -21,20 +21,11 @@
 
 <main class="main-site-container">
 
-    <div class="user-profile">
+    <div class="info-search">
         {% include 'profile_data.html' %}
     </div>
 
     {% block content %} {% endblock %}
-
-    {% comment %}
-    <div class="posts">
-        {% include 'post_box.html' %}
-        <div id="posts">
-            {{ posts | safe }}
-        </div>
-    </div>
-    {% endcomment %}
 
     <div class="miscellaneous">
         <span class="post-random-text">{% trans "Random post" %}</span><br>
