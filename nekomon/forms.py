@@ -1,4 +1,5 @@
 import re
+import string
 
 from crispy_forms.bootstrap import InlineField, PrependedText
 from crispy_forms.helper import FormHelper
@@ -204,6 +205,9 @@ class RegisterForm(forms.Form):
             is_validated = False
         elif len(username) > 15:
             self.add_error(None, ValidationError(_("The username field characters has exceeded.")))
+            is_validated = False
+        elif username is not username.replace(" ", ""):
+            self.add_error(None, ValidationError(_("The username must not contain space characters.")))
             is_validated = False
 
         if len(password) == 0:
