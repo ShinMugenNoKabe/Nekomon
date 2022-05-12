@@ -10,13 +10,10 @@
             </a>
         </div>
         <div class='post-username-date'>
-            <p>
-                <a href="/{{ request.user.username }}">@{{ request.user.username }}</a>
-            </p>
-            <p>
-                <a href="/{{ request.user.username }}">{{ request.user.name }}</a>
-            </p>
-
+            <a data-username-link href='/{{ request.user.username }}'>
+                <p data-name> {{ request.user.name }}</p>
+                <p data-username>@{{ request.user.username }}</p>
+            </a>
         </div>
     </div>
     <hr>

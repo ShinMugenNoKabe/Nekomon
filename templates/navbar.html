@@ -7,10 +7,10 @@
 
     {% if request.user.is_authenticated %}
         <div id="nav-username-logout">
-            <a href="/{{ request.user.username }}" class="nav-username-and-pfp">
+            <a data-username-link href="/{{ request.user.username }}" class="nav-username-and-pfp">
                 <div class="nav-user-data">
-                    <span class="nav-username">{{ request.user.username }}</span>
-                    <img class='profile-picture-nav'src="{% static 'images/profile_pictures/' %}{{ request.user.profile_picture }}">
+                    <span data-username class="nav-username">{{ request.user.username }}</span>
+                    <img class='profile-picture-nav' src="{% static 'images/profile_pictures/' %}{{ request.user.profile_picture }}">
                 </div>
             </a>
 

@@ -240,6 +240,110 @@ class RegisterForm(forms.Form):
                 )
 
 
+class UpdateUserForm(forms.Form):
+    def __init__(self, *args, **kwargs):
+        self.request = kwargs.pop('request', None)
+        super(UpdateUserForm, self).__init__(*args, **kwargs)
+
+    name = forms.CharField(
+        max_length=25,
+        required=False,
+        widget=forms.TextInput(
+            attrs={
+                'class': "input-user-text",
+                'placeholder': _("Name"),
+            }
+        )
+    )
+
+    username = forms.CharField(
+        max_length=15,
+        required=False,
+        widget=forms.TextInput(
+            attrs={
+                'class': "input-user-text",
+                'placeholder': _("Username"),
+            }
+        )
+    )
+
+    description = forms.CharField(
+        max_length=140,
+        required=False,
+        widget=forms.Textarea(
+            attrs={
+                'class': "input-user-text",
+                'placeholder': _("Description"),
+            }
+        )
+    )
+
+    class Meta:
+        # model = User
+        exclude = [
+            'created_at',
+            'last_modified_at',
+            'password',
+            'last_login',
+            'description',
+            'email',
+            'registration_ip',
+            'date_joined',
+            'profile_header_image',
+        ]
+
+    # Validations
+    def clean(self):
+        cleaned_data = super().clean()
+
+        cleaned_data["username"] = strip_tags(cleaned_data.get('username'))
+        username = cleaned_data.get('username')
+
+        cleaned_data["name"] = strip_tags(cleaned_data.get('name'))
+        name = cleaned_data.get('name')
+
+        description = cleaned_data.get('description')
+
+        is_validated = True
+
+        # if len(username) == 0:
+        #     self.add_error(None, ValidationError(_("The username field cannot be empty.")))
+        #     is_validated = False
+        if len(username) > 15:
+            self.add_error(None, ValidationError(_("The username field characters has exceeded.")))
+            is_validated = False
+        elif username is not username.replace(" ", ""):
+            self.add_error(None, ValidationError(_("The username must not contain space characters.")))
+            is_validated = False
+
+        elif len(name) > 25:
+            self.add_error(None, ValidationError(_("The name field characters has exceeded.")))
+            is_validated = False
+
+        elif len(description) > 140:
+            self.add_error(None, ValidationError(_("The description field characters has exceeded.")))
+            is_validated = False
+
+        if is_validated:
+            try:
+                User.objects.get(
+                    username=username,
+                )
+
+                self.add_error(None, ValidationError(_("An account with the introduced username already exists.")))
+            except User.DoesNotExist as dne:
+                pass
+                # self.save()
+
+                # user = self.request.user
+                #
+                # User.objects.update(
+                #     username=username,
+                #     name=name,
+                #     description=description,
+                # )
+
+
 class PostForm(forms.Form):
 
     content = forms.CharField(

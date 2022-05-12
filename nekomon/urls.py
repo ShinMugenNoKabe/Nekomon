@@ -19,7 +19,7 @@ from django.urls import path
 from nekomon.forms import CustomPasswordResetForm, CustomPasswordSetPasswordForm
 from nekomon.views.api_views import api_get_username
 from nekomon.views.views import go_to_main_view, log_in_ajax, register_ajax, logout_view, user_profile_view, \
-    new_post_ajax, log_in_view, register_view, post_view, follow_unfollow_ajax, chat, room, update_profile
+    new_post_ajax, log_in_view, register_view, post_view, follow_unfollow_ajax, chat, room, update_profile, search_users
 from django.contrib.auth import views as auth_views
 
 urlpatterns = [
@@ -76,6 +76,9 @@ urlpatterns = [
     
     # Follows / unfollows
     path('ajax/follow-unfollow/', follow_unfollow_ajax, name='follow_unfollow_ajax'),
+
+    # User search
+    path('ajax/search-users/', search_users, name='search_users'),
 
     # NekoBot API
     path('api/user/<str:username>', api_get_username, name='api_get_username'),

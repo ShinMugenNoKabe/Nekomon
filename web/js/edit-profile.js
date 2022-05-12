@@ -1,43 +1,41 @@
 $(document).ready(function() {
     const editProfileButton = $("#edit-profile");
+    const editProfileButtonSave = $("#edit-profile-save");
 
     editProfileButton.click(function() {
-        const name = $("#user-name");
-        name.html("<input type='text'>");
+        $("#profile-save-button-container").attr("hidden", false);
+        $(editProfileButton).attr("hidden", true);
+        $("#update-form-fields").attr("hidden", false);
+        $("#profile-info-data").attr("hidden", true);
+    });
 
-        const username = $("#user-username");
-        username.html("<input type='text'>");
-
-        const description = $("#user-description");
-        description.html("<input type='text'>");
-
-        const csrftoken = $("#profile-header").children('input[name="csrfmiddlewaretoken"]').val();
-
-        editProfileButton.text("Guardar");
-
-        editProfileButton.click(function() {
-            $.ajax({
+    editProfileButtonSave.click(function() {
+        $.ajax({
                 type: "post",
                 url: "/ajax/update-profile/",
-                data: {
-                    "name": name.val(),
-                    "username": username.val(),
-                    "description": description.val(),
-                    "csrftoken": csrftoken
-                },
+                data: $("#update-form").serialize(),
                 success: function(data) {
-                    /*if (data == "True") {
-                        follow_unfollow_button.html("Dejar de seguir");
-                        is_following_input.val(data);
-                    } else {
-                        follow_unfollow_button.html("Seguir");
-                        is_following_input.val(data);
-                    }*/
+                    // Update user data in the website
+                    Array.from($('[data-username]')).forEach(element => {
+                        $(element).text("@" + data.username);
+                    });
+
+                    Array.from($('[data-name]')).forEach(element => {
+                        $(element).text(data.name);
+                    });
+
+                    Array.from($('[data-username-link]')).forEach(element => {
+                        $(element).attr("href", "/" + data.username);
+                    });
+
+                    $("#profile-save-button-container").attr("hidden", true);
+                    $(editProfileButton).attr("hidden", false);
+                    $("#update-form-fields").attr("hidden", true);
+                    $("#profile-info-data").attr("hidden", false);
                 },
                 error: function(data) {
-                    console.log("An error has ocurred");
+                    $("#errors-update").html("<div class='flash-message'>" + data.responseJSON.error + "</div>");
                 },
             });
-        });
     });
 });

@@ -2,7 +2,7 @@ import pdb
 
 import bcrypt
 from crispy_forms.utils import render_crispy_form
-from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth import authenticate, login, logout, update_session_auth_hash
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core import serializers
@@ -21,7 +21,7 @@ from django.views.decorators.csrf import csrf_exempt
 from django.views.generic import RedirectView, CreateView
 
 from nekomon.exceptions import UploadImageToImgurException
-from nekomon.forms import LogInForm, RegisterForm, PostForm, FollowUnfollowForm
+from nekomon.forms import LogInForm, RegisterForm, PostForm, FollowUnfollowForm, UpdateUserForm
 # from nekomon.models import User
 from nekomon.models import User, Post, Follow
 from nekomon.utils import get_ip_address, upload_image_to_imgur, return_errors, build_multiple_posts_in_html, \
@@ -43,6 +43,7 @@ def go_to_main_view(request):
         "posts": build_multiple_posts_in_html(posts),
         "random_post": build_post_in_html(random_post),
         "post_box": PostForm,
+        "update_form": UpdateUserForm,
     }
 
     return render(request, 'main_site.html', context)
@@ -260,25 +261,70 @@ def follow_unfollow_ajax(request):
 
 def update_profile(request):
     if request.method == "POST":
-        form = RegisterForm(request.POST or None)
+        print('post' + str(request.POST))
+        form = UpdateUserForm(request.POST or None)
 
         if not form.is_valid():
             return return_errors(form.errors)
 
         username = form.cleaned_data['username']
+        name = form.cleaned_data['name']
         description = form.cleaned_data['description']
 
         user = request.user
 
         if user is not None:
-            user.description = description
-            user.update()
+            if username != "":
+                user.username = username
+            else:
+                username = user.username
 
-            login(request, user)
-            return go_to_main_view(request)
-            # return HttpResponseRedirect(reverse_lazy('main_view'))
-            # return render(request, "calender.html")
+            if name != "":
+                user.name = name
+            else:
+                name = user.name
+
+            if description != "":
+                user.description = description
+            else:
+                description = user.description
+
+            user.save()
+            update_session_auth_hash(request, user)
+
+            response = JsonResponse(
+                {
+                    "username": username,
+                    "name": name,
+                    "description": description,
+                }
+            )
+            response.status_code = 200
+            return response
         else:
+            print("test")
+
+
+@csrf_exempt
+def search_users(request):
+    if request.method == "POST":
+
+        print(request)
+
+        input = request.POST.get("input")
+
+        try:
+            found_users = User.objects.filter(
+                Q(username__contains=input) | Q(name__contains=input)
+            )
+
+            data = serializers.serialize('json', found_users)
+            print(data)
+            return HttpResponse(data, content_type="application/json")
+            response = JsonResponse(data)
+            response.status_code = 200
+            return response
+        except ObjectDoesNotExist:
             print("test")
 
 

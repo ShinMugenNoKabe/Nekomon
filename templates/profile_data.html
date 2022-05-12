@@ -6,27 +6,43 @@
         <img class='profile-pfp' src="{% static 'images/profile_pictures/' %}{{ request.user.profile_picture }}">
 
         <div id="profile-info">
-            <div id="user-name">
-                {{ request.user.name }}
-            </div>
-            <div id="user-username">
-                @{{ request.user.username }}
-            </div>
-            <div id="user-description">
-                {{ request.user.description }}
-            </div>
-            <div>
-                {% trans "Date joined" %}: {{ request.user.date_joined|date:"d/m/Y" }}
-            </div>
-            <div>
-                {% trans "Last access" %}: {{ request.user.last_login|date:"d/m/Y G:i:s" }}
-            </div>
-        </div>
+            <form id="update-form">
+                {% csrf_token %}
 
-        {% csrf_token %}
+                <div id="update-form-fields" hidden>
+                    {% for field in update_form %}
+                        {{ field }}
+                    {% endfor %}
+                </div>
+
+                <div id="profile-info-data">
+                    <div id="user-name">
+                        {{ request.user.name }}
+                    </div>
+                    <div id="user-username">
+                        @{{ request.user.username }}
+                    </div>
+                    <div id="user-description">
+                        {{ request.user.description }}
+                    </div>
+                    <div>
+                        {% trans "Date joined" %}: {{ request.user.date_joined|date:"d/m/Y" }}
+                    </div>
+                    <div>
+                        {% trans "Last access" %}: <time class="timeago" datetime="{{ request.user.last_login|date:'c' }}"></time>
+                    </div>
+                </div>
+            </form>
+
+            <div id="errors-update"></div>
+        </div>
 
         <div class="profile-button-container">
             <button id="edit-profile" class="profile-button">{% trans "Edit profile" %}</button>
+        </div>
+
+        <div class="profile-button-container" id="profile-save-button-container" hidden>
+            <button id="edit-profile-save" class="profile-button">{% trans "Save" %}</button>
         </div>
     </div>
 </div>

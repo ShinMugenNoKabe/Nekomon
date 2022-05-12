@@ -23,6 +23,8 @@
 
     <div class="info-search">
         {% include 'profile_data.html' %}
+
+        <input type="text" placeholder="{% trans 'Search users' %}" id="search-users-input">
     </div>
 
     {% block content %} {% endblock %}
@@ -54,6 +56,7 @@
 <script src="https://kit.fontawesome.com/44068b9eec.js" crossorigin="anonymous"></script>
 <script src="{% static 'js/edit-profile.js' %}"></script>
 <script src="{% static 'js/upload-post.js' %}"></script>
+<script src="{% static 'js/search-users.js' %}"></script>
 <script src="{% static 'js/fetch-errors.js' %}"></script>
 </body>
 
