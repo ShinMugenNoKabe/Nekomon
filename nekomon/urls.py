@@ -19,13 +19,11 @@ from django.urls import path
 from nekomon.forms import CustomPasswordResetForm, CustomPasswordSetPasswordForm
 from nekomon.views.api_views import api_get_username
 from nekomon.views.views import go_to_main_view, log_in_ajax, register_ajax, logout_view, user_profile_view, \
-    new_post_ajax, log_in_view, register_view, post_view, follow_unfollow_ajax, chat, room, update_profile, search_users
+    new_post_ajax, log_in_view, register_view, post_view, follow_unfollow_ajax, update_profile, search_users
 from django.contrib.auth import views as auth_views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('chat/', chat),
-    path('chat/<str:room_name>/', room, name='room'),
 
     # Main
     path('', go_to_main_view, name='main_view'),

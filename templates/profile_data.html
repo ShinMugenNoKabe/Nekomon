@@ -3,26 +3,31 @@
 {% block content %}
 <div class="user-profile">
     <div class="profile-header" id="profile-header">
-        <img class='profile-pfp' src="{% static 'images/profile_pictures/' %}{{ request.user.profile_picture }}">
+        <img class='profile-pfp' data-pfp="{{ request.user.username }}" src="https://i.imgur.com/{{ request.user.profile_picture }}.png" alt="Your profile picture">
 
         <div id="profile-info">
             <form id="update-form">
-                {% csrf_token %}
 
                 <div id="update-form-fields" hidden>
+                    {% csrf_token %}
+
+                    <div id="pfp-container">
+                        <i class="fa-solid fa-image" id="change-pfp-icon" title="{% trans 'Change your profile picture!' %}"></i>
+                    </div>
+
                     {% for field in update_form %}
                         {{ field }}
                     {% endfor %}
                 </div>
 
                 <div id="profile-info-data">
-                    <div id="user-name">
+                    <div id="user-name" data-name="{{ request.user.username }}">
                         {{ request.user.name }}
                     </div>
-                    <div id="user-username">
+                    <div id="user-username" data-username="{{ request.user.username }}">
                         @{{ request.user.username }}
                     </div>
-                    <div id="user-description">
+                    <div id="user-description" data-description="{{ request.user.username }}">
                         {{ request.user.description }}
                     </div>
                     <div>
@@ -34,7 +39,7 @@
                 </div>
             </form>
 
-            <div id="errors-update"></div>
+            <div id="messages-update"></div>
         </div>
 
         <div class="profile-button-container">
@@ -43,6 +48,10 @@
 
         <div class="profile-button-container" id="profile-save-button-container" hidden>
             <button id="edit-profile-save" class="profile-button">{% trans "Save" %}</button>
+        </div>
+
+        <div class="profile-button-container" id="profile-cancel-button-container" hidden>
+            <button id="edit-profile-cancel" class="profile-button">{% trans "Cancel" %}</button>
         </div>
     </div>
 </div>

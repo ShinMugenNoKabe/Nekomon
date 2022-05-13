@@ -26,6 +26,7 @@ from nekomon.forms import LogInForm, RegisterForm, PostForm, FollowUnfollowForm,
 from nekomon.models import User, Post, Follow
 from nekomon.utils import get_ip_address, upload_image_to_imgur, return_errors, build_multiple_posts_in_html, \
     build_post_in_html, get_random_post
+from django.utils.translation import gettext_lazy as _
 
 
 @login_required
@@ -88,6 +89,7 @@ def user_profile_view(request, profile):
             },
         ),
         "random_post": build_post_in_html(random_post),
+        "update_form": UpdateUserForm,
     }
 
     return render(request, 'user_profile.html', context)
@@ -111,6 +113,7 @@ def post_view(request, pk):
         "name": name,
         "post": post,
         "random_post": build_post_in_html(random_post),
+        "update_form": UpdateUserForm,
     }
 
     return render(request, 'post_view.html', context)
@@ -207,7 +210,7 @@ def new_post_ajax(request):
             #content = ""
 
             try:
-                image = upload_image_to_imgur(request)
+                image = upload_image_to_imgur(request, "image")
             except UploadImageToImgurException as ex:
                 return return_errors(str(ex))
 
@@ -259,25 +262,39 @@ def follow_unfollow_ajax(request):
             return response
 
 
+@login_required
 def update_profile(request):
     if request.method == "POST":
-        print('post' + str(request.POST))
-        form = UpdateUserForm(request.POST or None)
+        form = UpdateUserForm(request.POST, request.FILES, request=request)
 
         if not form.is_valid():
             return return_errors(form.errors)
 
-        username = form.cleaned_data['username']
+        new_username = form.cleaned_data['username']
         name = form.cleaned_data['name']
         description = form.cleaned_data['description']
 
         user = request.user
 
+        old_username = user.username
+
+        profile_picture = ""
+
         if user is not None:
-            if username != "":
-                user.username = username
+
+            if request.FILES:
+                try:
+                    profile_picture = upload_image_to_imgur(request, "profile_picture")
+                    user.profile_picture = profile_picture
+                except UploadImageToImgurException as ex:
+                    return return_errors(str(ex))
             else:
-                username = user.username
+                profile_picture = user.profile_picture
+
+            if new_username != "":
+                user.username = new_username
+            else:
+                new_username = old_username
 
             if name != "":
                 user.name = name
@@ -289,20 +306,23 @@ def update_profile(request):
             else:
                 description = user.description
 
+            if profile_picture != "":
+                user.profile_picture = profile_picture
+
             user.save()
             update_session_auth_hash(request, user)
 
-            response = JsonResponse(
-                {
-                    "username": username,
+            response = JsonResponse({
+                    "old_username": old_username,
+                    "new_username": new_username,
                     "name": name,
                     "description": description,
-                }
-            )
+                    "profile_picture": profile_picture
+            })
             response.status_code = 200
             return response
         else:
-            print("test")
+            print("No action")
 
 
 @csrf_exempt
@@ -317,23 +337,11 @@ def search_users(request):
             found_users = User.objects.filter(
                 Q(username__contains=input) | Q(name__contains=input)
             )
-            #te3st
 
             data = serializers.serialize('json', found_users)
-            print(data)
-            return HttpResponse(data, content_type="application/json")
-            response = JsonResponse(data)
+            response = HttpResponse(data, content_type="application/json")
             response.status_code = 200
             return response
         except ObjectDoesNotExist:
             print("test")
 
-
-def chat(request):
-    return render(request, 'chat.html')
-
-
-def room(request, room_name):
-    return render(request, 'chat/room.html', {
-        'room_name': room_name
-    })

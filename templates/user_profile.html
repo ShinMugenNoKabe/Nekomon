@@ -7,43 +7,39 @@
 {% block content %}
 
 <main class="user-profile-container">
-    <div class="profile-header">
-        <img class='profile-pfp' src="{% static 'images/profile_pictures/' %}{{ profile.profile_picture }}">
+    <div class="profile-header-view">
+        <img class='profile-pfp' data-pfp="{{ request.user.username }}" src="https://i.imgur.com/{{ request.user.profile_picture }}.png" alt="{{ request.user.name }}'s profile picture">
 
         <div id="profile-info">
-            <div>
+            <div id="user-name" data-name="{{ request.user.username }}">
                 {{ profile.name }}
             </div>
-            <div>
+            <div id="user-username" data-username="{{ request.user.username }}">
                 @{{ profile.username }}
             </div>
-            <div>
+            <div id="user-description" data-description="{{ request.user.username }}">
                 {{ profile.description }}
             </div>
             <div>
                 {% trans "Date joined" %}: {{ profile.date_joined|date:"d/m/Y" }}
             </div>
             <div>
-                {% trans "Last access" %}: {{ profile.last_login|date:"d/m/Y G:i:s" }}
+                {% trans "Last access" %}: <time class="timeago" datetime="{{ profile.last_login|date:'c' }}"></time>
             </div>
         </div>
 
         <div>
-            {% if profile == request.user %}
-            <form id="edit-profile" method="post" action="edit-profile.php" class="profile-button-container">
-                <button form="edit-profile" class="profile-button">{% trans "Edit profile" %}</button>
-            </form>
-            {% else %}
-            <form id="follow-unfollow" class="profile-button-container">
-                {% csrf_token %} {% for field in follow_unfollow_form %} {{ field }} {% endfor %}
-                <button form="follow-unfollow" class="profile-button" id="follow-unfollow-button">
-                    {% if is_following %}
-                    {% trans "Unfollow" %}
-                    {% else %}
-                    {% trans "Follow" %}
-                    {% endif %}
-                </button>
-            </form>
+            {% if profile != request.user %}
+                <form id="follow-unfollow" class="profile-button-container">
+                    {% csrf_token %} {% for field in follow_unfollow_form %} {{ field }} {% endfor %}
+                    <button form="follow-unfollow" class="profile-button" id="follow-unfollow-button">
+                        {% if is_following %}
+                        {% trans "Unfollow" %}
+                        {% else %}
+                        {% trans "Follow" %}
+                        {% endif %}
+                    </button>
+                </form>
             {% endif %}
         </div>
     </div>

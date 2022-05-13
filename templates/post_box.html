@@ -5,14 +5,14 @@
 <div class="post animated animatedFadeInUp fadeInUp">
     <div class='post-header'>
         <div>
-            <a href="/{{ request.user.username }}">
-                <img class='post-pfp' src="{% static 'images/profile_pictures/' %}{{ request.user.profile_picture }}">
+            <a data-username-link="{{ request.user.username }}" href="/{{ request.user.username }}">
+                <img class='post-pfp' data-pfp="{{ request.user.username }}" src="https://i.imgur.com/{{ request.user.profile_picture }}.png" alt="Your profile picture">
             </a>
         </div>
         <div class='post-username-date'>
             <a data-username-link href='/{{ request.user.username }}'>
-                <p data-name> {{ request.user.name }}</p>
-                <p data-username>@{{ request.user.username }}</p>
+                <p data-name="{{ request.user.username }}">{{ request.user.name }}</p>
+                <p data-username="{{ request.user.username }}">@{{ request.user.username }}</p>
             </a>
         </div>
     </div>

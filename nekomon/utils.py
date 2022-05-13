@@ -32,10 +32,10 @@ def build_post_in_html(post):
     # Header
     post_html +=    "<div class='post-header'>"
     post_html +=        "<div>"
-    post_html +=            "<img class='post-pfp' src='/web/images/profile_pictures/" + post.user.profile_picture + "'/>"
+    post_html +=            "<img class='post-pfp' data-pfp=" + post.user.username + " src='https://i.imgur.com/" + post.user.profile_picture + ".png' alt=" + post.user.name + "'s profile picture/>"
     post_html +=        "</div>"
     post_html +=        "<div class='post-username-date'>"
-    post_html +=            "<a data-username-link href='/" + post.user.username + "'>"
+    post_html +=            "<a data-username-link=" + post.user.username + " href='/" + post.user.username + "'>"
     post_html +=                "<p data-name='" + post.user.username + "'>" + post.user.name + "</p>"
     post_html +=                "<p data-username='" + post.user.username + "'>@" + post.user.username + "</p>"
     post_html +=            "</a>"
@@ -89,7 +89,7 @@ def get_ip_address(request):
     return ip
 
 
-def upload_image_to_imgur(request):
+def upload_image_to_imgur(request, name):
     client_id = os.getenv("IMGUR_CLIENT_ID")
 
     headers = {"Authorization": "Client-ID " + client_id}
@@ -98,7 +98,7 @@ def upload_image_to_imgur(request):
 
     url = "https://api.imgur.com/3/upload.json"
 
-    image = request.FILES.get("image")
+    image = request.FILES.get(name)
 
     response = requests.post(
         url,

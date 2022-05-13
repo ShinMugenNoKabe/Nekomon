@@ -251,6 +251,7 @@ class UpdateUserForm(forms.Form):
         widget=forms.TextInput(
             attrs={
                 'class': "input-user-text",
+                #"value": request.user.name,
                 'placeholder': _("Name"),
             }
         )
@@ -272,8 +273,17 @@ class UpdateUserForm(forms.Form):
         required=False,
         widget=forms.Textarea(
             attrs={
-                'class': "input-user-text",
+                'class': "input-user-description",
                 'placeholder': _("Description"),
+            }
+        )
+    )
+
+    profile_picture = forms.ImageField(
+        required=False,
+        widget=forms.FileInput(
+            attrs={
+                'style': "display: none",
             }
         )
     )
@@ -304,6 +314,8 @@ class UpdateUserForm(forms.Form):
 
         description = cleaned_data.get('description')
 
+        print(cleaned_data)
+
         is_validated = True
 
         # if len(username) == 0:
@@ -326,11 +338,12 @@ class UpdateUserForm(forms.Form):
 
         if is_validated:
             try:
-                User.objects.get(
+                user = User.objects.get(
                     username=username,
                 )
 
-                self.add_error(None, ValidationError(_("An account with the introduced username already exists.")))
+                if self.request.user.id != user.id:
+                    self.add_error(None, ValidationError(_("An account with the introduced username already exists.")))
             except User.DoesNotExist as dne:
                 pass
                 # self.save()
@@ -351,6 +364,7 @@ class PostForm(forms.Form):
         required=False,
         widget=forms.Textarea(
             attrs={
+                'class': "new-post-content",
                 'placeholder': _("New post"),
             }
         )

@@ -9,6 +9,7 @@
 
     <link href="{% static 'css/main.css' %}" rel="stylesheet" type="text/css">
     <link href="{% static 'css/main2.css' %}" rel="stylesheet" type="text/css">
+    <link href="{% static 'css/cropper.min.css' %}" rel="stylesheet" type="text/css">
 
     <title>{% block title %}{% endblock %}</title>
 
@@ -24,13 +25,16 @@
     <div class="info-search">
         {% include 'profile_data.html' %}
 
-        <input type="text" placeholder="{% trans 'Search users' %}" id="search-users-input">
+        {% comment %}
+            <input type="text" placeholder="{% trans 'Search users' %}" id="search-users-input">
+        {% endcomment %}
     </div>
 
     {% block content %} {% endblock %}
 
     <div class="miscellaneous">
         <span class="post-random-text">{% trans "Random post" %}</span><br>
+
         <div id="post-random">
             {{ random_post | safe }}
         </div>
@@ -43,8 +47,21 @@
         {% endcomment %}
     </div>
 
+    <!-- The Modal -->
+    <div id="update-profile-picture-modal" class="modal">
+
+      <!-- Modal content -->
+      <div class="modal-content">
+        <img id="image-cropper" src="">
+          <input type="file" name="new-profile-picture" hidden/>
+          <button id="close-modal" class="profile-button" style="margin-top: 10px">{% trans "Save" %}</button>
+      </div>
+
+    </div>
+
 </main>
 
+<script src="{% static 'js/cropper.min.js' %}"></script>
 <script src="{% static 'js/jquery.timeago.js' %}"></script>
 <script type="text/javascript">
         // Start timeago
