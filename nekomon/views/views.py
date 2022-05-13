@@ -317,6 +317,7 @@ def search_users(request):
             found_users = User.objects.filter(
                 Q(username__contains=input) | Q(name__contains=input)
             )
+            #te3st
 
             data = serializers.serialize('json', found_users)
             print(data)
