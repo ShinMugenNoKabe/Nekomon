@@ -2,7 +2,7 @@
 
 {% load static %}
 
-<div class="post animated animatedFadeInUp fadeInUp">
+<div class="post">
     <div class='post-header'>
         <div>
             <a data-username-link="{{ request.user.username }}" href="/{{ request.user.username }}">
@@ -19,12 +19,21 @@
     <hr>
     <form id="upload-post">
         {% csrf_token %}
-        {% for field in post_box %}
-        {{ field }}
-        {% endfor %}
+        {{ post_box.content }}
+        {{ post_box.image }}
+
+        {% if is_viewing_post %}
+        {{ post_box.in_response_to }}
+        {% endif %}
         <i class="fas fa-solid fa-images" id="select-image-icon"
            title="{% blocktranslate %}Add an image to your post!{% endblocktranslate %}"></i>
-        <button id="new-post-button" form="upload-post">{% trans "Upload new post" %}</button>
+        <button id="new-post-button" form="upload-post">
+            {% if is_viewing_post %}
+            {% trans "Reply to post" %}
+            {% else %}
+            {% trans "Upload new post" %}
+            {% endif %}
+        </button>
         <img src="{% static 'images/loading.gif' %}"
              alt="{% trans 'Submitting post...' %}"
              id="spin-load-icon"

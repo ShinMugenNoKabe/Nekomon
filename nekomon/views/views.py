@@ -21,9 +21,9 @@ from django.views.decorators.csrf import csrf_exempt
 from django.views.generic import RedirectView, CreateView
 
 from nekomon.exceptions import UploadImageToImgurException
-from nekomon.forms import LogInForm, RegisterForm, PostForm, FollowUnfollowForm, UpdateUserForm
+from nekomon.forms import LogInForm, RegisterForm, PostForm, FollowUnfollowForm, UpdateUserForm, LikePostForm
 # from nekomon.models import User
-from nekomon.models import User, Post, Follow
+from nekomon.models import User, Post, Follow, Like
 from nekomon.utils import get_ip_address, upload_image_to_imgur, return_errors, build_multiple_posts_in_html, \
     build_post_in_html, get_random_post
 from django.utils.translation import gettext_lazy as _
@@ -34,6 +34,7 @@ def go_to_main_view(request):
     posts = Post.objects.raw(
         "SELECT distinct nekomon_post.* from nekomon_post, nekomon_follow where user_follower_id = "
         + str(request.user.id) +
+        " and in_response_to_id is null " +
         " and nekomon_post.user_id = user_followed_id or nekomon_post.user_id = " + str(request.user.id) +
         " order by created_at desc"
     )
@@ -72,6 +73,7 @@ def user_profile_view(request, profile):
 
     posts = Post.objects.raw(
         "SELECT distinct nekomon_post.* from nekomon_post where user_id = " + str(profile.id) +
+        " and in_response_to_id is null " +
         " order by created_at desc"
     )
 
@@ -104,16 +106,28 @@ def post_view(request, pk):
         name = post.user.name
 
         post = build_post_in_html(post)
+
+        replies = Post.objects.filter(
+            in_response_to=pk
+        ).order_by("created_at")
+
+        replies = build_multiple_posts_in_html(replies)
     except ObjectDoesNotExist:
         return go_to_main_view()
 
     random_post = get_random_post()
+
+    post_form = PostForm(initial={"in_response_to": pk})
         
     context = {
         "name": name,
+        "is_viewing_post": True,
         "post": post,
+        "replies": replies,
         "random_post": build_post_in_html(random_post),
         "update_form": UpdateUserForm,
+        "post_box": post_form,
+        "in_response_to": pk
     }
 
     return render(request, 'post_view.html', context)
@@ -203,8 +217,11 @@ def new_post_ajax(request):
             return return_errors(form.errors)
 
         content = form.cleaned_data['content']
+        in_response_to = form.cleaned_data['in_response_to']
 
         image = ""
+
+        post_in_response_to = None
 
         if request.FILES:
             #content = ""
@@ -214,15 +231,44 @@ def new_post_ajax(request):
             except UploadImageToImgurException as ex:
                 return return_errors(str(ex))
 
+        if in_response_to != "":
+            post_in_response_to = Post.objects.get(
+                id=in_response_to
+            )
+
         post = Post.objects.create(
             content=content,
             user_id=request.user.id,
-            image=image
+            image=image,
+            in_response_to=post_in_response_to
         )
 
         # Post.save()
 
         response = JsonResponse({"post": build_post_in_html(post)})
+        response.status_code = 200
+        return response
+
+
+def like_post_ajax(request):
+    if request.method == "POST":
+        form = LikePostForm(request.POST or None)
+
+        if not form.is_valid():
+            return return_errors(form.errors)
+
+        post_id = form.cleaned_data['post_id']
+
+        like = Like(
+            user_liker_id=request.user.id,
+            post_liked_id=post_id,
+        )
+
+        like.save()
+
+        response = JsonResponse("True", safe=False)
+        # Post.save()
+
         response.status_code = 200
         return response
 

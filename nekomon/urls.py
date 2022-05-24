@@ -19,7 +19,8 @@ from django.urls import path
 from nekomon.forms import CustomPasswordResetForm, CustomPasswordSetPasswordForm
 from nekomon.views.api_views import api_get_username
 from nekomon.views.views import go_to_main_view, log_in_ajax, register_ajax, logout_view, user_profile_view, \
-    new_post_ajax, log_in_view, register_view, post_view, follow_unfollow_ajax, update_profile, search_users
+    new_post_ajax, log_in_view, register_view, post_view, follow_unfollow_ajax, update_profile, search_users, \
+    like_post_ajax
 from django.contrib.auth import views as auth_views
 
 urlpatterns = [
@@ -71,7 +72,8 @@ urlpatterns = [
     # Posts
     path('posts/<int:pk>', post_view, name='post_view'),
     path('ajax/new-post/', new_post_ajax, name='new_post_ajax'),
-    
+    path('ajax/like-post/', like_post_ajax, name='like_post_ajax'),
+
     # Follows / unfollows
     path('ajax/follow-unfollow/', follow_unfollow_ajax, name='follow_unfollow_ajax'),
 

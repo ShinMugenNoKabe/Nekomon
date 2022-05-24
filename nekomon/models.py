@@ -35,9 +35,18 @@ class Post(CommonInfo):
         related_name="posts",
         on_delete=models.CASCADE,
     )
+
     content = models.CharField("Content", max_length=500)
-    #image = models.ImageField(upload_to='images/')
+
     image = models.CharField(max_length=10)
+
+    in_response_to = models.ForeignKey(
+        "self",
+        related_name="replies",
+        on_delete=models.CASCADE,
+        blank=True,
+        null=True
+    )
 
     # Metadatos
     class Meta:
@@ -79,6 +88,33 @@ class Follow(CommonInfo):
         # Orden de la lista
         # ordering = ["name"]
         # Orden descendente
+        ordering = ["id"]
+
+    # def __str__(self):
+    #     return str(self.id)
+
+
+class Like(CommonInfo):
+    user_liker = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        related_name="liker",
+        on_delete=models.CASCADE,
+        default=0,
+        unique=False,
+    )
+
+    post_liked = models.ForeignKey(
+        Post,
+        related_name="post",
+        on_delete=models.CASCADE,
+        default=0,
+        unique=False,
+    )
+
+    class Meta:
+        verbose_name = "Like"
+        verbose_name_plural = "Likes"
+
         ordering = ["id"]
 
     # def __str__(self):

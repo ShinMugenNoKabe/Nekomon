@@ -6,7 +6,7 @@ from django.contrib.auth.models import AnonymousUser
 from django.core.exceptions import ObjectDoesNotExist
 from django.db import close_old_connections
 
-from nekomon.models import Follow, User
+from nekomon.models import Follow, User, Post
 
 
 class PostConsumer(AsyncWebsocketConsumer):
@@ -97,3 +97,65 @@ def get_followed_users(user):
             return None
     except ObjectDoesNotExist:
         return None
+
+
+class PostViewConsumer(AsyncWebsocketConsumer):
+    async def connect(self):
+        self.post = self.scope['url_route']['kwargs']['post']
+
+        post = await get_post(self.post)
+
+        if post is not None:
+            self.post_group = 'group_post_%s' % post.id
+
+            # Join group of the post
+            await self.channel_layer.group_add(
+                self.post_group,
+                self.channel_name
+            )
+
+            await self.accept()
+
+    async def disconnect(self, close_code):
+        # Leave room group
+        await self.channel_layer.group_discard(
+            self.post_group,
+            self.channel_name
+        )
+
+    # Receive message from WebSocket
+    async def receive(self, text_data):
+        text_data_json = json.loads(text_data)
+        post = text_data_json['post']
+
+        await self.channel_layer.group_send(
+            self.post_group,
+            {
+                'type': 'sent_post',
+                'new_post': post
+            }
+        )
+
+    # Receive message from group
+    async def sent_post(self, event):
+        new_post = event['new_post']
+
+        # Send message to WebSocket
+        await self.send(text_data=json.dumps({
+            'new_post': new_post
+        }))
+
+
+@database_sync_to_async
+def get_post(id_post):
+    close_old_connections()
+
+    try:
+        post = Post.objects.get(
+            id=id_post
+        )
+
+        return post
+    except ObjectDoesNotExist:
+        return None
+

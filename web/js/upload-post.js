@@ -22,19 +22,37 @@ function removeImage() {
 
 $("#remove-image-button").click(removeImage);
 
-postSocket.onmessage = function(e) {
-    const data = JSON.parse(e.data);
+if (typeof postSocket !== "undefined") {
+    postSocket.onmessage = function(e) {
+        const data = JSON.parse(e.data);
 
-    // Update posts
-    $("#posts").html(data.new_post + $("#posts").html());
+        // Update posts
+        $("#posts").html(data.new_post + $("#posts").html());
 
-    // Update timeago
-    $("time.timeago").timeago();
-};
+        // Update timeago
+        $("time.timeago").timeago();
+    };
 
-postSocket.onclose = function(e) {
-    console.error('Chat socket closed unexpectedly');
-};
+    postSocket.onclose = function(e) {
+        console.error('Chat socket closed unexpectedly');
+    };
+}
+
+if (typeof postViewSocket !== "undefined") {
+    postViewSocket.onmessage = function(e) {
+        const data = JSON.parse(e.data);
+
+        // Update posts
+        $("#replies").html($("#replies").html() + data.new_post);
+
+        // Update timeago
+        $("time.timeago").timeago();
+    };
+
+    postViewSocket.onclose = function(e) {
+        console.error('Chat socket closed unexpectedly');
+    };
+}
 
 post_box.submit(function (e) {
     let uploadButton = $("#new-post-button");
@@ -52,10 +70,13 @@ post_box.submit(function (e) {
 
     let content = $(post_box).children("textarea[name='content']").val();
     let image = $(post_box).children("input[name='image']")[0];
+    //let in_response_to = $(post_box).children("input[name='in_response_to']").val();
+    let in_response_to = 1;
     let csrftoken = $(post_box).children("input[name='csrfmiddlewaretoken']").val();
 
     formData.append("content", content);
     formData.append("image", image.files[0]);
+    formData.append("in_response_to", in_response_to);
     formData.append("csrfmiddlewaretoken", csrftoken);
 
     $.ajax({
@@ -68,15 +89,14 @@ post_box.submit(function (e) {
         success: function(data) {
             $('#id_content').val("");
             $("#char-count").html("");
-            //$("#posts").html(data.post + $("#posts").html());
 
-            // Send post to websocket
-            /*postSocket.send(
-                console.log(postSocket.readyState));*/
-            postSocket.send(JSON.stringify({
+            const socket = typeof postSocket !== "undefined" ? postSocket : postViewSocket;
+
+            socket.send(JSON.stringify({
                 'post': data.post
             }));
-            console.log(postSocket.readyState);
+
+            console.log(socket.readyState);
 
         },
         error: function(data) {

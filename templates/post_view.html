@@ -10,6 +10,21 @@
 
 <div id="posts">
     {{ post | safe }}
+
+    {% include "post_box.html" %}
+
+    <div id="replies">
+        {{ replies | safe }}
+    </div>
 </div>
+
+<script type="text/javascript">
+    const protocol = location.protocol === "http:" ? "ws://" : "wss://";
+
+    // Start WebSocket for the requested post
+    const postViewSocket = new WebSocket(
+        protocol + window.location.host + '/ws/post/{{ in_response_to }}'
+    );
+</script>
 
 {% endblock %}

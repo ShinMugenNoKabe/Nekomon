@@ -25,6 +25,10 @@ load_dotenv()
 
 
 def build_post_in_html(post):
+    replies = Post.objects.filter(
+        in_response_to=post
+    )
+
     formatted_post_date = post.created_at.strftime("%Y-%m-%d %H:%M:%S")
 
     post_html = "<div class='post'>"
@@ -32,10 +36,10 @@ def build_post_in_html(post):
     # Header
     post_html +=    "<div class='post-header'>"
     post_html +=        "<div>"
-    post_html +=            "<img class='post-pfp' data-pfp=" + post.user.username + " src='https://i.imgur.com/" + post.user.profile_picture + ".png' alt=" + post.user.name + "'s profile picture/>"
+    post_html +=            "<img class='post-pfp' data-pfp='" + post.user.username + "' src='https://i.imgur.com/" + post.user.profile_picture + ".png' alt=" + post.user.name + "'s profile picture/>"
     post_html +=        "</div>"
     post_html +=        "<div class='post-username-date'>"
-    post_html +=            "<a data-username-link=" + post.user.username + " href='/" + post.user.username + "'>"
+    post_html +=            "<a data-username-link='" + post.user.username + "' href='/" + post.user.username + "'>"
     post_html +=                "<p data-name='" + post.user.username + "'>" + post.user.name + "</p>"
     post_html +=                "<p data-username='" + post.user.username + "'>@" + post.user.username + "</p>"
     post_html +=            "</a>"
@@ -63,7 +67,8 @@ def build_post_in_html(post):
         post_html +=        "</div>"
         post_html +=        "<hr>"
 
-    post_html +=    "<i class='fas fa-heart'></i>"
+    post_html +=    "<a href='https://www.nekomon.es/posts/" + str(post.id) + "' target='_blank'><i class='fa-solid fa-reply'></i> " + str(len(replies)) + "</a>  "
+    post_html +=    "<i class='fas fa-heart like-post-icon' data-id='" + str(post.id) + "' ></i>"
 
     post_html += "</div>"
 

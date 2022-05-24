@@ -379,6 +379,16 @@ class PostForm(forms.Form):
         )
     )
 
+    in_response_to = forms.CharField(
+        max_length=20,
+        required=False,
+        widget=forms.TextInput(
+            attrs={
+                'style': "display: none",
+            }
+        )
+    )
+
     # Validations
     def clean(self):
         cleaned_data = super().clean()
@@ -386,12 +396,24 @@ class PostForm(forms.Form):
 
         content = cleaned_data.get('content')
         image = cleaned_data.get('image')
+        in_response_to = cleaned_data.get("in_response_to")
+
+        if in_response_to == "undefined" or in_response_to == "":
+            in_response_to = None
 
         # If an image is uploaded there is no need for content
         if image is None and len(content) == 0:
             self.add_error(None, ValidationError(_("The content of the post cannot be empty.")))
         elif len(content) > 140:
             self.add_error(None, ValidationError(_("The content of the post characters has exceeded.")))
+
+        if in_response_to is not None:
+            try:
+                Post.objects.get(
+                    id=in_response_to,
+                )
+            except Post.DoesNotExist:
+                self.add_error(None, ValidationError(_("The post you've tried to reply to was not found.")))
 
 
 class FollowUnfollowForm(forms.Form):
@@ -440,6 +462,54 @@ class FollowUnfollowForm(forms.Form):
                 )
             except User.DoesNotExist as dne:
                 self.add_error(None, ValidationError(_("User not found.")))
+
+
+class LikePostForm(forms.Form):
+    post_id = forms.CharField(
+        max_length=20,
+        required=False,
+        widget=forms.HiddenInput(
+            attrs={
+                # 'value': "{{profile.id}}",
+            }
+        )
+    )
+
+    # is_already_liked = forms.CharField(
+    #     max_length=5,
+    #     required=False,
+    #     widget=forms.HiddenInput(
+    #         attrs={
+    #             # 'value': "{{is_following}}",
+    #         }
+    #     )
+    # )
+
+    # Validations
+    def clean(self):
+        cleaned_data = super().clean()
+
+        post_id = cleaned_data.get("post_id")
+        # is_following = cleaned_data.get("is_following")
+        #
+        # if is_following == "True":
+        #     is_following = bool(True)
+        # else:
+        #     is_following = bool("")
+        #
+        # cleaned_data['is_following'] = is_following
+
+        if len(str(post_id)) == 0:
+            self.add_error(None, ValidationError(_("Cannot be empty.")))
+        # if len(str(is_following)) == 0:
+        #     self.add_error(None, ValidationError(_("Cannot be empty.")))
+        else:
+            try:
+                Post.objects.get(
+                    id=post_id
+                )
+            except Post.DoesNotExist:
+                self.add_error(None, ValidationError(_("Post not found.")))
 
 
 class CustomPasswordResetForm(PasswordResetForm):

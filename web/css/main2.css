@@ -118,8 +118,8 @@ a:hover {
 }
 
 #profile-info {
-    word-break: break-all;
-    line-break: break-all;
+    word-break: break;
+    line-break: break;
     font-size: 1.4em;
     text-shadow: 2px 0 0 black, -2px 0 0 black, 0 2px 0 black, 0 -2px 0 black, 1px 1px black, -1px -1px 0 black, 1px -1px 0 black, -1px 1px 0 black;
 }
@@ -185,8 +185,8 @@ a:hover {
     border: 2px solid #565656;
     border-top: 0;
     padding: 1em;
-    word-break: break-all;
-    line-break: break-all;
+    word-break: break;
+    line-break: break;
 }
 
 .post-header {
@@ -248,7 +248,7 @@ a:hover {
 .new-post-content {
     resize: none;
     width: 99%;
-    min-height: 6em;
+    height: 2em;
     font-size: 1em;
     background-color: rgb(42, 42, 42);
     color: white;
@@ -256,6 +256,7 @@ a:hover {
     border: none;
     outline: none;
     overflow: hidden;
+    box-sizing: border-box;
 }
 
 .input-user-description {
