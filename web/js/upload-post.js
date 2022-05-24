@@ -70,8 +70,8 @@ post_box.submit(function (e) {
 
     let content = $(post_box).children("textarea[name='content']").val();
     let image = $(post_box).children("input[name='image']")[0];
-    //let in_response_to = $(post_box).children("input[name='in_response_to']").val();
-    let in_response_to = 1;
+    let in_response_to = $(post_box).children("input[name='in_response_to']").val();
+    //let in_response_to = 1;
     let csrftoken = $(post_box).children("input[name='csrfmiddlewaretoken']").val();
 
     formData.append("content", content);
