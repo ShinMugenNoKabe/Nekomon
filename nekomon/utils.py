@@ -15,7 +15,6 @@ from django.template.backends import django
 from nekomon.exceptions import UploadImageToImgurException
 
 from django.utils.translation import gettext_lazy as _
-import timeago
 
 from dotenv import load_dotenv
 
@@ -27,16 +26,14 @@ load_dotenv()
 def build_post_in_html(post):
     replies = Post.objects.filter(
         in_response_to=post
-    )
-
-    formatted_post_date = post.created_at.strftime("%Y-%m-%d %H:%M:%S")
+    ).count()
 
     post_html = "<div class='post'>"
 
     # Header
     post_html +=    "<div class='post-header'>"
     post_html +=        "<div>"
-    post_html +=            "<img class='post-pfp' data-pfp='" + post.user.username + "' src='https://i.imgur.com/" + post.user.profile_picture + ".png' alt=" + post.user.name + "'s profile picture/>"
+    post_html +=            "<img class='post-pfp' data-pfp='" + post.user.username + "' src='https://i.imgur.com/" + post.user.profile_picture + ".png' alt='" + _("%s %s" % (post.user.username, _("profile picture'"))) + "' />"
     post_html +=        "</div>"
     post_html +=        "<div class='post-username-date'>"
     post_html +=            "<a data-username-link='" + post.user.username + "' href='/" + post.user.username + "'>"
@@ -57,17 +54,19 @@ def build_post_in_html(post):
     if post.content != "":
         post_html +=    "<hr>"
         post_html +=    "<div class='post-content'>" + post.content + "</div>"
+        alt_message = post.content
+    else:
+        alt_message = _("Image attached to the post")
 
     post_html +=    "<hr>"
 
     if post.image != "":
         post_html +=        "<div class='post-image'>"
-        post_html +=            "<img src='https://i.imgur.com/" + post.image + ".png' alt='" +\
-                                    _("Image attached to the post") + "'>"
+        post_html +=            "<img src='https://i.imgur.com/" + post.image + ".png' alt='" + alt_message + "'>"
         post_html +=        "</div>"
         post_html +=        "<hr>"
 
-    post_html +=    "<a href='/posts/" + str(post.id) + "' target='_blank'><i class='fa-solid fa-reply'></i> " + str(len(replies)) + "</a>  "
+    post_html +=    "<a href='/posts/" + str(post.id) + "' target='_blank'><i class='fa-solid fa-reply'></i> " + str(replies) + "</a>  "
     post_html +=    "<i class='fas fa-heart like-post-icon' data-id='" + str(post.id) + "' ></i>"
 
     post_html += "</div>"

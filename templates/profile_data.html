@@ -3,7 +3,7 @@
 {% block content %}
 <div class="user-profile">
     <div class="profile-header" id="profile-header">
-        <img class='profile-pfp' data-pfp="{{ request.user.username }}" src="https://i.imgur.com/{{ request.user.profile_picture }}.png" alt="Your profile picture">
+        <img class='profile-pfp' data-pfp="{{ request.user.username }}" src="https://i.imgur.com/{{ request.user.profile_picture }}.png" alt="{% trans 'Your profile picture' %}">
 
         <div id="profile-info">
             <form id="update-form">

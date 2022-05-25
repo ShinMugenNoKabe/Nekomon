@@ -4,8 +4,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: alpha\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-05-02 20:44+0200\n"
-"PO-Revision-Date: 2022-04-30 18:46+0100\n"
+"POT-Creation-Date: 2022-05-25 14:06+0200\n"
+"PO-Revision-Date: 2022-05-25 14:03+0100\n"
 "Last-Translator: Rufino Serrano Cañas rufisercay@gmail.com\n"
 "Language: Spanish\n"
 "MIME-Version: 1.0\n"
@@ -13,21 +13,44 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: .\templates\base-forms.html:30 .\templates\main_site.html:27
+#: .\templates\base-forms.html:30
 msgid "Check out our repository! "
 msgstr "¡Mira nuestro repositorio! "
+
+#: .\templates\base.html:39
+msgid "Random post"
+msgstr "Post aleatorio"
+
+#: .\templates\base.html:59
+msgid "Cropped image"
+msgstr "Imagen recortada"
+
+#: .\templates\base.html:61 .\templates\profile_data.html:50
+msgid "Save"
+msgstr "Guardar"
 
 #: .\templates\main_site.html:3
 msgid "Feed"
 msgstr "Inicio"
 
-#: .\templates\main_site.html:21
-msgid "Random post"
-msgstr "Post aleatorio"
+#: .\templates\navbar.html:6
+#: .\templates\user_forms\password_reset\reset_done.html:13
+#: .\templates\user_forms\password_reset\reset_email_sent.html:13
+#: .\templates\user_forms\password_reset\reset_form.html:13
+#: .\templates\user_forms\password_reset\reset_new_password.html:14
+#: .\templates\user_forms\user_login.html:13
+#: .\templates\user_forms\user_register.html:13
+msgid "Nekomon\\"
+msgstr "Nekomon"
 
 #: .\templates\navbar.html:6
 msgid "Home"
 msgstr "Inicio"
+
+#: .\templates\navbar.html:13 .\templates\post_box.html:9
+#: .\templates\profile_data.html:6
+msgid "Your profile picture"
+msgstr "Tu foto de perfil"
 
 #: .\templates\navbar.html:18
 msgid "Log-out"
@@ -44,19 +67,23 @@ msgstr "Iniciar sesión"
 msgid "Add an image to your post!"
 msgstr "¡Añade una imagen a tu post!"
 
-#: .\templates\post_box.html:30
+#: .\templates\post_box.html:32
+msgid "Reply to post"
+msgstr "Responder al post"
+
+#: .\templates\post_box.html:34
 msgid "Upload new post"
 msgstr "Subir nuevo post"
 
-#: .\templates\post_box.html:32
+#: .\templates\post_box.html:38
 msgid "Submitting post..."
 msgstr "Subiendo post..."
 
-#: .\templates\post_box.html:39
+#: .\templates\post_box.html:45
 msgid "Remove the image"
 msgstr "Eliminar la imagen"
 
-#: .\templates\post_box.html:41
+#: .\templates\post_box.html:47
 msgid "Preview of the image"
 msgstr "Previsualización de la imagen"
 
@@ -65,17 +92,25 @@ msgctxt "Post title - Username at Nekomon.es"
 msgid "at"
 msgstr "en"
 
-#: .\templates\profile_data.html:19 .\templates\user_profile.html:24
+#: .\templates\profile_data.html:15
+msgid "Change your profile picture!"
+msgstr "¡Cambia tu foto de perfil!"
+
+#: .\templates\profile_data.html:34 .\templates\user_profile.html:24
 msgid "Date joined"
 msgstr "Fecha de registro"
 
-#: .\templates\profile_data.html:22 .\templates\user_profile.html:27
+#: .\templates\profile_data.html:37 .\templates\user_profile.html:27
 msgid "Last access"
 msgstr "Último acceso"
 
-#: .\templates\profile_data.html:27 .\templates\user_profile.html:34
+#: .\templates\profile_data.html:46
 msgid "Edit profile"
 msgstr "Editar perfil"
+
+#: .\templates\profile_data.html:54
+msgid "Cancel"
+msgstr "Cancelar"
 
 #: .\templates\user_forms\password_reset\reset_done.html:14
 msgid "Password reset completed"
@@ -153,105 +188,158 @@ msgstr "¿Olvidaste tu contraseña?"
 msgid "New account"
 msgstr "Nueva cuenta"
 
-#: .\templates\user_profile.html:41 .\templates\user_profile.html:77
+#: .\templates\user_profile.html:37 .\templates\user_profile.html:75
 msgid "Unfollow"
 msgstr "Dejar de seguir"
 
-#: .\templates\user_profile.html:43 .\templates\user_profile.html:80
+#: .\templates\user_profile.html:39 .\templates\user_profile.html:78
 msgid "Follow"
 msgstr "Seguir"
 
-#: .\templates\user_profile.html:85
+#: .\templates\user_profile.html:83
 msgid "Can\\"
 msgstr ""
 
-#: .\nekomon\forms.py:36 .\nekomon\forms.py:142
+#: .\nekomon\forms.py:37 .\nekomon\forms.py:143 .\nekomon\forms.py:266
 msgid "Username"
 msgstr "Nombre de usuario"
 
-#: .\nekomon\forms.py:47 .\nekomon\forms.py:153 .\nekomon\forms.py:391
+#: .\nekomon\forms.py:48 .\nekomon\forms.py:154 .\nekomon\forms.py:587
 msgid "Password"
 msgstr "Contraseña"
 
-#: .\nekomon\forms.py:74 .\nekomon\forms.py:203
+#: .\nekomon\forms.py:75 .\nekomon\forms.py:204
 msgid "The username field cannot be empty."
 msgstr "El campo de nombre de usuario no puede estar vacío."
 
-#: .\nekomon\forms.py:77 .\nekomon\forms.py:84 .\nekomon\forms.py:206
-#: .\nekomon\forms.py:213 .\nekomon\forms.py:433
+#: .\nekomon\forms.py:78 .\nekomon\forms.py:85 .\nekomon\forms.py:207
+#: .\nekomon\forms.py:217 .\nekomon\forms.py:325 .\nekomon\forms.py:629
 msgid "The username field characters has exceeded."
 msgstr ""
 "Se ha excedido la cantidad de carácteres en el campo de nombre de usuario."
 
-#: .\nekomon\forms.py:81 .\nekomon\forms.py:210 .\nekomon\forms.py:430
+#: .\nekomon\forms.py:82 .\nekomon\forms.py:214 .\nekomon\forms.py:626
 msgid "The password field cannot be empty."
 msgstr "El campo de contraseña no puede estar vacío."
 
-#: .\nekomon\forms.py:95
+#: .\nekomon\forms.py:96
 msgid ""
 "The introduced username was not found or does not match with the password."
 msgstr "La contraseña introducida no coincide con el nombre de usuario."
 
-#: .\nekomon\forms.py:131 .\nekomon\forms.py:326
+#: .\nekomon\forms.py:132 .\nekomon\forms.py:522
 msgid "E-mail"
 msgstr ""
 
-#: .\nekomon\forms.py:164 .\nekomon\forms.py:402
+#: .\nekomon\forms.py:165 .\nekomon\forms.py:598
 msgid "Repeat the password"
 msgstr "Repita la contraseña"
 
-#: .\nekomon\forms.py:193 .\nekomon\forms.py:353
+#: .\nekomon\forms.py:194 .\nekomon\forms.py:549
 msgid "The e-mail field cannot be empty."
 msgstr "El campo de e-mail no puede estar vacío."
 
-#: .\nekomon\forms.py:196 .\nekomon\forms.py:356
+#: .\nekomon\forms.py:197 .\nekomon\forms.py:552
 msgid "The e-mail field characters has exceeded."
 msgstr "Se ha excedido la cantidad de carácteres en el campo de e-mail."
 
-#: .\nekomon\forms.py:199 .\nekomon\forms.py:359
+#: .\nekomon\forms.py:200 .\nekomon\forms.py:555
 msgid "The e-mail format is incorrect."
 msgstr "El formato del e-mail es incorrecto."
 
-#: .\nekomon\forms.py:216 .\nekomon\forms.py:436
+#: .\nekomon\forms.py:210 .\nekomon\forms.py:328
+#, fuzzy
+#| msgid "The username field characters has exceeded."
+msgid "The username must not contain space characters."
+msgstr ""
+"Se ha excedido la cantidad de carácteres en el campo de nombre de usuario."
+
+#: .\nekomon\forms.py:220 .\nekomon\forms.py:632
 msgid "The introduced passwords do not match."
 msgstr "Las contraseñas introducidas no coinciden."
 
-#: .\nekomon\forms.py:225
+#: .\nekomon\forms.py:229
 msgid "An account with the introduced e-mail or username already exists."
 msgstr "Una cuenta con el e-mail introducido ya existe."
 
-#: .\nekomon\forms.py:245
+#: .\nekomon\forms.py:255
+msgid "Name"
+msgstr "Nombre"
+
+#: .\nekomon\forms.py:277
+msgid "Description"
+msgstr "Descripción"
+
+#: .\nekomon\forms.py:332
+#, fuzzy
+#| msgid "The username field characters has exceeded."
+msgid "The name field characters has exceeded."
+msgstr ""
+"Se ha excedido la cantidad de carácteres en el campo de nombre de usuario."
+
+#: .\nekomon\forms.py:336
+#, fuzzy
+#| msgid "The username field characters has exceeded."
+msgid "The description field characters has exceeded."
+msgstr ""
+"Se ha excedido la cantidad de carácteres en el campo de nombre de usuario."
+
+#: .\nekomon\forms.py:346
+#, fuzzy
+#| msgid "An account with the introduced e-mail or username already exists."
+msgid "An account with the introduced username already exists."
+msgstr "Una cuenta con el e-mail introducido ya existe."
+
+#: .\nekomon\forms.py:368
 msgid "New post"
 msgstr "Nuevo post"
 
-#: .\nekomon\forms.py:266
+#: .\nekomon\forms.py:406
 msgid "The content of the post cannot be empty."
 msgstr "El contenido del post no puede estar vacío."
 
-#: .\nekomon\forms.py:268
+#: .\nekomon\forms.py:408
 msgid "The content of the post characters has exceeded."
 msgstr "Se han excecido la cantidad de carácteres del post"
 
-#: .\nekomon\forms.py:307 .\nekomon\forms.py:309
+#: .\nekomon\forms.py:416
+#, fuzzy
+#| msgid "The introduced username was not found."
+msgid "The post you've tried to reply to was not found."
+msgstr "El nombre de usuario introducido no se ha encontrado."
+
+#: .\nekomon\forms.py:455 .\nekomon\forms.py:457 .\nekomon\forms.py:503
 msgid "Cannot be empty."
 msgstr "El campo de e-mail no puede estar vacío."
 
-#: .\nekomon\forms.py:316
+#: .\nekomon\forms.py:464
 msgid "User not found."
 msgstr "Usuario no encontrado."
 
-#: .\nekomon\forms.py:380
+#: .\nekomon\forms.py:512
+#, fuzzy
+#| msgid "User not found."
+msgid "Post not found."
+msgstr "Usuario no encontrado."
+
+#: .\nekomon\forms.py:576
 msgid "An account registered by that e-mail was not found."
 msgstr ""
 "No se ha encontrado ninguna cuenta registrada con ese correo electrónico."
 
-#: .\nekomon\utils.py:54
+#: .\nekomon\utils.py:36
+msgid "profile picture'"
+msgstr ""
+
+#: .\nekomon\utils.py:36
+#, python-format
+msgid "%s %s"
+msgstr ""
+
+#: .\nekomon\utils.py:59
 msgid "Image attached to the post"
 msgstr "Imagen adjunta al post"
 
-#: .\nekomon\utils.py:120
+#: .\nekomon\utils.py:132
 msgid "The image is too big."
 msgstr "La imagen es demasiado grande."
-
-#~ msgid "The introduced username was not found."
-#~ msgstr "El nombre de usuario introducido no se ha encontrado."

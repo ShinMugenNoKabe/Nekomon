@@ -29,7 +29,7 @@
         </div>
 
         <div>
-            {% if profile != request.user %}
+            {% if request.user.is_authenticated and profile != request.user %}
                 <form id="follow-unfollow" class="profile-button-container">
                     {% csrf_token %} {% for field in follow_unfollow_form %} {{ field }} {% endfor %}
                     <button form="follow-unfollow" class="profile-button" id="follow-unfollow-button">

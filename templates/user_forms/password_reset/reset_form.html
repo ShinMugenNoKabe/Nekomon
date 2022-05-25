@@ -10,7 +10,7 @@
 
     <form id="reset-form" method="post">
         {% csrf_token %}
-        <img src="{% static 'images/neko.png' %}" id="nekomon-logo">
+        <img src="{% static 'images/neko.png' %}" id="nekomon-logo" alt="{% trans 'Nekomon\'s logo' %}">
         <p id="top-text">{% trans "Password reset" %}</p>
 
         {% for field in form %}

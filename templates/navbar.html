@@ -3,14 +3,14 @@
 {% load static %}
 
 <nav>
-    <a href="/"><img id="nav-logo" src="{% static 'images/neko.png' %}" title="{% trans 'Home' %}"></a>
+    <a href="/"><img id="nav-logo" src="{% static 'images/neko.png' %}" alt="{% trans 'Nekomon\'s logo' %}" title="{% trans 'Home' %}"></a>
 
     {% if request.user.is_authenticated %}
         <div id="nav-username-logout">
             <a data-username-link="{{ request.user.username }}" href="/{{ request.user.username }}" class="nav-username-and-pfp">
                 <div class="nav-user-data">
                     <span data-name="{{ request.user.username }}" class="nav-username">{{ request.user.name }}</span>
-                    <img class='profile-picture-nav' data-pfp="{{ request.user.username }}" src="https://i.imgur.com/{{ request.user.profile_picture }}.png" alt="Your profile picture">
+                    <img class='profile-picture-nav' data-pfp="{{ request.user.username }}" src="https://i.imgur.com/{{ request.user.profile_picture }}.png" alt="{% trans 'Your profile picture' %}">
                 </div>
             </a>
 

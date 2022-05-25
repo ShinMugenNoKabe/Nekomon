@@ -23,7 +23,9 @@
 <main class="main-site-container">
 
     <div class="info-search">
-        {% include 'profile_data.html' %}
+        {% if request.user.is_authenticated %}
+            {% include 'profile_data.html' %}
+        {% endif %}
 
         {% comment %}
             <input type="text" placeholder="{% trans 'Search users' %}" id="search-users-input">
@@ -52,7 +54,7 @@
 
       <!-- Modal content -->
       <div class="modal-content">
-        <img id="image-cropper" src="">
+        <img id="image-cropper" src="" alt="{% trans 'Cropped image' %}">
           <input type="file" name="new-profile-picture" hidden/>
           <button id="close-modal" class="profile-button" style="margin-top: 10px">{% trans "Save" %}</button>
       </div>
@@ -68,7 +70,6 @@
         $(document).ready(function() {
             $("time.timeago").timeago();
         });
-
 </script>
 <script src="https://kit.fontawesome.com/44068b9eec.js" crossorigin="anonymous"></script>
 <script src="{% static 'js/edit-profile.js' %}"></script>

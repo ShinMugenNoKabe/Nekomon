@@ -10,7 +10,7 @@
 
     <form id="register-form">
         {% csrf_token %}
-        <img src="{% static 'images/neko.png' %}" id="nekomon-logo">
+        <img src="{% static 'images/neko.png' %}" id="nekomon-logo" alt="{% trans 'Nekomon\'s logo' %}">
         <p id="top-text">{% trans "New account" %}</p>
 
         {% for field in form %}
