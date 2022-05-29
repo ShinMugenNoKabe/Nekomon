@@ -127,22 +127,26 @@ class PostViewConsumer(AsyncWebsocketConsumer):
     async def receive(self, text_data):
         text_data_json = json.loads(text_data)
         post = text_data_json['post']
+        post_id = text_data_json['post_id']
 
         await self.channel_layer.group_send(
             self.post_group,
             {
                 'type': 'sent_post',
-                'new_post': post
+                'new_post': post,
+                "post_id": post_id
             }
         )
 
     # Receive message from group
     async def sent_post(self, event):
         new_post = event['new_post']
+        post_id = event['post_id']
 
         # Send message to WebSocket
         await self.send(text_data=json.dumps({
-            'new_post': new_post
+            'new_post': new_post,
+            "post_id": post_id
         }))
 
 

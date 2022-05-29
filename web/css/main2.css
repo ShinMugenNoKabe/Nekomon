@@ -414,8 +414,12 @@ a:hover {
 }
 
 .description {
-    word-break: break all;
-    line-break: break all;
+    word-break: break-word;
+    line-break: break-word;
+}
+
+.post-replies-counter {
+    padding: 0 0.4em 0 0.2em;
 }
 
 @media only screen and (max-width: 500px) {

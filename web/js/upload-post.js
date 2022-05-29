@@ -45,6 +45,10 @@ if (typeof postViewSocket !== "undefined") {
         // Update posts
         $("#replies").html($("#replies").html() + data.new_post);
 
+        // Update counter
+        const counter = $("[data-post-replies='" + data.post_id + "']");
+        $(counter).text(Number($(counter).text()) + 1);
+
         // Update timeago
         $("time.timeago").timeago();
     };
@@ -93,7 +97,8 @@ post_box.submit(function (e) {
             const socket = typeof postSocket !== "undefined" ? postSocket : postViewSocket;
 
             socket.send(JSON.stringify({
-                'post': data.post
+                'post': data.post,
+                "post_id": data.post_id
             }));
 
             console.log(socket.readyState);
