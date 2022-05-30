@@ -9,7 +9,6 @@ from django.utils.timezone import now
 # Create your models here.
 class User(AbstractUser):
     profile_picture = models.CharField("Profile picture", max_length=200)
-    profile_header_image = models.CharField("Profile header image", max_length=200)
     name = models.CharField("Name", max_length=150)
     description = models.CharField("Description", max_length=200)
     registration_ip = models.CharField("Registration IP", max_length=20)
@@ -23,7 +22,7 @@ class User(AbstractUser):
         # Orden de la lista
         # ordering = ["name"]
         # Orden descendente
-        ordering = ["-name"]
+        ordering = ["username"]
 
     def __str__(self):
         return self.username
@@ -56,10 +55,10 @@ class Post(CommonInfo):
 
         # Orden de la lista
         # Orden descendente
-        ordering = ["-created_at"]
+        ordering = ["-id"]
 
-    # def __str__(self):
-    #     return self.content
+    def __str__(self):
+        return str(self.id)
 
 
 class Follow(CommonInfo):
@@ -88,10 +87,10 @@ class Follow(CommonInfo):
         # Orden de la lista
         # ordering = ["name"]
         # Orden descendente
-        ordering = ["id"]
+        ordering = ["-id"]
 
-    # def __str__(self):
-    #     return str(self.id)
+    def __str__(self):
+        return "Follower: " + str(self.user_follower.id) + ", followed: " + str(self.user_followed.id)
 
 
 class Like(CommonInfo):
