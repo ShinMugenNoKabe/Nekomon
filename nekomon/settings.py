@@ -15,8 +15,11 @@ from pathlib import Path
 import pytz
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
+from django.conf import settings
 
 from dotenv import load_dotenv
+
+import nekomon
 
 load_dotenv()
 
@@ -43,7 +46,8 @@ LOGGING = {
 SECRET_KEY = os.getenv("SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+
+DEBUG = False
 
 ALLOWED_HOSTS = [
     'localhost',
@@ -197,6 +201,7 @@ CHANNEL_LAYERS = {
         },
     },
 }
+
 
 # EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 # EMAIL_HOST = 'smtp.gmail.com'
