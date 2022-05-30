@@ -8,7 +8,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core import serializers
 from django.db.models import Q
 from django.http import HttpResponse, HttpResponseRedirect, JsonResponse, HttpRequest
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.core.exceptions import ObjectDoesNotExist
 from django.contrib.auth.hashers import make_password, check_password
 import json
@@ -28,13 +28,12 @@ from nekomon.utils import get_ip_address, upload_image_to_imgur, return_errors, 
     build_post_in_html, get_random_post
 from django.utils.translation import gettext_lazy as _
 
-
 @login_required
 def go_to_main_view(request):
     posts = Post.objects.raw(
         "SELECT distinct nekomon_post.* from nekomon_post, nekomon_follow where user_follower_id = "
         + str(request.user.id) +
-        " and (nekomon_post.user_id = user_followed_id or nekomon_post.user_id = " + str(request.user.id) + ")" +
+        " and nekomon_post.user_id = user_followed_id or nekomon_post.user_id = " + str(request.user.id) + "" +
         " and in_response_to_id is null " +
         " order by created_at desc"
     )
