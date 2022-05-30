@@ -15,7 +15,6 @@ from pathlib import Path
 import pytz
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
-import tzlocal
 
 from dotenv import load_dotenv
 

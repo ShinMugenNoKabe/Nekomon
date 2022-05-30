@@ -34,7 +34,7 @@ def go_to_main_view(request):
     posts = Post.objects.raw(
         "SELECT distinct nekomon_post.* from nekomon_post, nekomon_follow where user_follower_id = "
         + str(request.user.id) +
-        " and nekomon_post.user_id = user_followed_id or nekomon_post.user_id = " + str(request.user.id) +
+        " and (nekomon_post.user_id = user_followed_id or nekomon_post.user_id = " + str(request.user.id) + ")" +
         " and in_response_to_id is null " +
         " order by created_at desc"
     )
@@ -224,14 +224,12 @@ def new_post_ajax(request):
         post_in_response_to = None
 
         if request.FILES:
-            #content = ""
-
             try:
                 image = upload_image_to_imgur(request, "image")
             except UploadImageToImgurException as ex:
                 return return_errors(str(ex))
 
-        if in_response_to != "":
+        if in_response_to != "" and in_response_to != "undefined":
             post_in_response_to = Post.objects.get(
                 id=in_response_to
             )
@@ -242,8 +240,6 @@ def new_post_ajax(request):
             image=image,
             in_response_to=post_in_response_to
         )
-
-        # Post.save()
 
         response = JsonResponse({
             "post": build_post_in_html(post),

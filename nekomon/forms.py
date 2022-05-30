@@ -234,7 +234,7 @@ class RegisterForm(forms.Form):
                     email=email,
                     username=username,
                     password=make_password(password),
-                    profile_picture='gatopan.jpg',
+                    profile_picture='qn0eoAq',
                     name=username,
                     # get_ip_address(request)
                 )

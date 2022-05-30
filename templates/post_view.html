@@ -23,7 +23,7 @@
 
     // Start WebSocket for the requested post
     const postViewSocket = new WebSocket(
-        protocol + window.location.host + '/ws/post/{{ in_response_to }}'
+        protocol + window.location.host + '/ws/post/id/{{ in_response_to }}/'
     );
 </script>
 

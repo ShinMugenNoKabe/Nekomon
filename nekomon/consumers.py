@@ -101,9 +101,9 @@ def get_followed_users(user):
 
 class PostViewConsumer(AsyncWebsocketConsumer):
     async def connect(self):
-        self.post = self.scope['url_route']['kwargs']['post']
+        self.id_post = self.scope['url_route']['kwargs']['post']
 
-        post = await get_post(self.post)
+        post = await get_post(self.id_post)
 
         if post is not None:
             self.post_group = 'group_post_%s' % post.id
@@ -156,7 +156,7 @@ def get_post(id_post):
 
     try:
         post = Post.objects.get(
-            id=id_post
+            id=int(id_post)
         )
 
         return post

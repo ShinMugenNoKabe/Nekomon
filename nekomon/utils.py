@@ -1,6 +1,8 @@
 import base64
+import functools
 import json
 import ast
+import operator
 import os
 from datetime import datetime, timedelta
 
@@ -18,7 +20,8 @@ from django.utils.translation import gettext_lazy as _
 
 from dotenv import load_dotenv
 
-from nekomon.models import Post
+from nekomon.models import Post, User
+import re
 
 load_dotenv()
 
@@ -52,8 +55,9 @@ def build_post_in_html(post):
 
     # Content
     if post.content != "":
+        content = process_content(post.content)
         post_html +=    "<hr>"
-        post_html +=    "<div class='post-content'>" + post.content + "</div>"
+        post_html +=    "<div class='post-content'>" + content + "</div>"
         alt_message = post.content
     else:
         alt_message = _("Image attached to the post")
@@ -83,6 +87,46 @@ def build_multiple_posts_in_html(posts):
         posts_html += build_post_in_html(post)
 
     return posts_html
+
+
+def process_content(content):
+    # Users
+    users_in_content = list(set(re.findall("@[a-zA-Z0-9]+", content)))
+
+    if len(users_in_content) > 0:
+        for at_username in users_in_content:
+            username = at_username[1:]
+
+            user = User.objects.filter(
+                username=username
+            )
+
+            if len(user) > 0:
+                content = content.replace(at_username, "<a target='_blank' href='/" + user[0].username + "'>@" + user[0].username + "</a>&nbsp;")
+
+    # URLs and YouTube videos
+    youtube_videos_in_content = list(set(re.findall(r'(https?://)?(www\.)?(youtube|youtu|youtube-nocookie)\.(com|be)/(watch\?v=|embed/|v/|.+\?v=)?(?P<id>[A-Za-z0-9\-=_]{11})', content)))
+
+    if len(youtube_videos_in_content) > 0:
+        video = youtube_videos_in_content[0]
+        video_id = video[-1]
+        video_url = (video[0] + video[1] + video[2] + "." + video[3] + "/" + video[4] + video_id)
+
+        content = content.replace(
+            video_url,
+            "<iframe width='560' height='315' src='https://www.youtube.com/embed/" + video_id + "' title='YouTube video player'"
+            "frameborder='0' allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture'"
+            "allowfullscreen></iframe>"
+        )
+
+    urls_in_content = list(set(re.findall(r'(https?://[^\s]+)', content)))
+
+    if len(urls_in_content) > 0:
+        for url in urls_in_content:
+            if url.find("https://www.youtube.com/embed/") == -1:
+                content = content.replace(url, "<a target='_blank' href='" + url + "'>" + url + "</a>&nbsp;")
+
+    return content
 
 
 def get_ip_address(request):

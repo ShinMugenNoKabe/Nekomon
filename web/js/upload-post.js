@@ -105,6 +105,7 @@ post_box.submit(function (e) {
 
         },
         error: function(data) {
+            console.error("Error: " + JSON.stringify(data));
             $("#errors").html("<div class='flash-message'>" + data.responseJSON.error + "</div>");
         },
         complete: function() {
