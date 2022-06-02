@@ -24,4 +24,4 @@ creada desde cero utilizando Python.</p>
 Por ejemplo, para mostrar la información de usuario se debe escribir en un canal de texto:<br>
 <code>/user nombreDeUsuario</code>
 
-Puedes añadir el Bot a tu servidor haciendo click en <a href="https://discord.com/api/oauth2/authorize?client_id=349981324574195715&permissions=0&scope=bot">este enlace</a>.
+Puedes añadir el Bot a tu servidor haciendo click en <a href="https://discord.com/api/oauth2/authorize?client_id=981836167622299668&permissions=3147776&scope=bot">este enlace</a>.
