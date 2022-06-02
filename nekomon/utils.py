@@ -31,7 +31,10 @@ def build_post_in_html(post):
         in_response_to=post
     ).count()
 
-    post_html = "<div class='post' id='post-" + str(post.id) + "'>"
+    if post.in_response_to is not None:
+        post_html = "<div class='post' id='post-" + str(post.id) + "'>"
+    else:
+        post_html = "<div class='post'>"
 
     # Header
     post_html +=    "<div class='post-header'>"

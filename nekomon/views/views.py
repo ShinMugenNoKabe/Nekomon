@@ -121,13 +121,14 @@ def post_view(request, pk):
                 previous_posts += "<hr>"
 
         post = build_post_in_html(post)
-        post += "<hr>"
 
         replies = Post.objects.filter(
             in_response_to=pk
         ).order_by("created_at")
 
-        replies = build_multiple_posts_in_html(replies)
+        if len(replies) > 0:
+            replies = build_multiple_posts_in_html(replies)
+            post += "<hr>"
     except ObjectDoesNotExist:
         return go_to_main_view()
 
