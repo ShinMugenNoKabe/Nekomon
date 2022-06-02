@@ -8,7 +8,6 @@ creada desde cero utilizando Python.</p>
 <ul>
 <li>Framework para backend: <b>Django</b></li>
 <li>Framework JS para frontend: <b>jQuery</b></li>
-<li>Framework CSS para frontend: <b>SASS</b></li>
 <li>IDE: <b>PyCharm/Visual Studio Code</b></li>
 <li>VPS desplagado en: <b>Contabo</b></li>
 <li>Servidor web: <b>NGINX</b></li>
@@ -21,7 +20,8 @@ creada desde cero utilizando Python.</p>
 
 <p>Nekomon.es además viene incorporado con un Bot de Discord completamente funcional, el cual recibe datos de entidades desde una API REST y los muestra al usuario.</p>
 
-Por ejemplo, para mostrar la información de usuario se debe escribir en un canal de texto:<br>
-<code>/user nombreDeUsuario</code>
+El Bot puede mostrar los datos de un usuario o de un post. Para cada uno de ellos, se debe de escribir en un canal de texto el enlace del usuario o post. Ejemplo:<br>
+<code>https://www.nekomon.es/Godofredo</code><br>
+<code>https://www.nekomon.es/posts/1</code><br>
 
 Puedes añadir el Bot a tu servidor haciendo click en <a href="https://discord.com/api/oauth2/authorize?client_id=981836167622299668&permissions=3147776&scope=bot">este enlace</a>.
