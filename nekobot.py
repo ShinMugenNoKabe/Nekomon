@@ -62,11 +62,12 @@ async def on_message(message):
 
 
 def get_json_data(api):
-    response = ""
+    response = None
     
     try:
-        response = requests.get(url=api).json()
-    except JSONDecodeError:
+        response = requests.get(url=api, verify=False).json()
+    except Exception as ex:
+        print("ERROR: " + ex.message)
         response = None
     finally:
         return response
