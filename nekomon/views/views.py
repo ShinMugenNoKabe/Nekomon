@@ -33,7 +33,7 @@ def go_to_main_view(request):
     posts = Post.objects.raw(
         "SELECT distinct nekomon_post.* from nekomon_post, nekomon_follow where user_follower_id = "
         + str(request.user.id) +
-        " and nekomon_post.user_id = user_followed_id or nekomon_post.user_id = " + str(request.user.id) + "" +
+        " and (nekomon_post.user_id = user_followed_id or nekomon_post.user_id = " + str(request.user.id) + ")" +
         " and in_response_to_id is null " +
         " order by created_at desc"
     )
@@ -104,7 +104,24 @@ def post_view(request, pk):
 
         name = post.user.name
 
+        in_response_to_post = post.in_response_to
+
+        previous_posts_list = []
+        previous_posts = ""
+
+        while in_response_to_post is not None:
+            previous_posts_list.append(in_response_to_post)
+            in_response_to_post = in_response_to_post.in_response_to
+
+        if len(previous_posts_list) > 0:
+            previous_posts_list.reverse()
+
+            for previous_post in previous_posts_list:
+                previous_posts += build_post_in_html(previous_post)
+                previous_posts += "<hr>"
+
         post = build_post_in_html(post)
+        post += "<hr>"
 
         replies = Post.objects.filter(
             in_response_to=pk
@@ -121,7 +138,9 @@ def post_view(request, pk):
     context = {
         "name": name,
         "is_viewing_post": True,
+        "previous_posts": previous_posts,
         "post": post,
+        "id_post": pk,
         "replies": replies,
         "random_post": build_post_in_html(random_post),
         "update_form": UpdateUserForm,

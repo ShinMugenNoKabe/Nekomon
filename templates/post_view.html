@@ -9,9 +9,14 @@
 {% block content %}
 
 <div id="posts">
+    {{ previous_posts | safe }}
+
     {{ post | safe }}
 
-    {% include "post_box.html" %}
+    {% if request.user.is_authenticated %}
+        {% include "post_box.html" %}
+    {% endif %}
+
 
     <div id="replies">
         {{ replies | safe }}
@@ -25,6 +30,11 @@
     const postViewSocket = new WebSocket(
         protocol + window.location.host + '/ws/post/{{ in_response_to }}'
     );
+</script>
+
+<script>
+    // Go to the specific post
+    window.location.hash = "#post-{{id_post}}";
 </script>
 
 {% endblock %}
