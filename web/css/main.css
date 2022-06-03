@@ -64,7 +64,6 @@
   height: 3em;
   border-radius: 50px;
   font-size: 1em;
-  margin-top: 2em;
 }
 .big-button:hover {
   cursor: pointer;
@@ -104,6 +103,17 @@ footer {
     width: 100%;
     height: 4em;
     background-color: #ccc;
+}
+
+#spin-load-icon-container {
+    width: 100%;
+    margin-top: 2em;
+}
+
+#spin-load-icon {
+    width: 30px;
+    height: 30px;
+    margin-bottom: 2em;
 }
 
 footer div {

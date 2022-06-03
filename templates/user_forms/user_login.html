@@ -30,7 +30,13 @@
     </form>
 
     <div class="buttons-links">
-        <button class="big-button" type="submit" form="log-in-form">{% trans "Enter" %}</button>
+        <div id="spin-load-icon-container">
+            <img src="{% static 'images/loading.gif' %}"
+             alt="{% trans 'Logging in...' %}"
+             id="spin-load-icon"
+             hidden="hidden">
+        </div>
+        <button class="big-button" type="submit" form="log-in-form" id="login-button">{% trans "Enter" %}</button>
         <div id="links">
             <div class="link">{% trans "Don't have an account yet?" %} <a href='/register/'>{% trans "Register" %}</a></div>
             <div class="link">{% trans "Forgot your password?" %} <a href='/password_reset/'>{% trans "Reset password" %}</a></div>
