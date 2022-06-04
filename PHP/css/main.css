@@ -1,0 +1,284 @@
+@import url('https://fonts.googleapis.com/css2?family=Work+Sans&display=swap');
+/* {
+    box-sizing: border-box;
+}*/
+
+body {
+    margin: 0;
+    font-family: "Work Sans";
+}
+
+nav {
+    height: 7em;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: rgb(34, 34, 34);
+    color: white;
+}
+
+#nav-logo {
+    height: 5em;
+    padding-left: 1em;
+}
+
+.nav-user-data,
+.nav-user-data a {
+    display: flex;
+    align-items: center;
+}
+
+.nav-user-data {
+    margin-right: 2em;
+}
+
+.nav-username {
+    padding-right: 1em;
+}
+
+.profile-picture-nav {
+    width: 5em;
+    height: 5em;
+}
+
+#nav-logout-button {
+    background-color: inherit;
+    border: none;
+    color: rgb(199, 199, 199);
+    text-decoration: none;
+    font-size: inherit;
+    font-family: inherit;
+    cursor: pointer;
+}
+
+#nav-logout-button:hover {
+    color: rgb(224, 124, 185);
+}
+
+#nav-username-logout {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    padding-right: 1em;
+}
+
+a {
+    text-decoration: none;
+    color: rgb(199, 199, 199);
+}
+
+a:hover {
+    color: rgb(224, 124, 185);
+}
+
+.profile-header {
+    position: relative;
+    color: white;
+    background-image: url("https://www.nekomon.es/images/profile_pictures/flopadios.png");
+    background-size: cover;
+    height: 15em;
+    width: 95%;
+    border-radius: 20px;
+    border: 2px solid grey;
+    padding: 1em;
+    margin: 1em;
+}
+
+.profile-header p {
+    font-size: 1.4em;
+    text-shadow: 2px 0 0 black, -2px 0 0 black, 0 2px 0 black, 0 -2px 0 black, 1px 1px black, -1px -1px 0 black, 1px -1px 0 black, -1px 1px 0 black;
+}
+
+.profile-pfp {
+    width: 15em;
+    height: 15em;
+    border-radius: 20px;
+    border: 2px solid grey;
+    float: left;
+    margin-right: 2em;
+    background-color: rgb(34, 34, 34);
+}
+
+.profile-button-container {
+    position: absolute;
+    top: 1em;
+    right: 1em;
+}
+
+.profile-button,
+#new-post-button {
+    color: white;
+    text-decoration: none;
+    border: none;
+    border-radius: 50px;
+    border: 2px solid rgb(82, 82, 82);
+    cursor: pointer;
+}
+
+.profile-button {
+    background-color: rgb(144, 209, 221);
+    font-size: 2em;
+    padding: 0.2em 0.4em;
+}
+
+.profile-button:hover {
+    background-color: rgb(101, 152, 161);
+}
+
+#new-post-button {
+    background-color: rgb(193, 213, 168);
+    font-size: 1.2em;
+    padding: 0.2em 0.6em;
+}
+
+#new-post-button:hover {
+    background-color: rgb(119, 146, 96);
+}
+
+.post {
+    color: white;
+    background-color: rgb(42, 42, 42);
+    height: 100%;
+    width: 30em;
+    border-radius: 20px;
+    border: 2px solid grey;
+    padding: 1em;
+    margin: 1em;
+}
+
+.post-header {
+    height: 5em;
+    width: 100%;
+    padding-bottom: 1em;
+}
+
+.post-pfp {
+    float: left;
+    width: 5em;
+    height: 5em;
+    border-radius: 100%;
+    border: 1px solid grey;
+}
+
+.post-username-date {
+    padding-left: 5em;
+}
+
+.post-username-date p {
+    margin-top: 0;
+    margin-left: 1em;
+}
+
+.post-content,
+#new-post-content {
+    display: block;
+    word-wrap: break-word;
+}
+
+#new-post-content {
+    padding-top: 0;
+}
+
+textarea {
+    resize: none;
+    width: 99%;
+    height: 6em;
+    font-size: 1em;
+    background-color: rgb(42, 42, 42);
+    color: white;
+    font-family: "Work Sans";
+    border: none;
+    outline: none;
+    overflow: hidden;
+}
+
+#char-count {
+    float: right;
+    font-size: 1.2em;
+    padding-right: 1em;
+}
+
+.post p {
+    margin-bottom: 0.5em;
+}
+
+.flash-message {
+    color: red;
+    padding-top: 1.2em;
+}
+
+@keyframes fadeInUp {
+    from {
+        transform: translate3d(0, 40px, 0)
+    }
+    to {
+        transform: translate3d(0, 0, 0);
+        opacity: 1
+    }
+}
+
+@-webkit-keyframes fadeInUp {
+    from {
+        transform: translate3d(0, 40px, 0)
+    }
+    to {
+        transform: translate3d(0, 0, 0);
+        opacity: 1
+    }
+}
+
+.animated {
+    animation-duration: 1s;
+    animation-fill-mode: both;
+    -webkit-animation-duration: 1s;
+    -webkit-animation-fill-mode: both
+}
+
+.animatedFadeInUp {
+    opacity: 0
+}
+
+.fadeInUp {
+    opacity: 0;
+    animation-name: fadeInUp;
+    -webkit-animation-name: fadeInUp;
+}
+
+@media only screen and (max-width: 500px) {
+    nav {
+        width: 100%;
+    }
+    #nav-logo {
+        height: 3em;
+    }
+    .profile-picture-nav {
+        width: 3em;
+        height: 3em;
+    }
+    .profile-header {
+        height: 15em;
+        width: 80%;
+        height: 100%;
+    }
+    .profile-header p {
+        font-size: 1em;
+    }
+    .profile-pfp {
+        width: 5em;
+        height: 5em;
+    }
+    .profile-button-container {
+        position: static;
+    }
+    .profile-button {
+        font-size: 1.2em;
+        width: 100%;
+        height: 2em;
+    }
+    .post {
+        width: 80%;
+    }
+    textarea {
+        width: 98%;
+    }
+}
