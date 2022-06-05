@@ -175,12 +175,20 @@ def upload_image_to_imgur(request, name):
     is_success = json_response.get("success")
 
     if is_success:
+        image.close()
         return data_response.get("id")
     else:
         error = data_response.get("error")
-
-        if error == "File is over the size limit":
-            raise UploadImageToImgurException(_("The image is too big."))
+        print(type(error))
+        
+        error_message = ""
+        
+        if type(error) is str:
+            error_message = error
+        else:
+            error_message = error.get("message")
+            
+        raise UploadImageToImgurException(error_message)
 
 
 def return_errors(object_error):
