@@ -149,7 +149,7 @@ def post_view(request, pk):
     return render(request, 'post_view.html', context)
 
 
-def log_in_view(request, exeption):
+def log_in_view(request):
     """Goes to the log in view if the user is not logged in"""
     
     if request.user.is_authenticated:
