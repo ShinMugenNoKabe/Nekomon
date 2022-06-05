@@ -8,7 +8,7 @@ from nekomon.forms import FollowUnfollowForm, LikePostForm, LogInForm, PostForm,
 from nekomon.models import Follow, Post
 from nekomon.utils import build_post_in_html, get_ip_address, return_errors, upload_image_to_imgur
 from django.contrib.auth import authenticate, login
-from nekomon.views.views import go_to_main_view
+from nekomon.views.page_views import go_to_main_view
 
 
 def log_in_ajax(request):

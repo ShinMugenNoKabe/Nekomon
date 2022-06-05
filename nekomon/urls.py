@@ -7,7 +7,7 @@ from django.urls import path
 from nekomon.forms import CustomPasswordResetForm, CustomPasswordSetPasswordForm
 from nekomon.views.ajax_views import follow_unfollow_ajax, like_post_ajax, log_in_ajax, new_post_ajax, register_ajax
 from nekomon.views.api_views import api_get_username, api_get_post
-from nekomon.views.views import go_to_main_view, logout_view, user_profile_view, \
+from nekomon.views.page_views import go_to_main_view, logout_view, user_profile_view, \
     log_in_view, register_view, post_view, update_profile, search_users
 from django.contrib.auth import views as auth_views
 
@@ -71,3 +71,6 @@ urlpatterns = [
     path('api/user/<str:username>', api_get_username, name='api_get_username'),
     path('api/post/<int:post_id>', api_get_post, name='api_get_post'),
 ]
+
+handler404 = "nekomon.views.handlers_views.handler404"
+handler500 = "nekomon.views.handlers_views.handler500"

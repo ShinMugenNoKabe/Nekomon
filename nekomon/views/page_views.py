@@ -2,7 +2,7 @@
 Request page views
 """
 
-from django.contrib.auth import authenticate, login, logout, update_session_auth_hash
+from django.contrib.auth import logout, update_session_auth_hash
 from django.contrib.auth.decorators import login_required
 from django.core import serializers
 from django.db.models import Q
@@ -14,7 +14,7 @@ from django.views.decorators.csrf import csrf_exempt
 from nekomon.exceptions import UploadImageToImgurException
 from nekomon.forms import LogInForm, RegisterForm, PostForm, FollowUnfollowForm, UpdateUserForm, LikePostForm
 from nekomon.models import User, Post, Follow, Like
-from nekomon.utils import get_ip_address, upload_image_to_imgur, return_errors, build_multiple_posts_in_html, \
+from nekomon.utils import upload_image_to_imgur, return_errors, build_multiple_posts_in_html, \
     build_post_in_html, get_random_post
 from django.utils.translation import gettext_lazy as _
 
@@ -149,7 +149,7 @@ def post_view(request, pk):
     return render(request, 'post_view.html', context)
 
 
-def log_in_view(request):
+def log_in_view(request, exeption):
     """Goes to the log in view if the user is not logged in"""
     
     if request.user.is_authenticated:
