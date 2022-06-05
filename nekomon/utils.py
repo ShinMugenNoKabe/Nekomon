@@ -33,7 +33,7 @@ def build_post_in_html(post):
     # Header
     post_html +=    "<div class='post-header'>"
     post_html +=        "<div>"
-    post_html +=            "<img class='post-pfp' data-pfp='" + post.user.username + "' src='https://i.imgur.com/" + post.user.profile_picture + ".png' alt='" + _("%s %s" % (post.user.username, _("profile picture'"))) + "' />"
+    post_html +=            "<img class='post-pfp' data-pfp='" + post.user.username + "' src='https://i.imgur.com/" + post.user.profile_picture + ".jpg' alt='" + _("%s %s" % (post.user.username, _("profile picture'"))) + "' />"
     post_html +=        "</div>"
     post_html +=        "<div class='post-username-date'>"
     post_html +=            "<a data-username-link='" + post.user.username + "' href='/" + post.user.username + "'>"
@@ -63,7 +63,7 @@ def build_post_in_html(post):
 
     if post.image != "":
         post_html +=        "<div class='post-image'>"
-        post_html +=            "<img src='https://i.imgur.com/" + post.image + ".png' alt='" + alt_message + "'>"
+        post_html +=            "<img src='https://i.imgur.com/" + post.image + ".jpg' alt='" + alt_message + "'>"
         post_html +=        "</div>"
         post_html +=        "<hr>"
 
