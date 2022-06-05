@@ -1,32 +1,26 @@
-import base64
-import functools
+"""
+Utils methods container
+"""
+
 import json
-import ast
-import operator
 import os
-from datetime import datetime, timedelta
-
 import requests
-
 from base64 import b64encode
-
 from django.forms.utils import ErrorDict
 from django.http import JsonResponse
-from django.template.backends import django
-
 from nekomon.exceptions import UploadImageToImgurException
-
 from django.utils.translation import gettext_lazy as _
-
 from dotenv import load_dotenv
-
 from nekomon.models import Post, User
 import re
+
 
 load_dotenv()
 
 
 def build_post_in_html(post):
+    """Builds a given post to HTML"""
+    
     replies = Post.objects.filter(
         in_response_to=post
     ).count()
@@ -84,6 +78,8 @@ def build_post_in_html(post):
 
 
 def build_multiple_posts_in_html(posts):
+    """Builds a list of posts to HTML"""
+    
     posts_html = ""
 
     for post in posts:
@@ -93,6 +89,8 @@ def build_multiple_posts_in_html(posts):
 
 
 def process_content(content):
+    """Processes a post content to add user mentions, links and youtube embeds"""
+    
     # Users
     users_in_content = list(set(re.findall("@[a-zA-Z0-9]+", content)))
 
@@ -133,6 +131,8 @@ def process_content(content):
 
 
 def get_ip_address(request):
+    """Gets the user's IP address"""
+    
     x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')
 
     if x_forwarded_for:
@@ -143,6 +143,8 @@ def get_ip_address(request):
 
 
 def upload_image_to_imgur(request, name):
+    """Uploads an image to Imgur"""
+    
     client_id = os.getenv("IMGUR_CLIENT_ID")
 
     headers = {"Authorization": "Client-ID " + client_id}
@@ -182,6 +184,8 @@ def upload_image_to_imgur(request, name):
 
 
 def return_errors(object_error):
+    """Returns client errors as JSON"""
+    
     list_errors = []
 
     if type(object_error) is ErrorDict:
@@ -199,6 +203,10 @@ def return_errors(object_error):
 
 
 def get_random_post():
-    return Post.objects.raw(
+    """Gets a random post from the database"""
+    
+    random_post = Post.objects.raw(
         "SELECT * FROM nekomon_post ORDER BY RAND() LIMIT 1"
     )[0]
+    
+    return random_post

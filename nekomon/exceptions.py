@@ -1,3 +1,7 @@
+"""
+Custom exceptions
+"""
+
 from locale import Error
 
 

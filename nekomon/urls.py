@@ -1,32 +1,20 @@
-"""nekomon URL Configuration
-
-The `urlpatterns` list routes URLs to views. For more information please see:
-    https://docs.djangoproject.com/en/4.0/topics/http/urls/
-Examples:
-Function views
-    1. Add an import:  from my_app import views
-    2. Add a URL to urlpatterns:  path('', views.home, name='home')
-Class-based views
-    1. Add an import:  from other_app.views import Home
-    2. Add a URL to urlpatterns:  path('', Home.as_view(), name='home')
-Including another URLconf
-    1. Import the include() function: from django.urls import include, path
-    2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
+"""
+URLs patterns configuration
 """
 from django.contrib import admin
 from django.urls import path
 
 from nekomon.forms import CustomPasswordResetForm, CustomPasswordSetPasswordForm
+from nekomon.views.ajax_views import follow_unfollow_ajax, like_post_ajax, log_in_ajax, new_post_ajax, register_ajax
 from nekomon.views.api_views import api_get_username, api_get_post
-from nekomon.views.views import go_to_main_view, log_in_ajax, register_ajax, logout_view, user_profile_view, \
-    new_post_ajax, log_in_view, register_view, post_view, follow_unfollow_ajax, update_profile, search_users, \
-    like_post_ajax
+from nekomon.views.views import go_to_main_view, logout_view, user_profile_view, \
+    log_in_view, register_view, post_view, update_profile, search_users
 from django.contrib.auth import views as auth_views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
 
-    # Main
+    # Main view
     path('', go_to_main_view, name='main_view'),
 
     # Login
@@ -37,7 +25,6 @@ urlpatterns = [
     path('logout/', logout_view, name='logout_view'),
 
     # Reset password
-    # path('pw-reset/', auth_views.password_reset, name='password_reset_view'),
     path('password_reset/', auth_views.PasswordResetView.as_view(
             form_class=CustomPasswordResetForm,
             template_name="user_forms/password_reset/reset_form.html",
@@ -80,7 +67,7 @@ urlpatterns = [
     # User search
     path('ajax/search-users/', search_users, name='search_users'),
 
-    # NekoBot API
+    # API views
     path('api/user/<str:username>', api_get_username, name='api_get_username'),
     path('api/post/<int:post_id>', api_get_post, name='api_get_post'),
 ]

@@ -1,35 +1,28 @@
-import pdb
+"""
+Request page views
+"""
 
-import bcrypt
-from crispy_forms.utils import render_crispy_form
 from django.contrib.auth import authenticate, login, logout, update_session_auth_hash
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core import serializers
 from django.db.models import Q
-from django.http import HttpResponse, HttpResponseRedirect, JsonResponse, HttpRequest
-from django.shortcuts import render, redirect
+from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
+from django.shortcuts import render
 from django.core.exceptions import ObjectDoesNotExist
-from django.contrib.auth.hashers import make_password, check_password
-import json
-from django.conf import settings
-
-# Create your views here.
-from django.template.context_processors import csrf
 from django.urls import reverse, reverse_lazy
 from django.views.decorators.csrf import csrf_exempt
-from django.views.generic import RedirectView, CreateView
-
 from nekomon.exceptions import UploadImageToImgurException
 from nekomon.forms import LogInForm, RegisterForm, PostForm, FollowUnfollowForm, UpdateUserForm, LikePostForm
-# from nekomon.models import User
 from nekomon.models import User, Post, Follow, Like
 from nekomon.utils import get_ip_address, upload_image_to_imgur, return_errors, build_multiple_posts_in_html, \
     build_post_in_html, get_random_post
 from django.utils.translation import gettext_lazy as _
 
+
 @login_required
 def go_to_main_view(request):
+    """Goes to the main feed page"""
+    
     posts = Post.objects.raw(
         "SELECT distinct nekomon_post.* from nekomon_post, nekomon_follow where user_follower_id = "
         + str(request.user.id) +
@@ -51,6 +44,8 @@ def go_to_main_view(request):
 
 
 def user_profile_view(request, profile):
+    """Goes to the user profile view"""
+
     try:
         profile = User.objects.get(
             username=profile
@@ -97,6 +92,8 @@ def user_profile_view(request, profile):
 
 
 def post_view(request, pk):
+    """Goes to the post view"""
+
     try:
         post = Post.objects.get(
             id=pk
@@ -153,182 +150,42 @@ def post_view(request, pk):
 
 
 def log_in_view(request):
+    """Goes to the log in view if the user is not logged in"""
+    
     if request.user.is_authenticated:
         return go_to_main_view(request)
-    else:
-        context = {
-            'form': LogInForm,
-        }
+    
+    context = {
+        'form': LogInForm,
+    }
 
-        return render(request, 'user_forms/user_login.html', context)
-
-
-def register_view(request):
-    if request.user.is_authenticated:
-        return go_to_main_view(request)
-    else:
-        context = {
-            'form': RegisterForm
-        }
-
-        return render(request, 'user_forms/user_register.html', context)
-
-
-def log_in_ajax(request):
-    if request.method == "POST":
-        form = LogInForm(request.POST or None)
-
-        if not form.is_valid():
-            return return_errors(form.errors)
-
-        username = form.cleaned_data['username']
-        password = form.cleaned_data['password']
-        user = authenticate(
-            username=username,
-            password=password,
-        )
-        if user is not None:
-            login(request, user)
-            return go_to_main_view(request)
-            # return HttpResponseRedirect(reverse_lazy('main_view'))
-            # return render(request, "calender.html")
-        else:
-            print("test")
-
-
-def register_ajax(request):
-    if request.method == "POST":
-        form = RegisterForm(request.POST or None)
-
-        if not form.is_valid():
-            return return_errors(form.errors)
-
-        username = form.cleaned_data['username']
-        password = form.cleaned_data['password']
-
-        user = authenticate(
-            username=username,
-            password=password,
-        )
-
-        if user is not None:
-            user.registration_ip = get_ip_address(request)
-            user.save()
-
-            login(request, user)
-            return go_to_main_view(request)
-            # return HttpResponseRedirect(reverse_lazy('main_view'))
-            # return render(request, "calender.html")
-        else:
-            print("test")
+    return render(request, 'user_forms/user_login.html', context)
 
 
 def logout_view(request):
+    """Logouts the session"""
+
     logout(request)
     return HttpResponseRedirect(reverse('log_in_view'))
 
 
-def new_post_ajax(request):
-    if request.method == "POST":
-        form = PostForm(request.POST, request.FILES)
+def register_view(request):
+    """Goes to the register view if the user is not logged in"""
+    
+    if request.user.is_authenticated:
+        return go_to_main_view(request)
+    
+    context = {
+        'form': RegisterForm
+    }
 
-        if not form.is_valid():
-            return return_errors(form.errors)
-
-        content = form.cleaned_data['content']
-        in_response_to = form.cleaned_data['in_response_to']
-
-        image = ""
-
-        post_in_response_to = None
-
-        if request.FILES:
-            try:
-                image = upload_image_to_imgur(request, "image")
-            except UploadImageToImgurException as ex:
-                return return_errors(str(ex))
-
-        if in_response_to != "" and in_response_to != "undefined":
-            post_in_response_to = Post.objects.get(
-                id=in_response_to
-            )
-
-        post = Post.objects.create(
-            content=content,
-            user_id=request.user.id,
-            image=image,
-            in_response_to=post_in_response_to
-        )
-
-        response = JsonResponse({
-            "post": build_post_in_html(post),
-            "post_id": str(in_response_to)
-        })
-
-        response.status_code = 200
-        return response
-
-
-def like_post_ajax(request):
-    if request.method == "POST":
-        form = LikePostForm(request.POST or None)
-
-        if not form.is_valid():
-            return return_errors(form.errors)
-
-        post_id = form.cleaned_data['post_id']
-
-        like = Like(
-            user_liker_id=request.user.id,
-            post_liked_id=post_id,
-        )
-
-        like.save()
-
-        response = JsonResponse("True", safe=False)
-        # Post.save()
-
-        response.status_code = 200
-        return response
-
-
-def follow_unfollow_ajax(request):
-    if request.method == "POST":
-        form = FollowUnfollowForm(request.POST or None)
-
-        if not form.is_valid():
-            return return_errors(form.errors)
-
-        user_id = form.cleaned_data['user_id']
-        is_following = form.cleaned_data['is_following']
-
-        if not str(user_id) == str(request.user.id):
-            if is_following:
-                follow = Follow.objects.get(
-                    user_followed_id=user_id,
-                    user_follower_id=request.user.id,
-                )
-
-                follow.delete()
-
-                response = JsonResponse("False", safe=False)
-            else:
-                follow = Follow(
-                    user_followed_id=user_id,
-                    user_follower_id=request.user.id,
-                )
-
-                follow.save()
-
-                response = JsonResponse("True", safe=False)
-            # Post.save()
-
-            response.status_code = 200
-            return response
+    return render(request, 'user_forms/user_register.html', context)
 
 
 @login_required
 def update_profile(request):
+    """Updates the user profile"""
+
     if request.method == "POST":
         form = UpdateUserForm(request.POST, request.FILES, request=request)
 
@@ -392,6 +249,8 @@ def update_profile(request):
 
 @csrf_exempt
 def search_users(request):
+    """Looks for users on the database"""
+
     if request.method == "POST":
 
         print(request)

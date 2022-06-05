@@ -1,12 +1,13 @@
+"""
+Database models
+"""
+
 from django.contrib.auth.models import AbstractUser
 from django.db import models
-
 from nekomon import settings
 from core.models import CommonInfo
-from django.utils.timezone import now
 
 
-# Create your models here.
 class User(AbstractUser):
     profile_picture = models.CharField("Profile picture", max_length=200)
     name = models.CharField("Name", max_length=150)

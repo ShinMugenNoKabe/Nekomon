@@ -1,13 +1,8 @@
 import os
-
 import discord
 import requests
 from dotenv import load_dotenv
-from requests import JSONDecodeError
-from datetime import datetime
-
 from django.conf import settings
-
 import os
 
 os.environ['DJANGO_SETTINGS_MODULE'] = 'nekomon.settings'
@@ -28,7 +23,7 @@ client = discord.Client()
 
 @client.event
 async def on_ready():
-    print("Hola me ensendí")
+    print("Bot has connected")
 
 
 @client.event
@@ -48,8 +43,6 @@ async def on_message(message):
     if "nekomon.es/posts/" in content:
         post = content.split("/")
         post = post[len(post) - 1]
-        
-        print("POST ID: " + post)
 
         await show_post(channel, post)
         

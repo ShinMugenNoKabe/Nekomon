@@ -1,15 +1,18 @@
-import json
+"""
+Classes used by the WebSockets
+"""
 
+import json
 from channels.db import database_sync_to_async
 from channels.generic.websocket import AsyncWebsocketConsumer
-from django.contrib.auth.models import AnonymousUser
 from django.core.exceptions import ObjectDoesNotExist
 from django.db import close_old_connections
-
 from nekomon.models import Follow, User, Post
 
 
 class PostConsumer(AsyncWebsocketConsumer):
+    """Class that notifies if a new post has been posted by the user or a followed user"""
+    
     async def connect(self):
         self.page = self.scope['url_route']['kwargs']['page']
         self.username = self.scope['url_route']['kwargs']['username']
@@ -100,6 +103,8 @@ def get_followed_users(user):
 
 
 class PostViewConsumer(AsyncWebsocketConsumer):
+    """Class that notifies if a new post has been posted on a post view"""
+    
     async def connect(self):
         self.id_post = self.scope['url_route']['kwargs']['post']
 

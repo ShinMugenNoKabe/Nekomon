@@ -1,31 +1,21 @@
-import re
-import string
+"""
+Custom user forms
+"""
 
-from crispy_forms.bootstrap import InlineField, PrependedText
-from crispy_forms.helper import FormHelper
-from crispy_forms.layout import Submit, Layout, Fieldset, Div, HTML, Field
+import re
 from django import forms
 from django.contrib.auth import authenticate
-from django.contrib.auth.hashers import make_password, check_password
-from django.contrib.auth.views import PasswordResetConfirmView
-from django.core.exceptions import ValidationError, EmptyResultSet
+from django.contrib.auth.hashers import make_password
+from django.core.exceptions import ValidationError
 from django.db.models import Q
-from django.forms.models import inlineformset_factory
-from django.forms.widgets import Input
-from django.http import HttpResponseRedirect
-from django.urls import reverse
 from django.utils.html import strip_tags
 from django.utils.translation import gettext_lazy as _
 from django.contrib.auth.forms import PasswordResetForm, SetPasswordForm
-
-# from nekomon.models import User
 from django.conf.urls.static import static
 from six import b
+from nekomon.models import User, Post
 
-from nekomon.models import User, Post, Follow
-
-REGEX = r'\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}\b'
-
+REGEX_EMAIL = r'\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}\b'
 
 class LogInForm(forms.Form):
     username = forms.CharField(
@@ -95,31 +85,6 @@ class LogInForm(forms.Form):
                 self.add_error(None, ValidationError(
                     _("The introduced username was not found or does not match with the password."))
                 )
-
-        # is_validated = True
-        # if username is None:
-        #     self.add_error(field=None, error=ValidationError("The username field cannot be empty."))
-        #     is_validated = False
-        # elif len(username) > 15:
-        #     self.add_error(field=None, error=ValidationError("The username field characters has exceeded."))
-        #     is_validated = False
-        #
-        # if password is None:
-        #     self.add_error(field=None, error=ValidationError("The password field cannot be empty."))
-        #     is_validated = False
-        # elif len(password) > 60:
-        #     self.add_error(field=None, error=ValidationError("The password field characters has exceeded."))
-        #     is_validated = False
-
-        # try:
-        #     User.objects.get(
-        #         username=username,
-        #         password=password,
-        #     )
-        # except User.DoesNotExist as dne:
-        #     self.add_error(field=None, error=ValidationError(
-        #         "The username was not found or does not match with the password.")
-        #     )
 
 
 class RegisterForm(forms.Form):
@@ -196,7 +161,7 @@ class RegisterForm(forms.Form):
         elif len(email) > 40:
             self.add_error(None, ValidationError(_("The e-mail field characters has exceeded.")))
             is_validated = False
-        elif not re.fullmatch(REGEX, email):
+        elif not re.fullmatch(REGEX_EMAIL, email):
             self.add_error(None, ValidationError(_("The e-mail format is incorrect.")))
             is_validated = False
 
@@ -346,15 +311,6 @@ class UpdateUserForm(forms.Form):
                     self.add_error(None, ValidationError(_("An account with the introduced username already exists.")))
             except User.DoesNotExist as dne:
                 pass
-                # self.save()
-
-                # user = self.request.user
-                #
-                # User.objects.update(
-                #     username=username,
-                #     name=name,
-                #     description=description,
-                # )
 
 
 class PostForm(forms.Form):
@@ -551,7 +507,7 @@ class CustomPasswordResetForm(PasswordResetForm):
         elif len(email) > 40:
             self.add_error('email', ValidationError(_("The e-mail field characters has exceeded.")))
             is_validated = False
-        elif not re.fullmatch(REGEX, email):
+        elif not re.fullmatch(REGEX_EMAIL, email):
             self.add_error('email', ValidationError(_("The e-mail format is incorrect.")))
             is_validated = False
 
@@ -560,16 +516,6 @@ class CustomPasswordResetForm(PasswordResetForm):
                 user = User.objects.get(
                     email=email,
                 )
-
-                # password = password.encode()
-                # hashed = bcrypt.hashpw(password, bcrypt.gensalt())
-                #
-                # if not bcrypt.checkpw(password, user.password.encode()):
-                #     self.add_error(None, ValidationError(
-                #         _("The introduced password does not match with the username."))
-                #     )
-                # else:
-                #     print("Coincide")
 
             except User.DoesNotExist as dne:
                 self.add_error(None, ValidationError(

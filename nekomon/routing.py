@@ -1,5 +1,8 @@
-from django.urls import path
+"""
+Routing for the clients WebSockets
+"""
 
+from django.urls import path
 from nekomon import consumers
 
 websocket_urlpatterns = [
