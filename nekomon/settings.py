@@ -133,10 +133,11 @@ USE_TZ = True
 
 STATIC_URL = 'web/'
 
-STATIC_ROOT = ''
+STATIC_ROOT = 'static/'
 
 STATICFILES_DIRS = [
     BASE_DIR / "web",
+    "/virtualenvs/nekomon/lib/python3.8/site-packages/django/contrib/admin/static",
 ]
 
 MEDIA_URL = 'media/'
