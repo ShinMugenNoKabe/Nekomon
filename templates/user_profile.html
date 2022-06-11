@@ -32,13 +32,17 @@
             {% if request.user.is_authenticated and profile != request.user %}
                 <form id="follow-unfollow" class="profile-button-container">
                     {% csrf_token %} {% for field in follow_unfollow_form %} {{ field }} {% endfor %}
-                    <button form="follow-unfollow" class="profile-button" id="follow-unfollow-button">
-                        {% if is_following %}
+
+                    {% if is_following %}
+                        <button form="follow-unfollow" class="profile-button profile-button-red" id="follow-unfollow-button">
                             {% trans "Unfollow" %}
-                        {% else %}
+                        </button>
+                    {% else %}
+                        <button form="follow-unfollow" class="profile-button profile-button-green" id="follow-unfollow-button">
                             {% trans "Follow" %}
-                        {% endif %}
-                    </button>
+                        </button>
+                    {% endif %}
+                    
                 </form>
             {% endif %}
         </div>
@@ -60,32 +64,6 @@
     );
 </script>
 
-<script type="text/javascript">
-    let follow_unfollow_form = $('#follow-unfollow');
-    let follow_unfollow_button = $('#follow-unfollow-button');
-    let is_following_input = $('#id_is_following');
-
-    follow_unfollow_form.submit(function() {
-        $.ajax({
-            type: "post",
-            url: "/ajax/follow-unfollow/",
-            data: follow_unfollow_form.serialize(),
-            success: function(data) {
-                if (data == "True") {
-                    follow_unfollow_button.html("{% trans 'Unfollow' %}");
-                    is_following_input.val(data);
-                } else {
-                    follow_unfollow_button.html("{% trans 'Follow' %}");
-                    is_following_input.val(data);
-                }
-            },
-            error: function(data) {
-                alert("{% trans 'Can\'t do that' %}");
-            },
-        });
-        return false;
-    });
-
-</script>
+<script src="{% static 'js/follow-unfollow.js' %}"></script>
 
 {% endblock %}

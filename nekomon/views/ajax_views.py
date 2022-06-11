@@ -9,6 +9,7 @@ from nekomon.models import Follow, Post
 from nekomon.utils import build_post_in_html, get_ip_address, return_errors, upload_image_to_imgur
 from django.contrib.auth import authenticate, login
 from nekomon.views.page_views import go_to_main_view
+from django.utils.translation import gettext_lazy as _
 
 
 def log_in_ajax(request):
@@ -135,7 +136,10 @@ def follow_unfollow_ajax(request):
 
                 follow.delete()
 
-                response = JsonResponse("False", safe=False)
+                response = JsonResponse({
+                    "is_following": "False",
+                    "button_text": _("Follow")
+                })
             else:
                 follow = Follow(
                     user_followed_id=user_id,
@@ -144,7 +148,10 @@ def follow_unfollow_ajax(request):
 
                 follow.save()
 
-                response = JsonResponse("True", safe=False)
+                response = JsonResponse({
+                    "is_following": "True",
+                    "button_text": _("Unfollow")
+                })
 
             response.status_code = 200
             return response

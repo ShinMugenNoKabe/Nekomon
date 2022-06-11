@@ -155,13 +155,24 @@ a:hover {
 }
 
 .profile-button {
-    background-color: rgb(107 151 50);
     font-size: 1.6em;
     padding: 0.2em 0.4em;
 }
 
-.profile-button:hover {
+.profile-button-green {
+    background-color: rgb(107 151 50);
+}
+
+.profile-button-green:hover {
     background-color: rgb(60 84 28);
+}
+
+.profile-button-red {
+    background-color: rgb(162, 32, 0);
+}
+
+.profile-button-red:hover {
+    background-color: rgb(135, 2, 0);
 }
 
 #new-post-button {
