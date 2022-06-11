@@ -23,6 +23,7 @@ client = discord.Client()
 
 @client.event
 async def on_ready():
+    """"f"""
     print("Bot has connected")
 
 

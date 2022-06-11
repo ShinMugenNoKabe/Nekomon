@@ -72,5 +72,5 @@ urlpatterns = [
     path('api/post/<int:post_id>', api_get_post, name='api_get_post'),
 ]
 
-handler404 = "nekomon.views.handlers_views.handler404"
-handler500 = "nekomon.views.handlers_views.handler500"
+#handler404 = "nekomon.views.handlers_views.handler404"
+#handler500 = "nekomon.views.handlers_views.handler500"

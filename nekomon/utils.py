@@ -33,7 +33,7 @@ def build_post_in_html(post):
     # Header
     post_html +=    "<div class='post-header'>"
     post_html +=        "<div>"
-    post_html +=            "<img class='post-pfp' data-pfp='" + post.user.username + "' src='https://i.imgur.com/" + post.user.profile_picture + ".jpg' alt='" + post.user.username, _("profile picture'") + "' />"
+    post_html +=            "<img class='post-pfp' data-pfp='" + post.user.username + "' src='https://i.imgur.com/" + post.user.profile_picture + ".jpg' alt='" + post.user.username + "profile picture' />"
     post_html +=        "</div>"
     post_html +=        "<div class='post-username-date'>"
     post_html +=            "<a data-username-link='" + post.user.username + "' href='/" + post.user.username + "'>"

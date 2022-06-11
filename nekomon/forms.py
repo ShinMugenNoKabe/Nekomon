@@ -321,7 +321,7 @@ class PostForm(forms.Form):
         widget=forms.Textarea(
             attrs={
                 'class': "new-post-content",
-                'placeholder': _("New post"),
+                'placeholder': _("Click here to write a new post!"),
             }
         )
     )
