@@ -7,3 +7,4 @@ channels-redis==3.4.0
 python-dotenv==0.20.0
 requests==2.27.1
 discord==1.7.3
+pillow==9.1.1
