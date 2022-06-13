@@ -2,7 +2,11 @@
 
 {% block content %}
 <div class="user-profile">
-    <div class="profile-header" id="profile-header">
+    {% if profile is not None %}
+        <div class="profile-header" data-profile id="profile-header">
+    {% else %}
+        <div class="profile-header" data-not-profile id="profile-header">
+    {% endif %}    
         <img class='profile-pfp' data-pfp="{{ request.user.username }}" src="https://i.imgur.com/{{ request.user.profile_picture }}.jpg" alt="{% trans 'Your profile picture' %}">
 
         <div id="profile-info">

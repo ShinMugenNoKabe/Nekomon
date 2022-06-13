@@ -80,7 +80,7 @@ def user_profile_view(request, profile):
             },
         ),
         "random_post": build_post_in_html(random_post),
-        "update_form": UpdateUserForm,
+        "update_form": UpdateUserForm
     }
 
     return render(request, 'user_profile.html', context)
@@ -177,72 +177,6 @@ def register_view(request):
     return render(request, 'user_forms/user_register.html', context)
 
 
-@login_required
-def update_profile(request):
-    """Updates the user profile"""
-
-    if request.method == "POST":
-        form = UpdateUserForm(request.POST, request.FILES, request=request)
-
-        if not form.is_valid():
-            return return_errors(form.errors)
-
-        new_username = form.cleaned_data['username']
-        name = form.cleaned_data['name']
-        description = form.cleaned_data['description']
-
-        user = request.user
-
-        old_username = user.username
-
-        profile_picture = ""
-
-        if user is not None:
-
-            if request.FILES:
-                try:
-                    profile_picture = upload_image_to_imgur(request, "profile_picture")
-                    user.profile_picture = profile_picture
-                except UploadImageToImgurException as ex:
-                    return return_errors(str(ex))
-            else:
-                profile_picture = user.profile_picture
-
-            if new_username != "":
-                user.username = new_username
-            else:
-                new_username = old_username
-
-            if name != "":
-                user.name = name
-            else:
-                name = user.name
-
-            if description != "":
-                user.description = description
-            else:
-                description = user.description
-
-            if profile_picture != "":
-                user.profile_picture = profile_picture
-
-            user.save()
-            update_session_auth_hash(request, user)
-
-            response = JsonResponse({
-                    "old_username": old_username,
-                    "new_username": new_username,
-                    "name": name,
-                    "description": description,
-                    "profile_picture": profile_picture
-            })
-            response.status_code = 200
-            return response
-        else:
-            print("No action")
-
-
-@csrf_exempt
 def search_users(request):
     """Looks for users on the database"""
 

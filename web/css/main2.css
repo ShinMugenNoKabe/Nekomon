@@ -453,7 +453,7 @@ a:hover {
         width: 97%;
     }
 
-    .profile-header, .miscellaneous {
+    [data-not-profile], .profile-header-view, .miscellaneous {
         display: none;
     }
 
@@ -461,11 +461,11 @@ a:hover {
         display: block !important;
     }
 
-    .profile-header, .profile-header-view {
+    [data-not-profile], .profile-header-view {
         width: 91%;
     }
 
-    .profile-header p {
+    [data-not-profile] p {
         font-size: 1em;
     }
 

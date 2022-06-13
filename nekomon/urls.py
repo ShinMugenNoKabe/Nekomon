@@ -5,10 +5,10 @@ from django.contrib import admin
 from django.urls import path
 
 from nekomon.forms import CustomPasswordResetForm, CustomPasswordSetPasswordForm
-from nekomon.views.ajax_views import follow_unfollow_ajax, like_post_ajax, log_in_ajax, new_post_ajax, register_ajax
+from nekomon.views.ajax_views import follow_unfollow_ajax, like_post_ajax, log_in_ajax, new_post_ajax, register_ajax, update_profile
 from nekomon.views.api_views import api_get_username, api_get_post
 from nekomon.views.page_views import go_to_main_view, logout_view, user_profile_view, \
-    log_in_view, register_view, post_view, update_profile, search_users
+    log_in_view, register_view, post_view, search_users
 from django.contrib.auth import views as auth_views
 
 urlpatterns = [

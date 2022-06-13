@@ -4,12 +4,14 @@ AJAX petitions
 
 from django.http import JsonResponse
 from nekomon.exceptions import UploadImageToImgurException
-from nekomon.forms import FollowUnfollowForm, LikePostForm, LogInForm, PostForm, RegisterForm
-from nekomon.models import Follow, Post
+from nekomon.forms import FollowUnfollowForm, LikePostForm, LogInForm, PostForm, RegisterForm, UpdateUserForm
+from nekomon.models import Follow, Post, Like
 from nekomon.utils import build_post_in_html, get_ip_address, return_errors, upload_image_to_imgur
 from django.contrib.auth import authenticate, login
 from nekomon.views.page_views import go_to_main_view
 from django.utils.translation import gettext_lazy as _
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth import update_session_auth_hash
 
 
 def log_in_ajax(request):
@@ -157,4 +159,68 @@ def follow_unfollow_ajax(request):
 
             response.status_code = 200
             return response
-        
+
+
+@login_required
+def update_profile(request):
+    """Updates the user profile"""
+
+    if request.method == "POST":
+        form = UpdateUserForm(request.POST, request.FILES, request=request)
+
+        if not form.is_valid():
+            return return_errors(form.errors)
+
+        new_username = form.cleaned_data['username']
+        name = form.cleaned_data['name']
+        description = form.cleaned_data['description']
+
+        user = request.user
+
+        old_username = user.username
+
+        profile_picture = ""
+
+        if user is not None:
+
+            if request.FILES:
+                try:
+                    profile_picture = upload_image_to_imgur(request, "profile_picture")
+                    user.profile_picture = profile_picture
+                except UploadImageToImgurException as ex:
+                    return return_errors(str(ex))
+            else:
+                profile_picture = user.profile_picture
+
+            if new_username != "":
+                user.username = new_username
+            else:
+                new_username = old_username
+
+            if name != "":
+                user.name = name
+            else:
+                name = user.name
+
+            if description != "":
+                user.description = description
+            else:
+                description = user.description
+
+            if profile_picture != "":
+                user.profile_picture = profile_picture
+
+            user.save()
+            update_session_auth_hash(request, user)
+
+            response = JsonResponse({
+                    "old_username": old_username,
+                    "new_username": new_username,
+                    "name": name,
+                    "description": description,
+                    "profile_picture": profile_picture
+            })
+            response.status_code = 200
+            return response
+        else:
+            print("No action")

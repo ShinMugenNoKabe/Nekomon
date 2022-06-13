@@ -77,7 +77,10 @@ $(document).ready(function() {
                         $(element).attr("data-name", data.new_username);
                     });
 
-                    if (data.new_username)
+                    if (data.new_username) {
+                        
+                    }
+
                     Array.from($("[data-username-link='" + data.old_username + "']")).forEach(element => {
                         $(element).attr("href", "/" + data.new_username);
                         $(element).attr("data-username-link", data.new_username);
@@ -98,6 +101,7 @@ $(document).ready(function() {
                     resetProfileInfo();
                 },
                 error: function(data) {
+                    console.log(data);
                     $("#messages-update").html("<div class='flash-message'>" + data.responseJSON.error + "</div>");
                 },
             });
@@ -109,6 +113,10 @@ $(document).ready(function() {
         $(editProfileButton).attr("hidden", false);
         $("#update-form-fields").attr("hidden", true);
         $("#profile-info-data").attr("hidden", false);
+
+        $("#image-cropper").attr("src", null);
+        cropper.destroy();
+        newProfilePicture = null;
     }
 
     editProfileButtonCancel.click(resetProfileInfo);
