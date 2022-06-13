@@ -128,13 +128,15 @@ def follow_unfollow_ajax(request):
         is_following = form.cleaned_data['is_following']
 
         if not str(user_id) == str(request.user.id):
-            if is_following:
-                follow = Follow.objects.get(
-                    user_followed_id=user_id,
-                    user_follower_id=request.user.id,
-                )
+            
+            follows = Follow.objects.filter(
+                user_followed_id=user_id,
+                user_follower_id=request.user.id,
+            )
 
-                follow.delete()
+            if len(follows) > 0:
+
+                follows.delete()
 
                 response = JsonResponse({
                     "is_following": "False",

@@ -70,7 +70,7 @@ def build_post_in_html(post):
     post_html +=    "<a href='/posts/" + str(post.id) + "' target='_blank'><i class='fa-solid fa-reply'></i>"
     post_html +=    "<span class='post-replies-counter' data-post-replies='" + str(post.id) + "'>" + str(replies) + "</span>"
     post_html +=    "</a>"
-    post_html +=    "<i class='fas fa-heart like-post-icon' data-like-id='" + str(post.id) + "' ></i>"
+    #post_html +=    "<i class='fas fa-heart like-post-icon' data-like-id='" + str(post.id) + "' ></i>"
 
     post_html += "</div>"
 
