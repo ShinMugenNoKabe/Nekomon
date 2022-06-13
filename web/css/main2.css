@@ -283,6 +283,7 @@ a:hover {
     border: none;
     outline: none;
     overflow: hidden;
+    border: 2px solid #565656 !important;
 }
 
 #char-count {
