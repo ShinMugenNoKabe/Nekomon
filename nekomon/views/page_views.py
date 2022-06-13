@@ -53,17 +53,12 @@ def user_profile_view(request, profile):
     except ObjectDoesNotExist:
         return HttpResponseRedirect(reverse_lazy('main_view'))
     
-    follow = None
-    
-    try:
-        follow = Follow.objects.get(
-            user_followed_id=profile.id,
-            user_follower_id=request.user.id,
-        )
+    follow = Follow.objects.filter(
+        user_followed_id=profile.id,
+        user_follower_id=request.user.id,
+    )
         
-        is_following = True
-    except ObjectDoesNotExist:
-        is_following = False
+    is_following = len(follow) > 0
 
     posts = Post.objects.raw(
         "SELECT distinct nekomon_post.* from nekomon_post where user_id = " + str(profile.id) +
