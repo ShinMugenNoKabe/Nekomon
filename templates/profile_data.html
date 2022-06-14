@@ -7,7 +7,11 @@
     {% else %}
         <div class="profile-header" data-not-profile id="profile-header">
     {% endif %}    
-        <img class='profile-pfp' data-pfp="{{ request.user.username }}" src="https://i.imgur.com/{{ request.user.profile_picture }}.jpg" alt="{% trans 'Your profile picture' %}">
+        <img class='profile-pfp'
+            data-pfp="{{ request.user.username }}"
+            src="https://i.imgur.com/{{ request.user.profile_picture }}.jpg"
+            alt="{% trans 'Your profile picture' %}"
+            id="profile-pfp-uneditable">
 
         <div id="profile-info">
             <form id="update-form">
@@ -15,9 +19,11 @@
                 <div id="update-form-fields" hidden>
                     {% csrf_token %}
 
-                    <div id="pfp-container">
-                        <i class="fa-solid fa-image" id="change-pfp-icon" title="{% trans 'Change your profile picture!' %}"></i>
-                    </div>
+                    <img class='profile-pfp'
+                        data-pfp="{{ request.user.username }}"
+                        src="https://i.imgur.com/{{ request.user.profile_picture }}.jpg"
+                        alt="{% trans 'Your profile picture' %}"
+                        id="profile-pfp-editable">
 
                     {% for field in update_form %}
                         {{ field }}

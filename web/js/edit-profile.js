@@ -1,18 +1,20 @@
 $(document).ready(function() {
-    $("#change-pfp-icon").click(function() {
+    $("#profile-pfp-editable").click(function() {
         $("#id_profile_picture").trigger('click');
     });
 
     let newProfilePicture = null;
+    let img = null;
+    let cropper = null;
 
     $("#id_profile_picture").change(function(e) {
-        let img = null;
-        let cropper = null;
 
         $("#close-modal").click(function(e) {
             $("#image-cropper").attr("src", null);
             cropper.destroy();
             $("#update-profile-picture-modal").css("display", "none");
+
+            $("#profile-pfp-editable").attr("src", URL.createObjectURL(newProfilePicture));
         });
 
         $("#update-profile-picture-modal").css("display", "block");
@@ -20,7 +22,11 @@ $(document).ready(function() {
 
         img = document.querySelector("#image-cropper");
         cropper = new Cropper(img, {
+            viewMode: 2,
             aspectRatio: 1 / 1,
+            background: false,
+            autoCropArea: 1,
+            minCanvasWidth: 40,
                 crop() {
                     cropper.getCroppedCanvas().toBlob((blob) => {
                         if (blob != null) {
@@ -41,6 +47,8 @@ $(document).ready(function() {
         $(editProfileButton).attr("hidden", true);
         $("#update-form-fields").attr("hidden", false);
         $("#profile-info-data").attr("hidden", true);
+        $("#profile-pfp-uneditable").attr("hidden", true);
+        $("#profile-pfp-editable").attr("hidden", false);
         $("#messages-update").html("");
     });
 
@@ -54,7 +62,7 @@ $(document).ready(function() {
         let name = $(fields).children("input[name='name']").val();
         let username = $(fields).children("input[name='username']").val();
         let description = $(fields).children("textarea[name='description']").val();
-        let profile_picture = $(fields).children("input[name='profile_picture']")[0];
+        //let profile_picture = $(fields).children("input[name='profile_picture']")[0];
         let csrftoken = $(fields).children("input[name='csrfmiddlewaretoken']").val();
 
         formData.append("name", name);
@@ -113,10 +121,14 @@ $(document).ready(function() {
         $(editProfileButton).attr("hidden", false);
         $("#update-form-fields").attr("hidden", true);
         $("#profile-info-data").attr("hidden", false);
+        $("#profile-pfp-uneditable").attr("hidden", false);
+        $("#profile-pfp-editable").attr("hidden", true);
 
         $("#image-cropper").attr("src", null);
         cropper.destroy();
         newProfilePicture = null;
+
+        $("#profile-pfp-editable").attr("src", $("#profile-pfp-uneditable").attr("src"));
     }
 
     editProfileButtonCancel.click(resetProfileInfo);
