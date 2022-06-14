@@ -25,3 +25,5 @@ El Bot puede mostrar los datos de un usuario o de un post. Para cada uno de ello
 <code>https://www.nekomon.es/posts/1</code><br>
 
 Puedes añadir el Bot a tu servidor haciendo click en <a href="https://discord.com/api/oauth2/authorize?client_id=981836167622299668&permissions=3147776&scope=bot">este enlace</a>.
+
+La memoria del proyecto está disponible en <a href="https://github.com/ShinMugenNoKabe/Nekomon/raw/master/%C3%8Dndice%20memoria%20Proyecto%20final%20DAW.pdf">este enlace</a>.
