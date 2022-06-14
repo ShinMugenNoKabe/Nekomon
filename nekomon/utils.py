@@ -215,6 +215,9 @@ def get_random_post():
     
     random_post = Post.objects.raw(
         "SELECT * FROM nekomon_post ORDER BY RAND() LIMIT 1"
-    )[0]
-    
-    return random_post
+    )
+
+    if len(random_post) > 0:
+        return random_post[0]
+
+    return None

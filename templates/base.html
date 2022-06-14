@@ -36,11 +36,13 @@
     {% block content %} {% endblock %}
 
     <div class="miscellaneous">
-        <span class="post-random-text">{% trans "Random post" %}</span><br>
+        {% if random_post is not None %}
+            <span class="post-random-text">{% trans "Random post" %}</span><br>
 
-        <div id="post-random">
-            {{ random_post | safe }}
-        </div>
+            <div id="post-random">
+                {{ random_post | safe }}
+            </div>
+        {% endif %}
 
         {% comment %}
         <div class="repository">

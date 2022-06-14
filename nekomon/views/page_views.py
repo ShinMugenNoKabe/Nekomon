@@ -31,11 +31,22 @@ def go_to_main_view(request):
         " order by created_at desc"
     )
 
+    if len(posts) == 0:
+        posts = Post.objects.raw(
+            "SELECT distinct nekomon_post.* from nekomon_post" +
+            " where nekomon_post.user_id = " + str(request.user.id) +
+            " and in_response_to_id is null " +
+            " order by created_at desc"
+        )
+
     random_post = get_random_post()
-    
+
+    if random_post is not None:
+        random_post = build_post_in_html(random_post)
+
     context = {
         "posts": build_multiple_posts_in_html(posts),
-        "random_post": build_post_in_html(random_post),
+        "random_post": random_post,
         "post_box": PostForm,
         "update_form": UpdateUserForm,
     }
