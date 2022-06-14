@@ -7,7 +7,12 @@
 {% block content %}
 
 <div class="user-profile-container">
-    <div class="profile-header-view">
+    {% if user_is_viewing_their_profile %}
+        <div class="profile-header-view" data-user-profile>
+    {% else %}
+        <div class="profile-header-view">
+    {% endif %}
+    
         <img class='profile-pfp' data-pfp="{{ profile.username }}" src="https://i.imgur.com/{{ profile.profile_picture }}.jpg" alt="{{ profile.name }}'s profile picture">
 
         <div id="profile-info">

@@ -80,7 +80,8 @@ def user_profile_view(request, profile):
             },
         ),
         "random_post": build_post_in_html(random_post),
-        "update_form": UpdateUserForm
+        "update_form": UpdateUserForm,
+        "user_is_viewing_their_profile": profile.username == request.user.username,
     }
 
     return render(request, 'user_profile.html', context)

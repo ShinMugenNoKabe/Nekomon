@@ -2,7 +2,8 @@
 
 {% block content %}
 <div class="user-profile">
-    {% if profile is not None %}
+
+    {% if profile is not None and user_is_viewing_their_profile %}
         <div class="profile-header" data-profile id="profile-header">
     {% else %}
         <div class="profile-header" data-not-profile id="profile-header">

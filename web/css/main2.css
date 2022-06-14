@@ -450,7 +450,7 @@ a:hover {
         width: 97%;
     }
 
-    [data-not-profile], .profile-header-view, .miscellaneous {
+    [data-not-profile], [data-user-profile], .miscellaneous {
         display: none;
     }
 
@@ -483,6 +483,10 @@ a:hover {
 
     .post {
         width: 93%;
+    }
+
+    .user-profile-container {
+        margin-left: 0.5em;
     }
 }
 
