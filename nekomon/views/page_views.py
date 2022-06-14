@@ -24,9 +24,9 @@ def go_to_main_view(request):
     """Goes to the main feed page"""
     
     posts = Post.objects.raw(
-        "SELECT distinct nekomon_post.* from nekomon_post, nekomon_follow where user_follower_id = "
-        + str(request.user.id) +
-        " and (nekomon_post.user_id = user_followed_id or nekomon_post.user_id = " + str(request.user.id) + ")" +
+        "SELECT distinct nekomon_post.* from nekomon_post, nekomon_follow" +
+        " where (user_follower_id = " + str(request.user.id) + " and nekomon_post.user_id = user_followed_id)" +
+        " or nekomon_post.user_id = " + str(request.user.id) +
         " and in_response_to_id is null " +
         " order by created_at desc"
     )
