@@ -39,11 +39,11 @@ La memoria del proyecto está disponible en <a href="https://github.com/ShinMuge
         <ul>
             <li>SECRET_KEY - Clave secreta única de Django.</li>
             <li>EMAIL_HOST_USER - E-mail usado para enviar correos.</li>
-            <li>EMAIL_HOST_PASSWORD - Contraseña de aplicación del e-mail</li>
-            <li>DEFAULT_FROM_EMAIL</li>
-            <li>IMGUR_CLIENT_ID</li>
-            <li>IMGUR_API_KEY</li>
-            <li>DISCORD_TOKEN</li>
+            <li>EMAIL_HOST_PASSWORD - Contraseña de aplicación del e-mail.</li>
+            <li>DEFAULT_FROM_EMAIL - Nombre que aparece en los correos.</li>
+            <li>IMGUR_CLIENT_ID - ID de cliente de Imgur.</li>
+            <li>IMGUR_API_KEY - Clave de API de Imgur.</li>
+            <li>DISCORD_TOKEN - Token del Bot de Discord.</li>
         </ul>
     </li>
     <li>Crear una nueva base de datos con el nombre elegido, por defecto <code>nekomon</code></li>
