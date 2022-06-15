@@ -13,9 +13,11 @@ creada desde cero utilizando Python.</p>
     <li>Servidor web: <b>NGINX</b></li>
     <li>Servidor proxy para los WebSockets: <b>Daphne</b></li>
     <li>Servidor de bases de datos: <b>MySQL</b></li>
+    <li>Gestor de bases de datos: <b>HeidiSQL</b></li>
     <li>Servidor de correo: <b>Postfix</b></li>
     <li>Dominio registrado en: <b>GoDaddy</b></li>
     <li>Autoridad de Certificación: <b>Let’s Encrypt</b></li>
+    <li>Web donde se almacenan las imágenes: <b>Imgur</b></li>
 </ul>
 
 <p>Nekomon.es además viene incorporado con un Bot de Discord completamente funcional, el cual recibe datos de entidades desde una API REST y los muestra al usuario.</p>
