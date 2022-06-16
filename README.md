@@ -30,7 +30,7 @@ Puedes añadir el Bot a tu servidor haciendo click en <a href="https://discord.c
 
 La memoria del proyecto está disponible en <a href="https://github.com/ShinMugenNoKabe/Nekomon/raw/master/%C3%8Dndice%20memoria%20Proyecto%20final%20DAW.pdf">este enlace</a>.
 
-<h3>Pasos para despliegue</h3>
+<h3>Pasos para clonado del proyecto</h3>
 <ol>
     <li>Clonar el repositorio con <code>git clone https://github.com/ShinMugenNoKabe/Nekomon.git</code></li>
     <li>Instalar Python y el <a href="https://phoenixnap.com/kb/install-pip-windows">gestor de paquetes PIP</a></li>
@@ -49,6 +49,8 @@ La memoria del proyecto está disponible en <a href="https://github.com/ShinMuge
         </ul>
     </li>
     <li>Crear una nueva base de datos con el nombre elegido, por defecto <code>nekomon</code></li>
-    <li>Aplicar las migraciones con <code>python manage.py migrate</code></a></li>
-    <li>Ejecutar el servidor con <code>python manage.py runserver</code></a></li>
+    <li>Aplicar las migraciones con <code>python manage.py migrate</code></li>
+    <li>Para los WebSockets: <a href="https://docs.docker.com/desktop/windows/install/">instalar Docker.</a></li>
+    <li>Ejecutar Redis con <code>docker run -p 6379:6379 -d redis:5</code></li>
+    <li>Ejecutar el servidor con <code>python manage.py runserver</code></li>
 <ol>
